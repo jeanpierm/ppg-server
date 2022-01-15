@@ -5,7 +5,7 @@ import { CurrentUser } from './current-user.decorator';
 import { LoginResponse } from './dto/login-response.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
-@Controller('/api')
+@Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 

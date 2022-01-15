@@ -11,24 +11,30 @@ import {
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './schemas/users.schema';
+import { Response } from 'src/shared/dto/response.dto';
 
-@Controller('/api/users')
+@Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto, @Res() res) {
+  async create(@Body() createUserDto: CreateUserDto): Promise<Response<User>> {
     const user = await this.userService.createUser(createUserDto);
 
-    return res.status(HttpStatus.OK).json({
-      message: 'received',
+    return {
+      message: 'User created successfully',
       data: user,
-    });
+    };
   }
 
   @Get()
-  async findAll(): Promise<User[]> {
-    return this.userService.getUsers();
+  async findAll(): Promise<Response<User[]>> {
+    const users = await this.userService.getUsers();
+
+    return {
+      message: 'Users obtained successfully',
+      data: users,
+    };
   }
 
   @Get(':id')
