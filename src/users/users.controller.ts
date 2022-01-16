@@ -7,17 +7,20 @@ import {
   Body,
   Res,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { User } from './schemas/users.schema';
 import { Response } from 'src/shared/dto/response.dto';
+import { ValidateCreateUser } from './guards/validate-create-user.guard';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
+  @UseGuards(ValidateCreateUser)
   async create(@Body() createUserDto: CreateUserDto): Promise<Response<User>> {
     const user = await this.userService.createUser(createUserDto);
 
