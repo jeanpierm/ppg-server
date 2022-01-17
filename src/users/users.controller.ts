@@ -1,26 +1,14 @@
-import {
-  Controller,
-  Post,
-  Get,
-  Delete,
-  Param,
-  Body,
-  Res,
-  HttpStatus,
-  UseGuards,
-} from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UsersService } from './users.service';
-import { User } from './schemas/users.schema';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { Response } from 'src/shared/dto/response.dto';
-import { ValidateCreateUser } from './guards/validate-create-user.guard';
+import { CreateUserDto } from './dto/create-user.dto';
+import { User } from './schemas/users.schema';
+import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  @UseGuards(ValidateCreateUser)
   async create(@Body() createUserDto: CreateUserDto): Promise<Response<User>> {
     const user = await this.userService.createUser(createUserDto);
 

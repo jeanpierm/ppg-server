@@ -1,8 +1,10 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { EmailIsNotRegistered } from '../validators/email-is-not-registered.validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
   @IsEmail()
+  @EmailIsNotRegistered()
   readonly email: string;
 
   @IsNotEmpty()
@@ -17,6 +19,6 @@ export class CreateUserDto {
   @IsString()
   readonly surname: string;
 
-  //   status: string; // valores por defecto, no son necesarios en el createDto
+  //   status: string; // valores por defecto con la opcion "timestamp" del @Schema(), no son necesarios en el createDto
   //   createAt: Date;
 }
