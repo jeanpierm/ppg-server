@@ -3,13 +3,13 @@ import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/users.schema';
-import { EmailIsNotRegisteredValidator } from './validators/email-is-not-registered.validator';
+import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [UsersController],
-  providers: [UsersService, EmailIsNotRegisteredValidator],
+  providers: [UsersService, IsUnregisteredEmailValidator],
 })
 export class UsersModule {}

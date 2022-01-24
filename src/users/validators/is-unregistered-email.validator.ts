@@ -9,9 +9,9 @@ import {
 import { Model } from 'mongoose';
 import { User, UserDocument } from '../schemas/users.schema';
 
-@ValidatorConstraint({ name: 'UserEmailExists', async: true })
+@ValidatorConstraint({ name: 'IsUnregisteredEmail', async: true })
 @Injectable()
-export class EmailIsNotRegisteredValidator
+export class IsUnregisteredEmailValidator
   implements ValidatorConstraintInterface
 {
   constructor(
@@ -29,14 +29,14 @@ export class EmailIsNotRegisteredValidator
   }
 }
 
-export function EmailIsNotRegistered(validationOptions?: ValidationOptions) {
+export function IsUnregisteredEmail(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
     registerDecorator({
-      name: 'EmailIsNotRegistered',
+      name: 'IsUnregisteredEmail',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
-      validator: EmailIsNotRegisteredValidator,
+      validator: IsUnregisteredEmailValidator,
     });
   };
 }

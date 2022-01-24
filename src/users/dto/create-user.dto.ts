@@ -1,10 +1,9 @@
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-import { EmailIsNotRegistered } from '../validators/email-is-not-registered.validator';
+import { IsUnregisteredEmail } from '../validators/is-unregistered-email.validator';
 
 export class CreateUserDto {
-  @IsNotEmpty()
   @IsEmail()
-  @EmailIsNotRegistered()
+  @IsUnregisteredEmail()
   readonly email: string;
 
   @IsNotEmpty()
