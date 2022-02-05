@@ -1,7 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserStatus } from './enums/user-status.enum';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -10,19 +12,16 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async getUsers(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.userModel.find().exec();
   }
 
-  async getUserByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email }).exec();
-    if (!user) {
-      throw new NotFoundException(`No existe el usuario ${email}`);
-    }
-    return user;
+    return user.toObject();
   }
 
-  async createUser(user: CreateUserDto): Promise<User> {
+  async create(user: CreateUserDto): Promise<User> {
     const { email, password, name, surname } = user;
     const newUser = new this.userModel({
       email,
@@ -30,6 +29,20 @@ export class UsersService {
       name,
       surname,
     });
-    return newUser.save();
+    return (await newUser.save()).toObject();
+  }
+
+  async update(email: string, user: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findOneAndUpdate({ email }, user, {
+      new: true,
+    });
+    return updatedUser.toObject();
+  }
+
+  async remove(email: string): Promise<void> {
+    await this.userModel.findOneAndUpdate(
+      { email },
+      { status: UserStatus.INACTIVE },
+    );
   }
 }

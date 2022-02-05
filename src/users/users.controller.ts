@@ -1,45 +1,55 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { Response } from 'src/shared/dto/response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
+import { FindUserParams } from './dto/find-user-params.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './schemas/users.schema';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto): Promise<Response<User>> {
-    const user = await this.userService.createUser(createUserDto);
-
-    return {
-      message: 'User created successfully',
-      data: user,
-    };
+    const user = await this.usersService.create(createUserDto);
+    return new Response('User created successfully', user);
   }
 
   @Get()
   async findAll(): Promise<Response<User[]>> {
-    const users = await this.userService.getUsers();
-
-    return {
-      message: 'Users obtained successfully',
-      data: users,
-    };
+    const users = await this.usersService.findAll();
+    return new Response('Users obtained successfully', users);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string): string {
-    return `This action returns a #${id} user`;
+  @Get(':email')
+  async findOne(@Param() { email }: FindUserParams): Promise<Response<User>> {
+    const user = await this.usersService.findByEmail(email);
+    return new Response('User obtained successfully', user);
   }
 
-  /*  @Put(':id')
-    update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
-        return `This action updates a #${id} user`;
-    } */
+  @Patch(':email')
+  async update(
+    @Param() { email }: FindUserParams,
+    @Body() updateUserDto: UpdateUserDto,
+  ) {
+    const user = await this.usersService.update(email, updateUserDto);
+    return new Response('User updated successfully', user);
+  }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return `This action removes a #${id} user`;
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Delete(':email')
+  async remove(@Param() { email }: FindUserParams): Promise<void> {
+    await this.usersService.remove(email);
   }
 }
