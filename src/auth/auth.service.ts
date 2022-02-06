@@ -1,17 +1,10 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  ValidationError,
-} from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { validate, validateOrReject } from 'class-validator';
 import { AuthConfig } from 'src/config/auth.config';
 import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './dto/jwt-payload.dto';
-import { LoginRequest } from './dto/login-request.dto';
 import { LoginResponse } from './dto/login-response.dto';
 import { RegisterRequest } from './dto/register-request.dto';
 import { RegisterResponse } from './dto/register-response.dto';

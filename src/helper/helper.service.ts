@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ValidationError } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DateTime, Interval } from 'luxon';
 
@@ -53,5 +53,16 @@ export class HelperService {
    */
   censor(str: string, beginning = 2, end = 2): string {
     return str.slice(0, beginning) + '*'.repeat(4) + str.slice(-end);
+  }
+
+  mapValidationErrorsToMessages(errors: ValidationError[]) {
+    const constraints = errors.map(
+      (error: ValidationError) => error.constraints,
+    );
+    return constraints
+      .map((constraint: { [type: string]: string }) =>
+        Object.values(constraint),
+      )
+      .flat();
   }
 }
