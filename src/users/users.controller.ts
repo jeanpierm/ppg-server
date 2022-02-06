@@ -56,4 +56,10 @@ export class UsersController {
   async remove(@Param() { email }: FindUserParams): Promise<void> {
     await this.usersService.remove(email);
   }
+
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Post(':email')
+  async active(@Param() { email }: FindUserParams): Promise<void> {
+    await this.usersService.active(email);
+  }
 }

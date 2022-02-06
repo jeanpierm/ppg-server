@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { compare } from 'bcrypt';
 import { AuthConfig } from 'src/config/auth.config';
 import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
@@ -32,8 +33,8 @@ export class AuthService {
   async validateCredentials(email: string, pass: string): Promise<any> | null {
     const user = await this.usersService.findByEmail(email);
     if (!user) return null;
-    const valid = user.password === pass;
-    if (!valid) return null;
+    const passwordMatch = compare(pass, user.password);
+    if (!passwordMatch) return null;
 
     return { email };
   }

@@ -1,6 +1,9 @@
 import { Injectable, ValidationError } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DateTime, Interval } from 'luxon';
+import { AccountResponse } from 'src/account/dto/account-response.dto';
+import { UserResponse } from 'src/users/dto/user-response.dto';
+import { User } from 'src/users/schemas/users.schema';
 
 @Injectable()
 export class HelperService {
@@ -64,5 +67,13 @@ export class HelperService {
         Object.values(constraint),
       )
       .flat();
+  }
+
+  mapUserToAccountResponse(user: User): AccountResponse {
+    return new AccountResponse({
+      name: user.name,
+      surname: user.surname,
+      email: user.surname,
+    });
   }
 }

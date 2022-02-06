@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -27,19 +28,27 @@ export class UsersService {
 
   async create(user: CreateUserDto): Promise<User> {
     const { email, password, name, surname } = user;
+    const passwordSalt = await genSalt();
+    const passwordHash = await hash(password, passwordSalt);
     const newUser = new this.userModel({
       email,
-      password,
+      password: passwordHash,
       name,
       surname,
     });
     return (await newUser.save()).toObject();
   }
 
-  async update(email: string, user: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel.findOneAndUpdate({ email }, user, {
-      new: true,
-    });
+  async update(email: string, updateUser: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { email },
+      {
+        name: updateUser.name,
+        surname: updateUser.surname,
+        email: updateUser.email,
+      },
+      { new: true },
+    );
     return updatedUser.toObject();
   }
 
@@ -47,6 +56,22 @@ export class UsersService {
     await this.userModel.findOneAndUpdate(
       { email },
       { status: UserStatus.INACTIVE },
+    );
+  }
+
+  async active(email: string): Promise<void> {
+    await this.userModel.findOneAndUpdate(
+      { email },
+      { status: UserStatus.ACTIVE },
+    );
+  }
+
+  async updatePassword(email: string, password: string): Promise<void> {
+    const passwordSalt = await genSalt();
+    const passwordHash = await hash(password, passwordSalt);
+    await this.userModel.findOneAndUpdate(
+      { email },
+      { password: passwordHash },
     );
   }
 }
