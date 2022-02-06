@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import * as mongoose from 'mongoose';
 
-export type ProProfileDocument = ProProfile & Document;
+export type ProProfileDocument = ProfesionalProfile & Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class ProProfile {
+export class ProfesionalProfile {
   @Prop({
     required: true,
     type: [String],
@@ -20,4 +20,5 @@ export class ProProfile {
   owner: User;
 }
 
-export const ProProfileSchema = SchemaFactory.createForClass(ProProfile);
+export const ProProfileSchema =
+  SchemaFactory.createForClass(ProfesionalProfile);

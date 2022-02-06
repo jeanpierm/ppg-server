@@ -3,20 +3,20 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import {
-  ProProfile,
+  ProfesionalProfile,
   ProProfileDocument,
 } from './schemas/profesional-profile.schema';
 
 @Injectable()
 export class ProfesionalProfilesService {
   constructor(
-    @InjectModel(ProProfile.name)
+    @InjectModel(ProfesionalProfile.name)
     private readonly proProfileModel: Model<ProProfileDocument>,
   ) {}
 
   // TODO
   async generate(user: User) {
-    const profile: ProProfile = {
+    const profile: ProfesionalProfile = {
       languages: ['Java', 'TypeScript', 'JavaScript', 'PHP'],
       owner: user,
     };

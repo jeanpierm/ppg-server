@@ -37,18 +37,6 @@ export class AuthService {
    * @returns - Si las credenciales son válidas, retorna un objeto con data referente al usuario, caso contrario null.
    */
   async validateCredentials(email: string, pass: string): Promise<any> | null {
-    const loginRequest = new LoginRequest({ email, password: pass });
-    try {
-      await validateOrReject(loginRequest);
-    } catch (errors) {
-      // TODO mejorar legibilidad
-      this.logger.debug(JSON.stringify(errors));
-      const constraints = errors.map((error) => error.constraints);
-      const messages = constraints
-        .map((constraint) => Object.values(constraint))
-        .flat();
-      throw new BadRequestException(messages);
-    }
     const user = await this.usersService.findByEmail(email);
     if (!user) return null;
     const valid = user.password === pass;
