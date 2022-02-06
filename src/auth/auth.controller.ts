@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   HttpCode,
   HttpStatus,
@@ -9,6 +10,8 @@ import { User } from 'src/users/schemas/users.schema';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
 import { LoginResponse } from './dto/login-response.dto';
+import { RegisterRequest } from './dto/register-request.dto';
+import { RegisterResponse } from './dto/register-response.dto';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @Controller('auth')
@@ -20,5 +23,13 @@ export class AuthController {
   @Post('login')
   async login(@CurrentUser() user: User): Promise<LoginResponse> {
     return this.authService.login(user);
+  }
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post('register')
+  async register(
+    @Body() registerRequest: RegisterRequest,
+  ): Promise<RegisterResponse> {
+    return this.authService.register(registerRequest);
   }
 }

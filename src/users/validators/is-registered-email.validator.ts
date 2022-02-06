@@ -25,7 +25,7 @@ export class IsRegisteredEmailValidator
   }
 
   defaultMessage(): string {
-    return 'User not found';
+    return 'User $value not found';
   }
 }
 

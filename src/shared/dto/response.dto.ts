@@ -1,3 +1,3 @@
-export class Response<T> {
-  constructor(public message: string, public data: T) {}
+export class ApiResponse<T = void> {
+  constructor(public message: string, public data?: T) {}
 }

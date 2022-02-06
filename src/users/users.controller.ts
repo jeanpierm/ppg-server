@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { Response } from 'src/shared/dto/response.dto';
+import { ApiResponse } from 'src/shared/dto/response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,21 +21,25 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post()
-  async create(@Body() createUserDto: CreateUserDto): Promise<Response<User>> {
+  async create(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<ApiResponse<User>> {
     const user = await this.usersService.create(createUserDto);
-    return new Response('User created successfully', user);
+    return new ApiResponse('User created successfully', user);
   }
 
   @Get()
-  async findAll(): Promise<Response<User[]>> {
+  async findAll(): Promise<ApiResponse<User[]>> {
     const users = await this.usersService.findAll();
-    return new Response('Users obtained successfully', users);
+    return new ApiResponse('Users obtained successfully', users);
   }
 
   @Get(':email')
-  async findOne(@Param() { email }: FindUserParams): Promise<Response<User>> {
+  async findOne(
+    @Param() { email }: FindUserParams,
+  ): Promise<ApiResponse<User>> {
     const user = await this.usersService.findByEmail(email);
-    return new Response('User obtained successfully', user);
+    return new ApiResponse('User obtained successfully', user);
   }
 
   @Patch(':email')
@@ -44,7 +48,7 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const user = await this.usersService.update(email, updateUserDto);
-    return new Response('User updated successfully', user);
+    return new ApiResponse('User updated successfully', user);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)

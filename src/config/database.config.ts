@@ -10,7 +10,7 @@ export default registerAs(
   'database',
   (): DatabaseConfig => ({
     host: process.env.DATABASE_HOST || 'localhost:27017',
-    name: process.env.DATABASE_NAME || 'ppg_db',
+    name: process.env.DATABASE_NAME || 'ppgDB',
     options: process.env.DATABASE_OPTIONS,
   }),
 );
