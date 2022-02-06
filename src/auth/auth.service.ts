@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { AuthConfig } from 'src/config/auth.config';
 import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './dto/jwt-payload.dto';
@@ -8,17 +9,28 @@ import { LoginResponse } from './dto/login-response.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+  private readonly config: AuthConfig;
+
   constructor(
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+    this.config = configService.get<AuthConfig>('auth');
+  }
 
-  async validateUser(email: string, pass: string): Promise<any> | null {
+  /**
+   * Permite verificar las credenciales del usuario al momento de hacer login. Se invoca en la estrategia 'local'.
+   *
+   * @param email - username of user
+   * @param pass - password of user
+   * @returns - Si las credenciales son válidas, retorna un objeto, caso contrario null.
+   */
+  async validateCredentials(email: string, pass: string): Promise<any> | null {
     const user = await this.usersService.findByEmail(email);
-    const passwordIsValid = user.password === pass;
-    if (passwordIsValid) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const isValid = user.password === pass;
+    if (isValid) {
       const { email } = user;
       return { email };
     }
@@ -26,10 +38,10 @@ export class AuthService {
   }
 
   async verify(token: string): Promise<User> {
-    const decoded: JwtPayload = this.jwtService.verify(token, {
-      secret: this.configService.get<string>('JWT_SECRET'),
+    const payload: JwtPayload = this.jwtService.verify(token, {
+      secret: this.config.jwt.secretKey,
     });
-    const userEmail = decoded.sub;
+    const userEmail = payload.sub;
     const user = await this.usersService.findByEmail(userEmail);
     return user;
   }
