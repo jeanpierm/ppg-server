@@ -32,10 +32,16 @@ export class AuthService {
    */
   async validateCredentials(email: string, pass: string): Promise<any> | null {
     const user = await this.usersService.findByEmail(email);
-    if (!user) return null;
-    const passwordMatch = compare(pass, user.password);
-    if (!passwordMatch) return null;
-
+    if (!user) {
+      this.logger.log('User not fount');
+      return null;
+    }
+    const passwordMatch = await compare(pass, user.password);
+    if (!passwordMatch) {
+      this.logger.log('Invalid credentials');
+      return null;
+    }
+    this.logger.log('Valid credentials');
     return { email };
   }
 

@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
@@ -13,6 +14,8 @@ import { LoginRequest } from '../dto/login-request.dto';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
+  private readonly logger = new Logger(LocalStrategy.name);
+
   constructor(
     private readonly authService: AuthService,
     private readonly helperService: HelperService,
@@ -21,6 +24,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<User> {
+    // class validations
     try {
       const loginRequest = new LoginRequest({ email, password });
       await validateOrReject(loginRequest);
@@ -29,7 +33,9 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       throw new BadRequestException(messages);
     }
 
+    // credentials validation
     const user = await this.authService.validateCredentials(email, password);
+    this.logger.debug(user);
     if (!user) {
       throw new UnauthorizedException();
     }
