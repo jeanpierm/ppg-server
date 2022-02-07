@@ -13,53 +13,63 @@ import { ApiResponse } from 'src/shared/dto/response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './schemas/users.schema';
+import { UserResponse } from './dto/user-response.dto';
+import { UsersMapper } from './mapper/users.mapper';
 import { UsersService } from './users.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly usersMapper: UsersMapper,
+  ) {}
 
   @Post()
   async create(
     @Body() createUserDto: CreateUserDto,
-  ): Promise<ApiResponse<User>> {
+  ): Promise<ApiResponse<UserResponse>> {
     const user = await this.usersService.create(createUserDto);
-    return new ApiResponse('User created successfully', user);
+    const payload = this.usersMapper.mapToUserResponse(user);
+    return new ApiResponse('User created successfully', payload);
   }
 
   @Get()
-  async findAll(): Promise<ApiResponse<User[]>> {
+  async findAll(): Promise<ApiResponse<UserResponse[]>> {
     const users = await this.usersService.findAll();
-    return new ApiResponse('Users obtained successfully', users);
+    const payload = users.map((user) =>
+      this.usersMapper.mapToUserResponse(user),
+    );
+    return new ApiResponse('Users obtained successfully', payload);
   }
 
-  @Get(':email')
+  @Get(':id')
   async findOne(
-    @Param() { email }: FindUserParams,
-  ): Promise<ApiResponse<User>> {
-    const user = await this.usersService.findByEmail(email);
-    return new ApiResponse('User obtained successfully', user);
+    @Param() { id }: FindUserParams,
+  ): Promise<ApiResponse<UserResponse>> {
+    const user = await this.usersService.findById(id);
+    const payload = this.usersMapper.mapToUserResponse(user);
+    return new ApiResponse('User obtained successfully', payload);
   }
 
-  @Patch(':email')
+  @Patch(':id')
   async update(
-    @Param() { email }: FindUserParams,
+    @Param() { id }: FindUserParams,
     @Body() updateUserDto: UpdateUserDto,
-  ) {
-    const user = await this.usersService.update(email, updateUserDto);
-    return new ApiResponse('User updated successfully', user);
+  ): Promise<ApiResponse<UserResponse>> {
+    const user = await this.usersService.updateById(id, updateUserDto);
+    const payload = this.usersMapper.mapToUserResponse(user);
+    return new ApiResponse('User updated successfully', payload);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete(':email')
-  async remove(@Param() { email }: FindUserParams): Promise<void> {
-    await this.usersService.remove(email);
+  @Delete(':id')
+  async remove(@Param() { id }: FindUserParams): Promise<void> {
+    await this.usersService.removeById(id);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Post(':email')
-  async active(@Param() { email }: FindUserParams): Promise<void> {
-    await this.usersService.active(email);
+  @Post(':id')
+  async active(@Param() { id }: FindUserParams): Promise<void> {
+    await this.usersService.activeById(id);
   }
 }

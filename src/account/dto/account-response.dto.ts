@@ -1,4 +1,6 @@
 export class AccountResponse {
+  readonly userId: string;
+
   readonly email: string;
 
   readonly name: string;

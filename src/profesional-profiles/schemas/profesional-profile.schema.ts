@@ -13,10 +13,10 @@ export class ProfesionalProfile {
   })
   languages: string[];
 
-  @Prop({ default: new Date() })
-  consultationDate?: Date;
-
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+  })
   owner: User;
 }
 

@@ -6,6 +6,14 @@ export type UserDocument = User & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class User {
+  // props for the types
+  _id: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  // user schema props
   @Prop({ required: true, trim: true, lowercase: true })
   name: string;
 

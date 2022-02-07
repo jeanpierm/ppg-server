@@ -15,11 +15,18 @@ export class ProfesionalProfilesService {
   ) {}
 
   // TODO
+  /**
+   * Genera un perfil profesional utilizando un algoritmo que hace Web Scraping.
+   * El perfil generado se persiste en la base de datos.
+   * @param user - current user
+   */
   async generate(user: User) {
-    const profile: ProfesionalProfile = {
+    const proProfile: ProfesionalProfile = {
       languages: ['Java', 'TypeScript', 'JavaScript', 'PHP'],
       owner: user,
     };
-    return this.proProfileModel.create(profile);
+    const createdProProfile = await this.proProfileModel.create(proProfile);
+
+    return createdProProfile.populate('owner');
   }
 }

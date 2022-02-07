@@ -1,8 +1,8 @@
-import { IsEmail } from 'class-validator';
-import { IsRegisteredEmail } from '../validators/is-registered-email.validator';
+import { IsMongoId } from 'class-validator';
+import { IsRegistered } from '../validators/is-registered.validator';
 
 export class FindUserParams {
-  @IsEmail()
-  @IsRegisteredEmail()
-  readonly email: string;
+  @IsRegistered()
+  @IsMongoId()
+  readonly id: string;
 }

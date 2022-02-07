@@ -68,12 +68,4 @@ export class HelperService {
       )
       .flat();
   }
-
-  mapUserToAccountResponse(user: User): AccountResponse {
-    return new AccountResponse({
-      name: user.name,
-      surname: user.surname,
-      email: user.surname,
-    });
-  }
 }

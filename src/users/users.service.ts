@@ -13,7 +13,7 @@ export class UsersService {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().exec();
   }
 
@@ -21,9 +21,14 @@ export class UsersService {
     return this.userModel.exists({ email });
   }
 
+  async findById(id: string): Promise<User> {
+    const user = await this.userModel.findById(id);
+    return user.toObject();
+  }
+
   async findByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email }).exec();
-    return user?.toObject();
+    return user.toObject();
   }
 
   async create(user: CreateUserDto): Promise<User> {
@@ -39,9 +44,9 @@ export class UsersService {
     return (await newUser.save()).toObject();
   }
 
-  async update(email: string, updateUser: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel.findOneAndUpdate(
-      { email },
+  async updateById(id: string, updateUser: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findByIdAndUpdate(
+      id,
       {
         name: updateUser.name,
         surname: updateUser.surname,
@@ -52,21 +57,15 @@ export class UsersService {
     return updatedUser.toObject();
   }
 
-  async remove(email: string): Promise<void> {
-    await this.userModel.findOneAndUpdate(
-      { email },
-      { status: UserStatus.INACTIVE },
-    );
+  async removeById(id: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, { status: UserStatus.INACTIVE });
   }
 
-  async active(email: string): Promise<void> {
-    await this.userModel.findOneAndUpdate(
-      { email },
-      { status: UserStatus.ACTIVE },
-    );
+  async activeById(id: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(id, { status: UserStatus.ACTIVE });
   }
 
-  async updatePassword(email: string, password: string): Promise<void> {
+  async updatePasswordByEmail(email: string, password: string): Promise<void> {
     const passwordSalt = await genSalt();
     const passwordHash = await hash(password, passwordSalt);
     await this.userModel.findOneAndUpdate(
