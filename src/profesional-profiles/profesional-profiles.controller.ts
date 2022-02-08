@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/users/schemas/users.schema';
@@ -15,5 +15,11 @@ export class ProfesionalProfilesController {
   @UseGuards(JwtAuthGuard)
   async generate(@CurrentUser() user: User) {
     return this.proProfilesService.generate(user);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async get(@CurrentUser() user: User) {
+    return this.proProfilesService.get(user);
   }
 }

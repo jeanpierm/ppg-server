@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ApiResponse } from 'src/shared/dto/response.dto';
+import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
 import { AccountService } from './account.service';
 import { AccountResponse } from './dto/account-response.dto';

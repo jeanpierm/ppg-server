@@ -20,5 +20,7 @@ export class ProfesionalProfile {
   owner: User;
 }
 
-export const ProProfileSchema =
+export const ProfesionalProfileSchema =
   SchemaFactory.createForClass(ProfesionalProfile);
+
+export const ProfesionalProfileName = 'profesionalProfiles';

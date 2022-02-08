@@ -9,7 +9,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiResponse } from 'src/shared/dto/response.dto';
+import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';

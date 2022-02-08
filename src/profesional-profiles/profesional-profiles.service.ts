@@ -29,4 +29,10 @@ export class ProfesionalProfilesService {
 
     return createdProProfile.populate('owner');
   }
+
+  async get(user: User) {
+    const profiles = await this.proProfileModel.find({ owner: user }).exec();
+
+    return profiles;
+  }
 }
