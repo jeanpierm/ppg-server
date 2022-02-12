@@ -1,4 +1,4 @@
-import { UserStatus } from '../enums/user-status.enum';
+import { EntityStatus } from '../../shared/enums/status.enum';
 
 export class UserResponse {
   readonly userId: string;
@@ -13,7 +13,7 @@ export class UserResponse {
 
   readonly updatedAt: Date;
 
-  readonly status: UserStatus;
+  readonly status: EntityStatus;
 
   constructor(partial: Partial<UserResponse>) {
     Object.assign(this, partial);

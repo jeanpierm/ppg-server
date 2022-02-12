@@ -4,7 +4,7 @@ import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { UserStatus } from './enums/user-status.enum';
+import { EntityStatus } from '../shared/enums/status.enum';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -58,11 +58,13 @@ export class UsersService {
   }
 
   async removeById(id: string): Promise<void> {
-    await this.userModel.findByIdAndUpdate(id, { status: UserStatus.INACTIVE });
+    await this.userModel.findByIdAndUpdate(id, {
+      status: EntityStatus.INACTIVE,
+    });
   }
 
   async activeById(id: string): Promise<void> {
-    await this.userModel.findByIdAndUpdate(id, { status: UserStatus.ACTIVE });
+    await this.userModel.findByIdAndUpdate(id, { status: EntityStatus.ACTIVE });
   }
 
   async updatePasswordByEmail(email: string, password: string): Promise<void> {
