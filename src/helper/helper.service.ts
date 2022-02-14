@@ -1,9 +1,6 @@
 import { Injectable, ValidationError } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DateTime, Interval } from 'luxon';
-import { AccountResponse } from 'src/account/dto/account-response.dto';
-import { UserResponse } from 'src/users/dto/user-response.dto';
-import { User } from 'src/users/schemas/users.schema';
+import { DateInput, DateTime, Interval } from 'luxon';
 
 @Injectable()
 export class HelperService {
@@ -31,7 +28,7 @@ export class HelperService {
    * @param endDate - Optional end date. Default is the current DateTime.
    * @returns The interval (elapsed time) between two dates in milliseconds (ms).
    */
-  getInterval(startDate: DateTime, endDate: DateTime = DateTime.now()): number {
+  getInterval(startDate: DateInput, endDate: DateInput = new Date()): number {
     return Interval.fromDateTimes(startDate, endDate).length();
   }
 

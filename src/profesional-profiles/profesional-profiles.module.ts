@@ -7,7 +7,6 @@ import {
   ProfesionalProfileName,
   ProfesionalProfileSchema,
 } from './schemas/profesional-profile.schema';
-import { GenerateProfesionalProfile } from './algorithm/generate-profesional-profile';
 import { ProfesionalProfilesMapper } from './mapper/profesional-profiles.mapper';
 
 @Module({
@@ -21,10 +20,6 @@ import { ProfesionalProfilesMapper } from './mapper/profesional-profiles.mapper'
     ]),
   ],
   controllers: [ProfesionalProfilesController],
-  providers: [
-    ProfesionalProfilesService,
-    GenerateProfesionalProfile,
-    ProfesionalProfilesMapper,
-  ],
+  providers: [ProfesionalProfilesService, ProfesionalProfilesMapper],
 })
 export class ProfesionalProfilesModule {}

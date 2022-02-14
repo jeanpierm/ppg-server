@@ -4,7 +4,7 @@ import { User } from 'src/users/schemas/users.schema';
 import * as mongoose from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 
-export type ProProfileDocument = ProfesionalProfile & Document;
+export type ProfesionalProfileDocument = ProfesionalProfile & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class ProfesionalProfile {
