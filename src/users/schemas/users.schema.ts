@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { UserStatus } from '../enums/user-status.enum';
+import { EntityStatus } from '../../shared/enums/status.enum';
 
 export type UserDocument = User & Document;
 
@@ -27,12 +27,12 @@ export class User {
   surname: string;
 
   @Prop({
-    default: UserStatus.ACTIVE,
+    default: EntityStatus.ACTIVE,
     trim: true,
     uppercase: true,
     maxlength: 1,
   })
-  status: UserStatus;
+  status: EntityStatus;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

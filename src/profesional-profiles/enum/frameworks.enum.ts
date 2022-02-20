@@ -1,0 +1,15 @@
+export enum Frameworks {
+  VUEJS = 'vue.js',
+  VUEJS_ALT = 'vuejs',
+  REACTJS = 'react.js',
+  REACTJS_ALT = 'reactjs',
+  ANGULAR = 'angular',
+  EXPRESSJS = 'express.js',
+  EXPRESSJS_ALT = 'expressjs',
+  NESTJS = 'nestjs',
+  NESTJS_ALT = 'nest.js',
+  SPRING_BOOT = 'spring boot',
+  QUARKUS = 'quarkus',
+  QUARKUS_ALT_1 = 'quarkus.io',
+  QUARKUS_ALT_2 = 'quarkusio',
+}
