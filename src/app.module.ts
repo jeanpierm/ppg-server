@@ -8,7 +8,7 @@ import { DatabaseService } from './database/database.service';
 import { DatabaseModule } from './database/database.module';
 import { HelperModule } from './helper/helper.module';
 import { AccountModule } from './account/account.module';
-import { ProfesionalProfilesModule } from './profesional-profiles/profesional-profiles.module';
+import { ProfesionalProfilesModule } from './professional-profiles/professional-profiles.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ load: Configs, isGlobal: true }),

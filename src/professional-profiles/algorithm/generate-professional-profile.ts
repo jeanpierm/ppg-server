@@ -1,4 +1,5 @@
 import puppeteer = require('puppeteer');
+import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 import { login } from './login.algorithm';
 import { scrapJobLinks } from './scrap-job-links.algorithm';
 import { scrapJobs as scrapJobs } from './scrap-jobs.algorithm';
@@ -15,9 +16,12 @@ export async function generateProfesionalProfile() {
   await login(page);
   await searchJobs(page, jobTitle, location);
   const jobLinks = await scrapJobLinks(page);
-  const { languages, frameworks } = await scrapJobs(page, jobLinks);
+  const [languages, frameworks] = await scrapJobs(page, jobLinks);
 
-  console.log(languages, frameworks);
+  console.log('languages', languages);
+  console.log('frameworks', frameworks);
 
   await browser.close();
+
+  return new ProfessionalProfile();
 }

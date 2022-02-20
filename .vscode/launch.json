@@ -17,7 +17,10 @@
       ],
       "sourceMaps": true,
       "envFile": "${workspaceFolder}/.env",
-      "args": ["${workspaceFolder}/src/main.ts"],
+      // "args": ["${workspaceFolder}/src/main.ts"],
+      "args": [
+        "${workspaceFolder}/src/professional-profiles/tests/generate.ts"
+      ],
       "cwd": "${workspaceRoot}",
       "console": "integratedTerminal",
       "protocol": "inspector"

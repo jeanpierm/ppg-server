@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
-import { generateProfesionalProfile } from './algorithm/generate-profesional-profile';
+import { generateProfesionalProfile } from './algorithm/generate-professional-profile';
 import {
-  ProfesionalProfile,
-  ProfesionalProfileDocument,
-} from './schemas/profesional-profile.schema';
+  ProfessionalProfile,
+  ProfessionalProfileDocument,
+} from './schemas/professional-profile.schema';
 
 @Injectable()
 export class ProfesionalProfilesService {
   constructor(
-    @InjectModel(ProfesionalProfile.name)
-    private readonly proProfileModel: Model<ProfesionalProfileDocument>,
+    @InjectModel(ProfessionalProfile.name)
+    private readonly proProfileModel: Model<ProfessionalProfileDocument>,
   ) {}
 
   // TODO
@@ -28,7 +28,7 @@ export class ProfesionalProfilesService {
     return createdProProfile;
   }
 
-  async get(user: User): Promise<ProfesionalProfile[]> {
+  async get(user: User): Promise<ProfessionalProfile[]> {
     const profiles = await this.proProfileModel.find({ owner: user }).exec();
 
     return profiles;

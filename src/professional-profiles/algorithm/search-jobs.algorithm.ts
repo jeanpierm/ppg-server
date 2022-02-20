@@ -1,5 +1,5 @@
 import puppeteer = require('puppeteer');
-import { waitLoad } from './helper';
+import { waitLoad } from './util';
 
 const searchJobsUrl = 'https://www.linkedin.com/jobs';
 
@@ -9,6 +9,12 @@ const jobTitleSelector =
 const locationSelector = 'input[aria-label="City, state, or zip code"]';
 const submitSearchJobSelector = '.jobs-search-box__submit-button';
 
+/**
+ * Se dirije a la página de trabajos y busca ofertas.
+ * @param page
+ * @param jobTitle - título del trabajo a buscar
+ * @param location - localidad del trabajo
+ */
 export async function searchJobs(
   page: puppeteer.Page,
   jobTitle: string,

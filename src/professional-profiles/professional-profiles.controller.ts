@@ -1,5 +1,4 @@
 import {
-  Body,
   Controller,
   Delete,
   Get,
@@ -12,8 +11,8 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
 import { ProfesionalProfileResponse } from './dto/profesional-profile-response.dto';
-import { ProfesionalProfilesMapper } from './mapper/profesional-profiles.mapper';
-import { ProfesionalProfilesService } from './profesional-profiles.service';
+import { ProfesionalProfilesMapper } from './mapper/professional-profiles.mapper';
+import { ProfesionalProfilesService } from './professional-profiles.service';
 
 @Controller('profesional-profiles')
 export class ProfesionalProfilesController {

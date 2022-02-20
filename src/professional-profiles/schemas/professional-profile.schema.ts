@@ -4,10 +4,10 @@ import { User } from 'src/users/schemas/users.schema';
 import * as mongoose from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 
-export type ProfesionalProfileDocument = ProfesionalProfile & Document;
+export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class ProfesionalProfile {
+export class ProfessionalProfile {
   @Prop({
     required: true,
     type: [String],
@@ -63,7 +63,7 @@ export class ProfesionalProfile {
   status: EntityStatus;
 }
 
-export const ProfesionalProfileSchema =
-  SchemaFactory.createForClass(ProfesionalProfile);
+export const ProfessionalProfileSchema =
+  SchemaFactory.createForClass(ProfessionalProfile);
 
-export const ProfesionalProfileName = 'profesionalProfiles';
+export const ProfessionalProfileName = 'profesionalProfiles';
