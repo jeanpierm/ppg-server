@@ -1,4 +1,4 @@
-export class ProfesionalProfileResponse {
+export class ProfessionalProfileResponse {
   readonly languages: string[];
 
   readonly frameworks: string[];
@@ -13,7 +13,7 @@ export class ProfesionalProfileResponse {
 
   readonly requireTitle: boolean;
 
-  constructor(partial: Partial<ProfesionalProfileResponse>) {
+  constructor(partial: Partial<ProfessionalProfileResponse>) {
     Object.assign(this, partial);
   }
 }

@@ -10,15 +10,15 @@ import { CurrentUser } from 'src/auth/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
-import { ProfesionalProfileResponse } from './dto/profesional-profile-response.dto';
-import { ProfesionalProfilesMapper } from './mapper/professional-profiles.mapper';
-import { ProfesionalProfilesService } from './professional-profiles.service';
+import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
+import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
+import { ProfessionalProfilesService } from './professional-profiles.service';
 
-@Controller('profesional-profiles')
-export class ProfesionalProfilesController {
+@Controller('professional-profiles')
+export class ProfessionalProfilesController {
   constructor(
-    private readonly proProfilesService: ProfesionalProfilesService,
-    private readonly proProfilesMapper: ProfesionalProfilesMapper,
+    private readonly proProfilesService: ProfessionalProfilesService,
+    private readonly proProfilesMapper: ProfessionalProfilesMapper,
   ) {}
 
   // TODO
@@ -32,14 +32,14 @@ export class ProfesionalProfilesController {
   @UseGuards(JwtAuthGuard)
   async get(
     @CurrentUser() user: User,
-  ): Promise<ApiResponse<ProfesionalProfileResponse[]>> {
+  ): Promise<ApiResponse<ProfessionalProfileResponse[]>> {
     const profiles = await this.proProfilesService.get(user);
     const payload = profiles.map((profile) =>
-      this.proProfilesMapper.mapToProfesionalProfileResponse(profile),
+      this.proProfilesMapper.mapToProfessionalProfileResponse(profile),
     );
 
     return new ApiResponse(
-      'Profesional profiles obtained successfully',
+      'Professional profiles obtained successfully',
       payload,
     );
   }

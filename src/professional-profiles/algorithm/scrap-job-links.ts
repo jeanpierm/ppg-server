@@ -1,7 +1,7 @@
 import puppeteer = require('puppeteer');
 
 const jobElementSelector = '.job-card-container__link.job-card-list__title';
-const jobListSelector = '.jobs-search-results__list.list-style-none';
+// const jobListSelector = '.jobs-search-results__list.list-style-none';
 
 /**
  * @param page

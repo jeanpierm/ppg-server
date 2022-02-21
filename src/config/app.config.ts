@@ -6,5 +6,5 @@ export interface AppConfig {
 
 export default registerAs(
   'app',
-  (): AppConfig => ({ name: 'Profesional Profile Generator' }),
+  (): AppConfig => ({ name: 'Professional Profile Generator' }),
 );

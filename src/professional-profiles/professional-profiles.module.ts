@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { ProfesionalProfilesService } from './professional-profiles.service';
-import { ProfesionalProfilesController } from './professional-profiles.controller';
+import { ProfessionalProfilesService } from './professional-profiles.service';
+import { ProfessionalProfilesController } from './professional-profiles.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   ProfessionalProfile,
   ProfessionalProfileName,
   ProfessionalProfileSchema,
 } from './schemas/professional-profile.schema';
-import { ProfesionalProfilesMapper } from './mapper/professional-profiles.mapper';
+import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { ProfesionalProfilesMapper } from './mapper/professional-profiles.mapper
       },
     ]),
   ],
-  controllers: [ProfesionalProfilesController],
-  providers: [ProfesionalProfilesService, ProfesionalProfilesMapper],
+  controllers: [ProfessionalProfilesController],
+  providers: [ProfessionalProfilesService, ProfessionalProfilesMapper],
 })
-export class ProfesionalProfilesModule {}
+export class ProfessionalProfilesModule {}

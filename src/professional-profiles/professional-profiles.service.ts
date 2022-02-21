@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
-import { generateProfesionalProfile } from './algorithm/generate-professional-profile';
+import { generateProfessionalProfile } from './algorithm/generate-professional-profile';
 import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
 } from './schemas/professional-profile.schema';
 
 @Injectable()
-export class ProfesionalProfilesService {
+export class ProfessionalProfilesService {
   constructor(
     @InjectModel(ProfessionalProfile.name)
     private readonly proProfileModel: Model<ProfessionalProfileDocument>,
@@ -22,7 +22,7 @@ export class ProfesionalProfilesService {
    * @param user - current user
    */
   async generate(user: User) {
-    const proProfile = await generateProfesionalProfile();
+    const proProfile = await generateProfessionalProfile();
     const createdProProfile = await this.proProfileModel.create(proProfile);
 
     return createdProProfile;

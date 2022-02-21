@@ -4,9 +4,10 @@ export const tools = {
   JENKINS: ['jenkins'],
   GIT: ['git', 'github', 'gitlab'],
   K8S: ['kubernetes', 'k8s'],
-  CI_CD: ['ci', 'cd'],
+  CI_CD: ['ci/cd', 'ci cd', 'ci', 'cd'],
   NPM: ['npm'],
   WEBPACK: ['webpack'],
   MAVEN: ['maven'],
   GRADLE: ['gradle'],
+  FIREBASE: ['firebase'],
 };

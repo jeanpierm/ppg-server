@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { ProfesionalProfileResponse } from '../dto/profesional-profile-response.dto';
+import { ProfessionalProfileResponse as ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 
 @Injectable()
-export class ProfesionalProfilesMapper {
-  mapToProfesionalProfileResponse(
+export class ProfessionalProfilesMapper {
+  mapToProfessionalProfileResponse(
     proProfile: ProfessionalProfile,
-  ): ProfesionalProfileResponse {
-    return new ProfesionalProfileResponse({
+  ): ProfessionalProfileResponse {
+    return new ProfessionalProfileResponse({
       languages: proProfile.languages,
       frameworks: proProfile.frameworks,
       databases: proProfile.databases,

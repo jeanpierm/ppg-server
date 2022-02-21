@@ -1,4 +1,4 @@
-import { architectures } from '../identifiers/architectures';
+import { patterns } from '../identifiers/patterns';
 import { databases } from '../identifiers/databases';
 import { frameworks } from '../identifiers/frameworks';
 import { languages } from '../identifiers/languages';
@@ -14,30 +14,30 @@ import { TechDictionary } from './types';
  * @param languagesDict
  * @param frameworksDict
  */
-export function countSkills(
+export function countTechnologies(
   jobDetail: string,
   jobIndex: number,
   languagesDict: TechDictionary,
   frameworksDict: TechDictionary,
   librariesDict: TechDictionary,
   databasesDict: TechDictionary,
-  architecturesDict: TechDictionary,
+  patternsDict: TechDictionary,
   toolsDict: TechDictionary,
 ) {
   const jobDetailSplitted = jobDetail.split(' ');
 
-  // count architectures
-  for (const names of Object.values(architectures)) {
+  // count patterns
+  for (const names of Object.values(patterns)) {
     const key = names[0];
-    if (architecturesDict[key] === undefined) {
-      architecturesDict[key] = 0;
+    if (patternsDict[key] === undefined) {
+      patternsDict[key] = 0;
     }
     for (const word of jobDetailSplitted) {
       if (names.includes(word)) {
-        ++architecturesDict[key];
+        ++patternsDict[key];
         console.log(
-          `[Job: ${jobIndex + 1}] Architecture "${key}" found! (count: ${
-            architecturesDict[key]
+          `[Job: ${jobIndex + 1}] Pattern "${key}" found! (count: ${
+            patternsDict[key]
           })`,
         );
         break;
@@ -68,8 +68,19 @@ export function countSkills(
     if (frameworksDict[key] === undefined) {
       frameworksDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    // for (const word of jobDetailSplitted) {
+    //   if (names.includes(word)) {
+    //     ++frameworksDict[key];
+    //     console.log(
+    //       `[Job: ${jobIndex + 1}] Framework "${key}" found! (count: ${
+    //         frameworksDict[key]
+    //       })`,
+    //     );
+    //     break;
+    //   }
+    // }
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++frameworksDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Framework "${key}" found! (count: ${
@@ -126,7 +137,7 @@ export function countSkills(
       if (names.includes(word)) {
         ++toolsDict[key];
         console.log(
-          `[Job: ${jobIndex + 1}] Library "${key}" found! (count: ${
+          `[Job: ${jobIndex + 1}] Tool "${key}" found! (count: ${
             toolsDict[key]
           })`,
         );

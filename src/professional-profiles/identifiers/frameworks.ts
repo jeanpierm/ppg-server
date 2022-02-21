@@ -13,7 +13,7 @@ export const frameworks = {
   SVELTE: ['svelte', 'sveltejs', 'svelte.js'],
   EMBERJS: ['emberjs', 'ember', 'ember.js'],
   // java
-  SPRING: ['spring', 'springboot'],
+  SPRING: ['spring boot', 'springboot', 'spring'],
   QUARKUS: ['quarkus', 'quarkus.io', 'quarkusio'],
   // csharp
   NET: ['dotnet', 'asp.net', '.net'],
@@ -27,5 +27,6 @@ export const frameworks = {
   SYMFONY: ['symfony'],
   LUMEN: ['lumen'],
   // ruby
-  RUBY_ON_RAILS: ['ruby'],
+  RUBY_ON_RAILS: ['ruby on rails', 'ruby'],
+  ENGLISH: ['english', 'fluent english'],
 };

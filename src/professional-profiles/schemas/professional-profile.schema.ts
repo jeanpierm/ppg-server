@@ -36,6 +36,12 @@ export class ProfessionalProfile {
     required: true,
     type: [String],
   })
+  libraries: string[];
+
+  @Prop({
+    required: true,
+    type: [String],
+  })
   tools: string[];
 
   @Prop({
@@ -61,9 +67,13 @@ export class ProfessionalProfile {
     maxlength: 1,
   })
   status: EntityStatus;
+
+  constructor(partial: Partial<ProfessionalProfile>) {
+    Object.assign(this, partial);
+  }
 }
 
 export const ProfessionalProfileSchema =
   SchemaFactory.createForClass(ProfessionalProfile);
 
-export const ProfessionalProfileName = 'profesionalProfiles';
+export const ProfessionalProfileName = 'professionalProfiles';

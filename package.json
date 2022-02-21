@@ -1,7 +1,7 @@
 {
-  "name": "tsr-backend",
+  "name": "ppg-backend",
   "version": "0.0.1",
-  "description": "",
+  "description": "PPG (Professional Profile Generator) es un sistema que permite generar los perfiles profesionales de desarollo de software con mayor demanda de a través de web scraping a ofertas de trabajo de LinkedIn.",
   "author": "",
   "private": true,
   "license": "UNLICENSED",

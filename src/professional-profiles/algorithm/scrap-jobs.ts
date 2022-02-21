@@ -1,7 +1,8 @@
 import puppeteer = require('puppeteer');
-import { countSkills as countTechnologies } from './count-skills';
+import { countTechnologies as countTechnologies } from './count-technologies';
+import { normalizeJobDetail } from './normalize-job-detail';
 import { TechDictionary } from './types';
-import { normalizeJobDetail, waitLoad } from './util';
+import { waitLoad } from './util';
 
 const jobDetailsSelector = '#job-details';
 
@@ -47,7 +48,14 @@ export async function scrapJobs(
   }
   console.debug('Jobs scrapped successfully');
 
-  return [languagesDict, frameworksDict];
+  return [
+    languagesDict,
+    frameworksDict,
+    librariesDict,
+    databasesDict,
+    architecturesDict,
+    toolsDict,
+  ];
 }
 
 /**
