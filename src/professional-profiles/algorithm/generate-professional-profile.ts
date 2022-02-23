@@ -19,25 +19,33 @@ export async function generateProfessionalProfile() {
   await login(page);
   await searchJobs(page, jobTitle, location);
   const jobLinks = await scrapJobLinks(page);
-  const [languages, frameworks, libraries, databases, patterns, tools] =
-    await scrapJobs(page, jobLinks);
+  const {
+    languagesDict,
+    frameworksDict,
+    librariesDict,
+    databasesDict,
+    patternsDict,
+    toolsDict,
+    requireEnglish,
+  } = await scrapJobs(page, jobLinks);
 
-  console.log('languages:', languages);
-  console.log('frameworks:', frameworks);
-  console.log('libraries:', libraries);
-  console.log('databases:', databases);
-  console.log('patterns:', patterns);
-  console.log('tools:', tools);
+  console.log('languages:', languagesDict);
+  console.log('frameworks:', frameworksDict);
+  console.log('libraries:', librariesDict);
+  console.log('databases:', databasesDict);
+  console.log('patterns:', patternsDict);
+  console.log('tools:', toolsDict);
 
   await browser.close();
 
   return new ProfessionalProfile({
-    languages: getMostPopulars(languages, languagesMaxLength),
-    frameworks: getMostPopulars(frameworks),
-    libraries: getMostPopulars(libraries),
-    databases: getMostPopulars(databases),
-    patterns: getMostPopulars(patterns),
-    tools: getMostPopulars(tools),
+    languages: getMostDemanded(languagesDict, languagesMaxLength),
+    frameworks: getMostDemanded(frameworksDict),
+    libraries: getMostDemanded(librariesDict),
+    databases: getMostDemanded(databasesDict),
+    patterns: getMostDemanded(patternsDict),
+    tools: getMostDemanded(toolsDict),
+    requireEnglish,
   });
 }
 
@@ -45,9 +53,9 @@ export async function generateProfessionalProfile() {
  *
  * @param techDict - diccionario (objeto) de las tecnologías en estructura clave: valor
  * @param maxLength - máximo de tecnologías a retornar
- * @returns un arreglo de las tecnologías más populares (de las más repetida a la menos repetida)
+ * @returns un arreglo de las tecnologías más demandadas (de las más repetida a la menos repetida)
  */
-function getMostPopulars(techDict: TechDictionary, maxLength = 4): string[] {
+function getMostDemanded(techDict: TechDictionary, maxLength = 4): string[] {
   const technologiesOrdered = Object.keys(techDict)
     // is different to zero
     .filter((technology) => techDict[technology] !== 0)

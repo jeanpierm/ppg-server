@@ -24,16 +24,13 @@ export function countTechnologies(
   patternsDict: TechDictionary,
   toolsDict: TechDictionary,
 ) {
-  const jobDetailSplitted = jobDetail.split(' ');
-
   // count patterns
-  for (const names of Object.values(patterns)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(patterns)) {
     if (patternsDict[key] === undefined) {
       patternsDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++patternsDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Pattern "${key}" found! (count: ${
@@ -45,13 +42,12 @@ export function countTechnologies(
     }
   }
   // count databases
-  for (const names of Object.values(databases)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(databases)) {
     if (databasesDict[key] === undefined) {
       databasesDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++databasesDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Database "${key}" found! (count: ${
@@ -63,22 +59,10 @@ export function countTechnologies(
     }
   }
   // count frameworks
-  for (const names of Object.values(frameworks)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(frameworks)) {
     if (frameworksDict[key] === undefined) {
       frameworksDict[key] = 0;
     }
-    // for (const word of jobDetailSplitted) {
-    //   if (names.includes(word)) {
-    //     ++frameworksDict[key];
-    //     console.log(
-    //       `[Job: ${jobIndex + 1}] Framework "${key}" found! (count: ${
-    //         frameworksDict[key]
-    //       })`,
-    //     );
-    //     break;
-    //   }
-    // }
     for (const name of names) {
       if (jobDetail.includes(name)) {
         ++frameworksDict[key];
@@ -92,13 +76,12 @@ export function countTechnologies(
     }
   }
   // count languages
-  for (const names of Object.values(languages)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(languages)) {
     if (languagesDict[key] === undefined) {
       languagesDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++languagesDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Language "${key}" found! (count: ${
@@ -110,13 +93,12 @@ export function countTechnologies(
     }
   }
   // count libraries
-  for (const names of Object.values(libraries)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(libraries)) {
     if (librariesDict[key] === undefined) {
       librariesDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++librariesDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Library "${key}" found! (count: ${
@@ -128,13 +110,12 @@ export function countTechnologies(
     }
   }
   // count tools
-  for (const names of Object.values(tools)) {
-    const key = names[0];
+  for (const [key, names] of Object.entries(tools)) {
     if (toolsDict[key] === undefined) {
       toolsDict[key] = 0;
     }
-    for (const word of jobDetailSplitted) {
-      if (names.includes(word)) {
+    for (const name of names) {
+      if (jobDetail.includes(name)) {
         ++toolsDict[key];
         console.log(
           `[Job: ${jobIndex + 1}] Tool "${key}" found! (count: ${

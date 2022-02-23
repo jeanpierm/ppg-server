@@ -1,17 +1,17 @@
 export const databases = {
   // sql
-  MYSQL: ['mysql'],
-  MARIADB: ['mariadb'],
-  ORACLE: ['oracle'],
-  POSTGRESQL: ['postgresql', 'postgres'],
-  MSSQL: ['mssql', 'sqlserver'],
+  MySQL: ['mysql'],
+  MariaDB: ['mariadb'],
+  Oracle: ['oracle'],
+  PostgreSQL: ['postgresql', 'postgres'],
+  'Microsoft SQL Server': ['mssql', 'sqlserver'],
 
   // nosql
-  MONGODB: ['mongodb', 'mongo'],
-  COUCHDB: ['couchdb'],
-  CASSANDRA: ['cassandra'],
-  REDIS: ['redis'],
-  HADOOP: ['hadoop', 'hbase'],
-  RIAK: ['riak'],
-  NEO4J: ['neo4j'],
+  MongoDB: ['mongodb', 'mongo'],
+  CouchDB: ['couchdb'],
+  Cassandra: ['cassandra'],
+  Redis: ['redis'],
+  Hadoop: ['hadoop', 'hbase'],
+  Riak: ['riak'],
+  Neo4j: ['neo4j'],
 };
