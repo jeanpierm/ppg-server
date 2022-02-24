@@ -5,9 +5,9 @@ import { User } from '../schemas/users.schema';
 
 @Injectable()
 export class UsersMapper {
-  maptoAccountResponse(user: User): AccountResponse {
+  mapToAccountResponse(user: User): AccountResponse {
     return new AccountResponse({
-      userId: user._id,
+      userId: (user as any)._id,
       name: user.name,
       surname: user.surname,
       email: user.email,
@@ -16,13 +16,13 @@ export class UsersMapper {
 
   mapToUserResponse(user: User): UserResponse {
     return new UserResponse({
-      userId: user._id,
+      userId: (user as any)._id,
       name: user.name,
       surname: user.surname,
       email: user.email,
       status: user.status,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
+      createdAt: (user as any).createdAt,
+      updatedAt: (user as any).updatedAt,
     });
   }
 }

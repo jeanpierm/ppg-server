@@ -1,5 +1,9 @@
 export const patterns = {
+  MVVM: ['mvvm', 'model–view–viewmodel', 'model view viewmodel'],
+  MVP: ['mvp', 'model-view-presenter', 'model view presenter'],
+  SOLID: ['solid', 'model-view-presenter', 'model view presenter'],
   REST: ['rest', 'restful'],
+  GrapQl: ['graphql'],
   SOAP: ['soap'],
   MVC: ['mvc'],
   AJAX: ['ajax'],
@@ -26,3 +30,5 @@ export const patterns = {
   Singleton: ['singleton'],
   'Inyección de dependencias': ['dependency injection'],
 };
+
+export const patternsLength = 6;

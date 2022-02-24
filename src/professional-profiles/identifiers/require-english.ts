@@ -3,4 +3,6 @@ export const requireEnglish = [
   'fluent english',
   'inglés avanzado',
   'advanced english',
+  'advanced fluent english',
+  'english language proficiency',
 ];

@@ -9,6 +9,8 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.setGlobalPrefix('api-ppg/v1/');
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  await app.listen(3000);
+  const server = await app.listen(3000);
+  // 90s de timeout para que el algoritmo PPG tenga suficiente tiempo
+  server.setTimeout(90_000);
 }
 bootstrap();

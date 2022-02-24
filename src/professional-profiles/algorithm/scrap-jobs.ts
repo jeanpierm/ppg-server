@@ -1,20 +1,11 @@
 import puppeteer = require('puppeteer');
+import { ScrapJobsResponse } from '../interfaces/professional-profile.interface';
+import { TechDictionary } from '../types/professional-profile.type';
 import { checkRequireEnglish } from './count-require-english';
 import { countTechnologies as countTechnologies } from './count-technologies';
-import { TechDictionary } from './types';
 import { waitLoad } from './util';
 
 const jobDetailsSelector = '#job-details';
-
-interface ScrapJobsResponse {
-  languagesDict: TechDictionary;
-  frameworksDict: TechDictionary;
-  librariesDict: TechDictionary;
-  databasesDict: TechDictionary;
-  patternsDict: TechDictionary;
-  toolsDict: TechDictionary;
-  requireEnglish: boolean;
-}
 
 /**
  * Implementa un algoritmo de web scraping el cual:
@@ -37,6 +28,7 @@ export async function scrapJobs(
   const databasesDict: TechDictionary = {};
   const patternsDict: TechDictionary = {};
   const toolsDict: TechDictionary = {};
+  const paradigmsDict: TechDictionary = {};
   let englishCount = 0;
 
   for (const [index, link] of jobLinks.entries()) {
@@ -54,6 +46,7 @@ export async function scrapJobs(
       databasesDict,
       patternsDict,
       toolsDict,
+      paradigmsDict,
     );
     if (checkRequireEnglish(jobDetail, index)) {
       englishCount++;
@@ -64,6 +57,14 @@ export async function scrapJobs(
   const requireEnglish = calculateRequireEnglish(englishCount, jobLinks.length);
   console.debug('Jobs scrapped successfully');
 
+  console.log('languages:', languagesDict);
+  console.log('frameworks:', frameworksDict);
+  console.log('libraries:', librariesDict);
+  console.log('databases:', databasesDict);
+  console.log('patterns:', patternsDict);
+  console.log('tools:', toolsDict);
+  console.log('require english:', requireEnglish);
+
   return {
     languagesDict,
     frameworksDict,
@@ -71,6 +72,7 @@ export async function scrapJobs(
     databasesDict,
     patternsDict,
     toolsDict,
+    paradigmsDict,
     requireEnglish,
   };
 }

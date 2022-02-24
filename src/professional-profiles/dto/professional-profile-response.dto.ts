@@ -1,4 +1,12 @@
+import { AccountResponse } from 'src/account/dto/account-response.dto';
+
 export class ProfessionalProfileResponse {
+  readonly ppId: string;
+
+  readonly jobTitle: string;
+
+  readonly location: string;
+
   readonly languages: string[];
 
   readonly frameworks: string[];
@@ -9,9 +17,11 @@ export class ProfessionalProfileResponse {
 
   readonly tools: string[];
 
+  readonly paradigms: string[];
+
   readonly requireEnglish: boolean;
 
-  readonly requireTitle: boolean;
+  readonly owner: AccountResponse;
 
   constructor(partial: Partial<ProfessionalProfileResponse>) {
     Object.assign(this, partial);

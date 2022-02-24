@@ -8,6 +8,28 @@ export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class ProfessionalProfile {
+  // props for the types
+  _id: mongoose.Types.ObjectId;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+
+  // schema props
+  @Prop({
+    required: true,
+    index: true,
+    lowercase: true,
+  })
+  jobTitle: string;
+
+  @Prop({
+    required: true,
+    index: true,
+    lowercase: true,
+  })
+  location: string;
+
   @Prop({
     required: true,
     type: [String],
@@ -46,13 +68,14 @@ export class ProfessionalProfile {
 
   @Prop({
     required: true,
+    type: [String],
   })
-  requireEnglish: boolean;
+  paradigms: string[];
 
   @Prop({
     required: true,
   })
-  requireTitle: boolean;
+  requireEnglish: boolean;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -67,10 +90,6 @@ export class ProfessionalProfile {
     maxlength: 1,
   })
   status: EntityStatus;
-
-  constructor(partial: Partial<ProfessionalProfile>) {
-    Object.assign(this, partial);
-  }
 }
 
 export const ProfessionalProfileSchema =

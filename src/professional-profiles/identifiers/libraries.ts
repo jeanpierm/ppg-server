@@ -3,6 +3,7 @@ export const libraries = {
   jQuery: ['jquery'],
   Lodash: ['lodash'],
   Jest: ['jest'],
+  Cypress: ['cypress'],
   // css
   Bootstrap: ['bootstrap'],
   'Tailwind CSS': ['tailwind'],

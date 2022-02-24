@@ -2,7 +2,7 @@ import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { HelperService } from 'src/helper/helper.service';
 import { UsersMapper } from 'src/users/mapper/users.mapper';
-import { User, UserDocument } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
 import { AccountResponse } from './dto/account-response.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -18,7 +18,7 @@ export class AccountService {
   ) {}
 
   async get(user: User): Promise<AccountResponse> {
-    const account = this.usersMapper.maptoAccountResponse(user as UserDocument);
+    const account = this.usersMapper.mapToAccountResponse(user);
     this.logger.log('Account obtained successfully');
     return account;
   }

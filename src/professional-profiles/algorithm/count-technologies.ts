@@ -4,11 +4,17 @@ import { frameworks } from '../identifiers/frameworks';
 import { languages } from '../identifiers/languages';
 import { libraries } from '../identifiers/libraries';
 import { tools } from '../identifiers/tools';
-import { TechDictionary } from './types';
+import { paradigms } from '../identifiers/paradigms';
+import {
+  TechDictionary,
+  TechDictionaryWithMeta,
+  Identifier,
+} from '../types/professional-profile.type';
 
 /**
  * Cuenta el número de veces que se repite una tecnología (lenguaje, framework, herramienta, entre otros).
- * Esta función modifica por referencia a los diccionarios de tecnologias.
+ *
+ * Esta función modifica por referencia a los diccionarios de tecnologías.
  * @param jobDetail
  * @param jobIndex
  * @param languagesDict
@@ -23,103 +29,53 @@ export function countTechnologies(
   databasesDict: TechDictionary,
   patternsDict: TechDictionary,
   toolsDict: TechDictionary,
+  paradigmsDict: TechDictionary,
 ) {
-  // count patterns
-  for (const [key, names] of Object.entries(patterns)) {
-    if (patternsDict[key] === undefined) {
-      patternsDict[key] = 0;
-    }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++patternsDict[key];
-        console.log(
-          `[Job: ${jobIndex + 1}] Pattern "${key}" found! (count: ${
-            patternsDict[key]
-          })`,
-        );
-        break;
-      }
-    }
+  console.log(`[Job ${jobIndex + 1}] detail: ${jobDetail}`);
+
+  const dictionaries: TechDictionaryWithMeta[] = [
+    { name: 'language', identifier: languages, dictionary: languagesDict },
+    { name: 'framework', identifier: frameworks, dictionary: frameworksDict },
+    { name: 'library', identifier: libraries, dictionary: librariesDict },
+    { name: 'database', identifier: databases, dictionary: databasesDict },
+    { name: 'pattern', identifier: patterns, dictionary: patternsDict },
+    { name: 'tool', identifier: tools, dictionary: toolsDict },
+    { name: 'paradigm', identifier: paradigms, dictionary: paradigmsDict },
+  ];
+
+  for (const { name, identifier, dictionary } of dictionaries) {
+    countTechnology(name, dictionary, identifier, jobDetail, jobIndex);
   }
-  // count databases
-  for (const [key, names] of Object.entries(databases)) {
-    if (databasesDict[key] === undefined) {
-      databasesDict[key] = 0;
+}
+
+/**
+ * Añade 1 al contador si se encuentra a una tecnología de desarrollo de software en la descripción de la oferta trabajo.
+ *
+ * Solo añade 1 por oferta de trabajo (sin importar las veces que se repita en la misma descripción).
+ *
+ * @param dictName
+ * @param dictionary
+ * @param identifier
+ * @param jobDetail
+ * @param jobIndex
+ */
+function countTechnology(
+  dictName: string,
+  dictionary: TechDictionary,
+  identifier: Identifier,
+  jobDetail: string,
+  jobIndex: number,
+) {
+  for (const [techKey, techNames] of Object.entries(identifier)) {
+    if (dictionary[techKey] === undefined) {
+      dictionary[techKey] = 0;
     }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++databasesDict[key];
+    for (const name of techNames) {
+      if (jobDetail.includes(` ${name} `)) {
+        ++dictionary[techKey];
         console.log(
-          `[Job: ${jobIndex + 1}] Database "${key}" found! (count: ${
-            databasesDict[key]
-          })`,
-        );
-        break;
-      }
-    }
-  }
-  // count frameworks
-  for (const [key, names] of Object.entries(frameworks)) {
-    if (frameworksDict[key] === undefined) {
-      frameworksDict[key] = 0;
-    }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++frameworksDict[key];
-        console.log(
-          `[Job: ${jobIndex + 1}] Framework "${key}" found! (count: ${
-            frameworksDict[key]
-          })`,
-        );
-        break;
-      }
-    }
-  }
-  // count languages
-  for (const [key, names] of Object.entries(languages)) {
-    if (languagesDict[key] === undefined) {
-      languagesDict[key] = 0;
-    }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++languagesDict[key];
-        console.log(
-          `[Job: ${jobIndex + 1}] Language "${key}" found! (count: ${
-            languagesDict[key]
-          })`,
-        );
-        break;
-      }
-    }
-  }
-  // count libraries
-  for (const [key, names] of Object.entries(libraries)) {
-    if (librariesDict[key] === undefined) {
-      librariesDict[key] = 0;
-    }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++librariesDict[key];
-        console.log(
-          `[Job: ${jobIndex + 1}] Library "${key}" found! (count: ${
-            librariesDict[key]
-          })`,
-        );
-        break;
-      }
-    }
-  }
-  // count tools
-  for (const [key, names] of Object.entries(tools)) {
-    if (toolsDict[key] === undefined) {
-      toolsDict[key] = 0;
-    }
-    for (const name of names) {
-      if (jobDetail.includes(name)) {
-        ++toolsDict[key];
-        console.log(
-          `[Job: ${jobIndex + 1}] Tool "${key}" found! (count: ${
-            toolsDict[key]
+          `[Job: ${jobIndex + 1}] ${dictName} "${techKey}" found! (count: ${
+            dictionary[techKey]
           })`,
         );
         break;

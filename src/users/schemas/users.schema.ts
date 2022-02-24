@@ -1,13 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { EntityStatus } from '../../shared/enums/status.enum';
 
-export type UserDocument = User & Document;
+export type UserDocument = User & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class User {
   // props for the types
-  _id: string;
+  _id: mongoose.Types.ObjectId;
 
   createdAt: Date;
 
@@ -17,7 +17,7 @@ export class User {
   @Prop({ required: true, trim: true, lowercase: true })
   name: string;
 
-  @Prop({ required: true, index: { unique: true } })
+  @Prop({ required: true, index: { unique: true }, lowercase: true })
   email: string;
 
   @Prop({ required: true })

@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -10,6 +11,7 @@ import { CurrentUser } from 'src/auth/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
+import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
 import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
 import { ProfessionalProfilesService } from './professional-profiles.service';
@@ -21,11 +23,27 @@ export class ProfessionalProfilesController {
     private readonly proProfilesMapper: ProfessionalProfilesMapper,
   ) {}
 
-  // TODO
   @Post()
   @UseGuards(JwtAuthGuard)
-  async generate(@CurrentUser() user: User) {
-    return this.proProfilesService.generate(user);
+  async generate(
+    @CurrentUser() user: User,
+    @Body() generatePpgDto: GeneratePpgDto,
+  ) {
+    const { jobTitle, location } = generatePpgDto;
+    const generatedProProfile = await this.proProfilesService.generate(
+      user,
+      jobTitle,
+      location,
+    );
+    const payload =
+      this.proProfilesMapper.mapToProfessionalProfileResponse(
+        generatedProProfile,
+      );
+
+    return new ApiResponse(
+      'Professional profile generated successfully',
+      payload,
+    );
   }
 
   @Get()

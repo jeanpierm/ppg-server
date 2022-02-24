@@ -13,7 +13,7 @@ export const frameworks = {
   Svelte: ['svelte', 'sveltejs', 'svelte.js'],
   'Ember.js': ['emberjs', 'ember', 'ember.js'],
   // java
-  'Spring Boot': ['spring boot', 'springboot', 'spring'],
+  'Spring Boot': ['spring boot', 'spring'],
   'Quarkus.io': ['quarkus', 'quarkus.io', 'quarkusio'],
   // csharp
   '.NET': ['dotnet', 'asp.net', '.net'],
@@ -21,6 +21,7 @@ export const frameworks = {
   // python
   Django: ['django'],
   FastAPI: ['fastapi'],
+  Flask: ['flask'],
   // php
   Laravel: ['laravel'],
   Blade: ['blade'],
@@ -28,4 +29,6 @@ export const frameworks = {
   Lumel: ['lumen'],
   // ruby
   'Ruby on rails': ['ruby on rails', 'ruby'],
+  // dart
+  Flutter: ['flutter'],
 };

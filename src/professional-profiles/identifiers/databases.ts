@@ -4,7 +4,8 @@ export const databases = {
   MariaDB: ['mariadb'],
   Oracle: ['oracle'],
   PostgreSQL: ['postgresql', 'postgres'],
-  'Microsoft SQL Server': ['mssql', 'sqlserver'],
+  'Microsoft SQL Server': ['mssql', 'sql server'],
+  SQLite: ['sqlite'],
 
   // nosql
   MongoDB: ['mongodb', 'mongo'],

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { EntityStatus } from '../shared/enums/status.enum';
 import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
@@ -21,7 +21,7 @@ export class UsersService {
     return this.userModel.exists({ email });
   }
 
-  async findById(id: string): Promise<User> {
+  async findById(id: Types.ObjectId): Promise<User> {
     const user = await this.userModel.findById(id);
     return user.toObject();
   }
@@ -44,7 +44,10 @@ export class UsersService {
     return (await newUser.save()).toObject();
   }
 
-  async updateById(id: string, updateUser: UpdateUserDto): Promise<User> {
+  async updateById(
+    id: Types.ObjectId,
+    updateUser: UpdateUserDto,
+  ): Promise<User> {
     const updatedUser = await this.userModel.findByIdAndUpdate(
       id,
       {
@@ -57,13 +60,13 @@ export class UsersService {
     return updatedUser.toObject();
   }
 
-  async removeById(id: string): Promise<void> {
+  async removeById(id: Types.ObjectId): Promise<void> {
     await this.userModel.findByIdAndUpdate(id, {
       status: EntityStatus.INACTIVE,
     });
   }
 
-  async activeById(id: string): Promise<void> {
+  async activeById(id: Types.ObjectId): Promise<void> {
     await this.userModel.findByIdAndUpdate(id, { status: EntityStatus.ACTIVE });
   }
 
