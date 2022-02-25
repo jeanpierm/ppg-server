@@ -3,6 +3,8 @@ export const patterns = {
   MVP: ['mvp', 'model-view-presenter', 'model view presenter'],
   SOLID: ['solid', 'model-view-presenter', 'model view presenter'],
   REST: ['rest', 'restful'],
+  Flux: ['flux'],
+  Redux: ['redux'],
   GrapQl: ['graphql'],
   SOAP: ['soap'],
   MVC: ['mvc'],

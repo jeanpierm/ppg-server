@@ -1,5 +1,5 @@
 export const languages = {
-  'Node.js': ['nodejs', 'node.js', 'node'],
+  NodeJS: ['nodejs', 'node.js', 'node'],
   JavaScript: ['javascript'],
   TypeScript: ['typescript'],
   'C#': ['csharp', 'c#'],

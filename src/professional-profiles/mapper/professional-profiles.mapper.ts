@@ -19,6 +19,8 @@ export class ProfessionalProfilesMapper {
       tools: proProfile.tools,
       paradigms: proProfile.paradigms,
       requireEnglish: proProfile.requireEnglish,
+      createdAt: proProfile.createdAt,
+      updatedAt: proProfile.createdAt,
       owner: new AccountResponse({
         userId: proProfile.owner._id.toString(),
         name: proProfile.owner.name,

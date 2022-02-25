@@ -1,5 +1,8 @@
 import puppeteer = require('puppeteer');
-import { ScrapJobsResponse } from '../interfaces/professional-profile.interface';
+import {
+  RequireEnglishDict,
+  ScrapJobsResponse,
+} from '../interfaces/professional-profile.interface';
 import { TechDictionary } from '../types/professional-profile.type';
 import { checkRequireEnglish } from './count-require-english';
 import { countTechnologies as countTechnologies } from './count-technologies';
@@ -54,7 +57,11 @@ export async function scrapJobs(
     console.debug(`Job #${index + 1} scrapped successfully`);
   }
 
-  const requireEnglish = calculateRequireEnglish(englishCount, jobLinks.length);
+  const requireEnglish: RequireEnglishDict = {
+    requireEnglish: englishCount,
+    totalJobs: jobLinks.length,
+  };
+
   console.debug('Jobs scrapped successfully');
 
   console.log('languages:', languagesDict);
@@ -90,19 +97,6 @@ async function getJobDetail(page: puppeteer.Page): Promise<string> {
   }, jobDetailsSelector);
   console.log('Job detail obtained successfully');
   return jobDetail;
-}
-
-/**
- * @param englishCount
- * @param jobsCount
- * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
- */
-function calculateRequireEnglish(
-  englishCount: number,
-  jobsCount: number,
-): boolean {
-  console.log(`${englishCount}/${jobsCount} jobs require english`);
-  return englishCount > jobsCount * 0.5;
 }
 
 /**

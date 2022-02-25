@@ -23,6 +23,10 @@ export class ProfessionalProfileResponse {
 
   readonly owner: AccountResponse;
 
+  readonly createdAt: Date;
+
+  readonly updatedAt: Date;
+
   constructor(partial: Partial<ProfessionalProfileResponse>) {
     Object.assign(this, partial);
   }

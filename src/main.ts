@@ -7,7 +7,13 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
-  app.setGlobalPrefix('api-ppg/v1/');
+  app.setGlobalPrefix('api-ppg/v1');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+    }),
+  );
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const server = await app.listen(3000);
   // 90s de timeout para que el algoritmo PPG tenga suficiente tiempo

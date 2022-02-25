@@ -8,5 +8,10 @@ export interface ScrapJobsResponse {
   patternsDict: TechDictionary;
   toolsDict: TechDictionary;
   paradigmsDict: TechDictionary;
-  requireEnglish: boolean;
+  requireEnglish: RequireEnglishDict;
+}
+
+export interface RequireEnglishDict {
+  requireEnglish: number;
+  totalJobs: number;
 }
