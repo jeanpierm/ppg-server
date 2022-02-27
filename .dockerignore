@@ -1,0 +1,13 @@
+.git
+node_modules/
+dist/
+.vscode/
+.test/
+.eslintrc.js
+.editorconfig
+.gitignore
+.prettierrc
+playground.mongodb
+*.zip
+*.md
+*.http
