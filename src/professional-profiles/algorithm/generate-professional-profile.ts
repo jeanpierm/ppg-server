@@ -55,11 +55,10 @@ export class GenerateProfessionalProfile {
    */
   async executeAlgorithm(user: User, jobTitle: string, location: string) {
     // ? headless en false hace que se muestre el browser del web scraping
-    // const browser = await puppeteer.launch({ headless: false });
-    const browser = await puppeteer.launch({
-      args: ['--lang=en-US,en'],
-    });
+    const browser = await puppeteer.launch({ headless: false });
+    // const browser = await puppeteer.launch({});
     const page = await browser.newPage();
+    await this.setLanguageInEnglish(page);
     await page.setViewport({ width: 2400, height: 1080 });
 
     await login(page);
@@ -77,6 +76,12 @@ export class GenerateProfessionalProfile {
       user,
       scrapJobsResponse,
     );
+  }
+
+  private async setLanguageInEnglish(page: puppeteer.Page) {
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'en',
+    });
   }
 
   private saveTechnologyMetadata(scrapJobsResponse: ScrapJobsResponse) {
