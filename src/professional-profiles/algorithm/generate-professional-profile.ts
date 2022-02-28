@@ -57,7 +57,8 @@ export class GenerateProfessionalProfile {
     // ? headless en false hace que se muestre el browser del web scraping
     const browser = await puppeteer.launch({ headless: false });
     // const browser = await puppeteer.launch({});
-    const page = await browser.newPage();
+    const context = await browser.createIncognitoBrowserContext();
+    const page = await context.newPage();
     await this.setLanguageInEnglish(page);
     await page.setViewport({ width: 1920, height: 1080 });
 
