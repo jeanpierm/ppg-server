@@ -10,7 +10,7 @@ const locationSelector = 'input[aria-label="City, state, or zip code"]';
 const submitSearchJobSelector = '.jobs-search-box__submit-button';
 
 /**
- * Se dirije a la página de trabajos y busca ofertas.
+ * Se dirige a la página de trabajos y busca ofertas.
  * @param page
  * @param jobTitle - título del trabajo a buscar
  * @param location - localidad del trabajo
