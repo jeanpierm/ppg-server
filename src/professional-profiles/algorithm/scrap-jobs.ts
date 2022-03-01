@@ -51,7 +51,7 @@ export async function scrapJobs(
       toolsDict,
       paradigmsDict,
     );
-    if (checkRequireEnglish(jobDetail, index)) {
+    if (checkRequireEnglish(jobDetailNormalized, index)) {
       englishCount++;
     }
     console.debug(`Job #${index + 1} scrapped successfully`);

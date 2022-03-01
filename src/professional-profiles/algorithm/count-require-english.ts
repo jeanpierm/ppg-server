@@ -5,8 +5,8 @@ export function checkRequireEnglish(
   jobIndex: number,
 ): boolean {
   let require = false;
-  for (const name of requireEnglish) {
-    if (jobDetail.includes(`${name}`)) {
+  for (const englishName of requireEnglish) {
+    if (jobDetail.includes(englishName)) {
       require = true;
       break;
     }
