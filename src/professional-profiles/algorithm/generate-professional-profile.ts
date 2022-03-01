@@ -59,7 +59,7 @@ export class GenerateProfessionalProfile {
     // const browser = await puppeteer.launch({});
     const page = await browser.newPage();
     await this.setLanguageInEnglish(page);
-    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 1920, height: 2400 });
 
     await login(page);
     await searchJobs(page, jobTitle, location);
