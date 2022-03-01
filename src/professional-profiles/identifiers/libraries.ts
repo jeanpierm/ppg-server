@@ -1,14 +1,11 @@
 export const libraries = {
-  // js
-  jQuery: ['jquery'],
-  Lodash: ['lodash'],
-  Jest: ['jest'],
-  Cypress: ['cypress'],
-  // css
-  Bootstrap: ['bootstrap'],
   'Tailwind CSS': ['tailwind'],
-  // java
-  Mockito: ['mockito'],
+  Bootstrap: ['bootstrap'],
+  Cypress: ['cypress'],
+  Jest: ['jest'],
   JMockit: ['jmockit'],
+  jQuery: ['jquery'],
   JUnit: ['junit'],
+  Lodash: ['lodash'],
+  Mockito: ['mockito'],
 };

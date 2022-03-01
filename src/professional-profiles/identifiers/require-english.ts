@@ -1,8 +1,8 @@
 export const requireEnglish = [
-  'require english',
-  'fluent english',
-  'inglés avanzado',
   'advanced english',
   'advanced fluent english',
   'english language proficiency',
+  'fluent english',
+  'inglés avanzado',
+  'require english',
 ];

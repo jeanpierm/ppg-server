@@ -1,14 +1,20 @@
 export const patterns = {
-  MVVM: ['mvvm', 'model–view–viewmodel', 'model view viewmodel'],
-  MVP: ['mvp', 'model-view-presenter', 'model view presenter'],
-  SOLID: ['solid', 'model-view-presenter', 'model view presenter'],
-  REST: ['rest', 'restful'],
-  Flux: ['flux'],
-  Redux: ['redux'],
-  GrapQl: ['graphql'],
-  SOAP: ['soap'],
-  MVC: ['mvc'],
+  'Clean Code': ['clean code'],
+  'Domain-Driven Design (DDD)': [
+    'ddd',
+    'domain-driven design',
+    'domain driven design',
+  ],
+  'Inyección de dependencias': ['dependency injection'],
+  'Test-Driven Development (TDD)': [
+    'tdd',
+    'test-driven development',
+    'test driven development',
+  ],
   AJAX: ['ajax'],
+  Flux: ['flux'],
+  GrapQl: ['graphql'],
+  Hexagonal: ['hexagonal'],
   Microservicios: [
     'microservices',
     'micro services',
@@ -17,20 +23,14 @@ export const patterns = {
     'micro-servicios',
     'micro servicios',
   ],
-  Hexagonal: ['hexagonal'],
-  'Clean Code': ['clean code'],
-  'Test-Driven Development (TDD)': [
-    'tdd',
-    'test-driven development',
-    'test driven development',
-  ],
-  'Domain-Driven Design (DDD)': [
-    'ddd',
-    'domain-driven design',
-    'domain driven design',
-  ],
+  MVC: ['mvc'],
+  MVP: ['mvp', 'model-view-presenter', 'model view presenter'],
+  MVVM: ['mvvm', 'model–view–viewmodel', 'model view viewmodel'],
+  Redux: ['redux'],
+  REST: ['rest', 'restful'],
   Singleton: ['singleton'],
-  'Inyección de dependencias': ['dependency injection'],
+  SOAP: ['soap'],
+  SOLID: ['solid', 'model-view-presenter', 'model view presenter'],
 };
 
 export const patternsLength = 6;

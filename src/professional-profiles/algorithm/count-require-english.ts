@@ -6,7 +6,7 @@ export function checkRequireEnglish(
 ): boolean {
   let require = false;
   for (const name of requireEnglish) {
-    if (jobDetail.includes(` ${name} `)) {
+    if (jobDetail.includes(`${name}`)) {
       require = true;
       break;
     }
