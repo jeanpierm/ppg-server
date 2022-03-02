@@ -5,8 +5,19 @@ export type LanguagesDocument = Languages & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Languages {
+  @Prop({ required: true, trim: true, lowercase: true })
+  jobTitle: string;
+
+  @Prop({ required: true, trim: true, lowercase: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  totalJobs: number;
   @Prop({ required: true, trim: true })
   NodeJS: number;
+
+  @Prop({ required: true, trim: true })
+  Elixir: number;
 
   @Prop({ required: true, trim: true })
   JavaScript: number;

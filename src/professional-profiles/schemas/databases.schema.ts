@@ -5,6 +5,15 @@ export type DatabasesDocument = Databases & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Databases {
+  @Prop({ required: true, trim: true, lowercase: true })
+  jobTitle: string;
+
+  @Prop({ required: true, trim: true, lowercase: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  totalJobs: number;
+
   @Prop({ required: true, trim: true })
   MySQL: number;
 

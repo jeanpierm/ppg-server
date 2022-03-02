@@ -5,6 +5,15 @@ export type FrameworksDocument = Frameworks & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Frameworks {
+  @Prop({ required: true, trim: true, lowercase: true })
+  jobTitle: string;
+
+  @Prop({ required: true, trim: true, lowercase: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  totalJobs: number;
+
   @Prop({ required: true, trim: true })
   VueJS: number;
 
@@ -15,10 +24,22 @@ export class Frameworks {
   ReactJS: number;
 
   @Prop({ required: true, trim: true })
+  'React Native': number;
+
+  @Prop({ required: true, trim: true })
   NextJS: number;
 
   @Prop({ required: true, trim: true })
   Angular: number;
+
+  @Prop({ required: true, trim: true })
+  Ionic: number;
+
+  @Prop({ required: true, trim: true })
+  MeteorJS: number;
+
+  @Prop({ required: true, trim: true })
+  LoopBack: number;
 
   @Prop({ required: true, trim: true })
   AngularJS: number;
@@ -75,12 +96,13 @@ export class Frameworks {
   Lumel: number;
 
   @Prop({ required: true, trim: true })
-  // ruby number;
-  @Prop({ required: true, trim: true })
   'Ruby on Rails': number;
 
   @Prop({ required: true, trim: true })
   Flutter: number;
+
+  @Prop({ required: true, trim: true })
+  Xamarin: number;
 }
 
 export const FrameworksSchema = SchemaFactory.createForClass(Frameworks);

@@ -5,6 +5,15 @@ export type ToolsDocument = Tools & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Tools {
+  @Prop({ required: true, trim: true, lowercase: true })
+  jobTitle: string;
+
+  @Prop({ required: true, trim: true, lowercase: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  totalJobs: number;
+
   @Prop({ required: true, trim: true })
   Docker: number;
 

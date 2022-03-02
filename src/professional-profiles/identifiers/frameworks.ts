@@ -24,9 +24,9 @@ export const frameworks = {
   NuxtJS: ['nuxtjs', 'nuxt.js'],
   Quarkus: ['quarkus', 'quarkus.io', 'quarkusio'],
   ReactJS: ['reactjs', 'react.js', 'react'],
-  ReactNative: ['react native', 'reactnative'],
+  'React Native': ['react native', 'reactnative'],
   Svelte: ['svelte', 'sveltejs', 'svelte.js'],
   Symfony: ['symfony'],
   VueJS: ['vuejs', 'vue.js', 'vue', 'quasar'],
-  Xamairn: ['xamarin'],
+  Xamarin: ['xamarin'],
 };
