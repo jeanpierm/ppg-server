@@ -3,7 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import { patternsLength } from '../identifiers/patterns';
-import { ScrapJobsResponse } from '../interfaces/professional-profile.interface';
+import {
+  RequireEnglishDict,
+  ScrapJobsResponse,
+} from '../interfaces/professional-profile.interface';
 import { Languages, LanguagesDocument } from '../schemas/languages.schema';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 import { TechDictionary } from '../types/professional-profile.type';
@@ -95,35 +98,65 @@ export class GenerateProfessionalProfile {
     location: string,
     totalJobs: number,
   ) {
-    this.saveDatabaseMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
+    this.saveDatabaseMetadata(
+      scrapJobsResponse.databasesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
     this.saveFrameworkMetadata(
-      scrapJobsResponse,
+      scrapJobsResponse.frameworksDict,
       jobTitle,
       location,
       totalJobs,
     );
-    this.saveLanguageMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
-    this.saveLibraryMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
-    this.saveParadigmMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
-    this.SavePatternMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
+    this.saveLanguageMetadata(
+      scrapJobsResponse.languagesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveLibraryMetadata(
+      scrapJobsResponse.librariesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveParadigmMetadata(
+      scrapJobsResponse.paradigmsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.SavePatternMetadata(
+      scrapJobsResponse.patternsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
     this.saveRequireEnglishMetadata(
-      scrapJobsResponse,
+      scrapJobsResponse.requireEnglishDict,
       jobTitle,
       location,
       totalJobs,
     );
-    this.saveToolMetadata(scrapJobsResponse, jobTitle, location, totalJobs);
+    this.saveToolMetadata(
+      scrapJobsResponse.toolsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
   }
 
   private saveLanguageMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    languagesDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.languagesModel
       .create({
-        ...scrapJobsResponse.languagesDict,
+        ...languagesDict,
         jobTitle,
         location,
         totalJobs,
@@ -134,14 +167,14 @@ export class GenerateProfessionalProfile {
   }
 
   private saveLibraryMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    librariesDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.librariesModel
       .create({
-        ...scrapJobsResponse.librariesDict,
+        ...librariesDict,
         jobTitle,
         location,
         totalJobs,
@@ -152,14 +185,14 @@ export class GenerateProfessionalProfile {
   }
 
   private saveParadigmMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    paradigmsDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.paradigmsModel
       .create({
-        ...scrapJobsResponse.paradigmsDict,
+        ...paradigmsDict,
         jobTitle,
         location,
         totalJobs,
@@ -170,14 +203,14 @@ export class GenerateProfessionalProfile {
   }
 
   private SavePatternMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    patternsDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.patternsModel
       .create({
-        ...scrapJobsResponse.patternsDict,
+        ...patternsDict,
         jobTitle,
         location,
         totalJobs,
@@ -188,14 +221,14 @@ export class GenerateProfessionalProfile {
   }
 
   private saveRequireEnglishMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    requireEnglish: RequireEnglishDict,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.requireEnglishModel
       .create({
-        ...scrapJobsResponse.requireEnglish,
+        ...requireEnglish,
         jobTitle,
         location,
         totalJobs,
@@ -208,27 +241,27 @@ export class GenerateProfessionalProfile {
   }
 
   private saveToolMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    toolsDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.toolsModel
-      .create({ ...scrapJobsResponse.toolsDict, jobTitle, location, totalJobs })
+      .create({ ...toolsDict, jobTitle, location, totalJobs })
       .then(() => {
         this.logger.log('Tools metadata saved successfully in database');
       });
   }
 
   private saveFrameworkMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    frameworksDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.frameworksModel
       .create({
-        ...scrapJobsResponse.frameworksDict,
+        ...frameworksDict,
         jobTitle,
         location,
         totalJobs,
@@ -239,14 +272,14 @@ export class GenerateProfessionalProfile {
   }
 
   private saveDatabaseMetadata(
-    scrapJobsResponse: ScrapJobsResponse,
+    databasesDict: TechDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
   ) {
     this.databasesModel
       .create({
-        ...scrapJobsResponse.databasesDict,
+        ...databasesDict,
         jobTitle,
         location,
         totalJobs,
@@ -275,7 +308,7 @@ export class GenerateProfessionalProfile {
       patternsDict,
       toolsDict,
       paradigmsDict,
-      requireEnglish,
+      requireEnglishDict: requireEnglish,
     } = scrapJobsResponse;
     const professionalProfile = new ProfessionalProfile();
     professionalProfile.jobTitle = jobTitle;

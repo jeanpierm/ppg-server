@@ -49,8 +49,7 @@ export class AuthService {
     const payload: JwtPayload = this.jwtService.verify(token, {
       secret: this.config.jwt.secretKey,
     });
-    const userEmail = payload.sub;
-    const user = await this.usersService.findByEmail(userEmail);
+    const user = await this.usersService.findById(payload.sub);
     return user;
   }
 
@@ -62,7 +61,7 @@ export class AuthService {
    */
   async login(user: User): Promise<LoginResponse> {
     const payload: JwtPayload = {
-      sub: user.email,
+      sub: user.userId,
     };
     return { accessToken: this.jwtService.sign(payload) };
   }

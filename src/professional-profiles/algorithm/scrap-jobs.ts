@@ -57,7 +57,7 @@ export async function scrapJobs(
     console.debug(`Job #${index + 1} scrapped successfully`);
   }
 
-  const requireEnglish: RequireEnglishDict = {
+  const requireEnglishDict: RequireEnglishDict = {
     requireEnglish: englishCount,
     totalJobs: jobLinks.length,
   };
@@ -70,7 +70,7 @@ export async function scrapJobs(
   console.log('databases:', databasesDict);
   console.log('patterns:', patternsDict);
   console.log('tools:', toolsDict);
-  console.log('require english:', requireEnglish);
+  console.log('require english:', requireEnglishDict);
 
   return {
     languagesDict,
@@ -80,7 +80,7 @@ export async function scrapJobs(
     patternsDict,
     toolsDict,
     paradigmsDict,
-    requireEnglish,
+    requireEnglishDict,
   };
 }
 
