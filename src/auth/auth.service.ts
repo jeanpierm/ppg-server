@@ -42,7 +42,7 @@ export class AuthService {
       return null;
     }
     this.logger.log('Valid credentials');
-    return { email };
+    return { userId: user.userId };
   }
 
   async verify(token: string): Promise<User> {
