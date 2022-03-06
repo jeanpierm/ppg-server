@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User } from 'src/users/schemas/users.schema';
 import { GenerateProfessionalProfile } from './algorithm/generate-professional-profile';
@@ -23,6 +23,8 @@ export class ProfessionalProfilesService {
    * Genera un perfil profesional utilizando un algoritmo que hace Web Scraping.
    * El perfil generado se persiste en la base de datos.
    * @param user - current user
+   * @param jobTitle
+   * @param location
    */
   async generate(
     user: User,
@@ -48,13 +50,25 @@ export class ProfessionalProfilesService {
 
   async getSortedByCreatedDateAsc(
     user: User,
-    skip = 0,
-    limit = 25,
+    initDate?: Date,
+    endDate?: Date,
+    jobTitle?: string,
+    location?: string,
   ): Promise<ProfessionalProfile[]> {
+    const findQuery: FilterQuery<ProfessionalProfileDocument> = {
+      owner: user,
+      status: EntityStatus.ACTIVE,
+    };
+    if (initDate || endDate) findQuery.createdAt = {};
+    if (initDate) findQuery.createdAt['$gte'] = initDate;
+    if (endDate) findQuery.createdAt['$lt'] = endDate;
+    if (jobTitle)
+      findQuery.jobTitle = { $regex: new RegExp(jobTitle), $options: 'i' };
+    if (location)
+      findQuery.location = { $regex: new RegExp(location), $options: 'i' };
+
     const profiles = await this.proProfileModel
-      .find({ owner: user, status: EntityStatus.ACTIVE })
-      .skip(skip)
-      .limit(limit)
+      .find(findQuery)
       .sort({ createdAt: -1 })
       .populate('owner')
       .exec();
