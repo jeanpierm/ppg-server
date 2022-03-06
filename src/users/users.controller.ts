@@ -42,34 +42,34 @@ export class UsersController {
     return new ApiResponse('Users obtained successfully', payload);
   }
 
-  @Get(':id')
+  @Get(':userId')
   async findOne(
-    @Param() { id }: FindUserParams,
+    @Param() { userId }: FindUserParams,
   ): Promise<ApiResponse<UserResponse>> {
-    const user = await this.usersService.findById(id);
+    const user = await this.usersService.findById(userId);
     const payload = this.usersMapper.mapToUserResponse(user);
     return new ApiResponse('User obtained successfully', payload);
   }
 
-  @Patch(':id')
+  @Patch(':userId')
   async update(
-    @Param() { id }: FindUserParams,
+    @Param() { userId }: FindUserParams,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<ApiResponse<UserResponse>> {
-    const user = await this.usersService.updateById(id, updateUserDto);
+    const user = await this.usersService.updateById(userId, updateUserDto);
     const payload = this.usersMapper.mapToUserResponse(user);
     return new ApiResponse('User updated successfully', payload);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Delete(':id')
-  async remove(@Param() { id }: FindUserParams): Promise<void> {
-    await this.usersService.removeById(id);
+  @Delete(':userId')
+  async remove(@Param() { userId }: FindUserParams): Promise<void> {
+    await this.usersService.removeById(userId);
   }
 
   @HttpCode(HttpStatus.NO_CONTENT)
-  @Post(':id')
-  async active(@Param() { id }: FindUserParams): Promise<void> {
-    await this.usersService.activeById(id);
+  @Post(':userId')
+  async active(@Param() { userId }: FindUserParams): Promise<void> {
+    await this.usersService.activeById(userId);
   }
 }

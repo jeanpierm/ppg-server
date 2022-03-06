@@ -23,10 +23,10 @@
       // ],
       "cwd": "${workspaceRoot}",
       "console": "integratedTerminal",
-      "protocol": "inspector"
+      "protocol": "inspector",
+      "outFiles": ["${workspaceFolder}/**/*.js", "!**/node_modules/**"]
       // "autoAttachChildProcesses": true
       // "console": "internalConsole"
-      // "outFiles": ["${workspaceFolder}/**/*.js", "!**/node_modules/**"]
     }
   ]
 }

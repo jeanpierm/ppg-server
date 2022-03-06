@@ -11,7 +11,7 @@ import {
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
-import { PaginationQuery } from 'src/shared/dto/pagination-query.dto';
+import { GetProfessionalProfilesQuery } from 'src/professional-profiles/dto/get-professional-profiles-query.dto';
 import { User } from 'src/users/schemas/users.schema';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
@@ -51,13 +51,16 @@ export class ProfessionalProfilesController {
   @Get()
   @UseGuards(JwtAuthGuard)
   async get(
-    @Query() { skip, limit }: PaginationQuery,
+    @Query()
+    { initDate, endDate, jobTitle, location }: GetProfessionalProfilesQuery,
     @CurrentUser() user: User,
   ): Promise<ApiResponse<ProfessionalProfileResponse[]>> {
     const profiles = await this.proProfilesService.getSortedByCreatedDateAsc(
       user,
-      skip,
-      limit,
+      initDate,
+      endDate,
+      jobTitle,
+      location,
     );
     const payload = profiles.map((profile) =>
       this.proProfilesMapper.mapToProfessionalProfileResponse(profile),

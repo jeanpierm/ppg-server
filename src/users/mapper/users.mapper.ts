@@ -7,7 +7,7 @@ import { User } from '../schemas/users.schema';
 export class UsersMapper {
   mapToAccountResponse(user: User): AccountResponse {
     return new AccountResponse({
-      userId: (user as any)._id,
+      userId: user.userId,
       name: user.name,
       surname: user.surname,
       email: user.email,
@@ -16,7 +16,7 @@ export class UsersMapper {
 
   mapToUserResponse(user: User): UserResponse {
     return new UserResponse({
-      userId: (user as any)._id,
+      userId: user.userId,
       name: user.name,
       surname: user.surname,
       email: user.email,

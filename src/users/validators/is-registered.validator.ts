@@ -1,7 +1,6 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
-  isMongoId,
   registerDecorator,
   ValidationOptions,
   ValidatorConstraint,
@@ -20,12 +19,13 @@ export class IsRegisteredValidator implements ValidatorConstraintInterface {
   ) {}
 
   async validate(id: string): Promise<boolean> {
-    if (!isMongoId(id)) {
-      throw new BadRequestException('Identificador no válido');
-    }
     const isRegistered = await this.userModel.exists({ _id: id });
 
-    return isRegistered;
+    if (!isRegistered) {
+      throw new NotFoundException('User not found in database');
+    }
+
+    return true;
   }
 
   defaultMessage(): string {

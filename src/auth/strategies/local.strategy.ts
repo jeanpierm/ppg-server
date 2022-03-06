@@ -1,9 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  Logger,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { validateOrReject } from 'class-validator';
 import { Strategy } from 'passport-local';
@@ -25,13 +20,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
 
   async validate(email: string, password: string): Promise<User> {
     // class validations
-    try {
-      const loginRequest = new LoginRequest({ email, password });
-      await validateOrReject(loginRequest);
-    } catch (errors) {
-      const messages = this.helperService.mapValidationErrorsToMessages(errors);
-      throw new BadRequestException(messages);
-    }
+    const loginRequest = new LoginRequest({ email, password });
+    await validateOrReject(loginRequest);
 
     // credentials validation
     const user = await this.authService.validateCredentials(email, password);

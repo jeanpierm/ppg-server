@@ -5,6 +5,15 @@ export type LibrariesDocument = Libraries & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Libraries {
+  @Prop({ required: true, trim: true, lowercase: true })
+  jobTitle: string;
+
+  @Prop({ required: true, trim: true, lowercase: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  totalJobs: number;
+
   @Prop({ required: true, trim: true })
   jQuery: number;
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
-import { Model, Types } from 'mongoose';
+import { Model } from 'mongoose';
 import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,14 +21,14 @@ export class UsersService {
     return this.userModel.exists({ email });
   }
 
-  async findById(id: Types.ObjectId): Promise<User> {
-    const user = await this.userModel.findById(id);
-    return user.toObject();
+  async findById(userId: string): Promise<User> {
+    const user = await this.userModel.findOne({ userId });
+    return user?.toObject();
   }
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.userModel.findOne({ email }).exec();
-    return user.toObject();
+    return user?.toObject();
   }
 
   async create(user: CreateUserDto): Promise<User> {
@@ -44,12 +44,9 @@ export class UsersService {
     return (await newUser.save()).toObject();
   }
 
-  async updateById(
-    id: Types.ObjectId,
-    updateUser: UpdateUserDto,
-  ): Promise<User> {
-    const updatedUser = await this.userModel.findByIdAndUpdate(
-      id,
+  async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
+    const updatedUser = await this.userModel.findOneAndUpdate(
+      { userId },
       {
         name: updateUser.name,
         surname: updateUser.surname,
@@ -60,14 +57,16 @@ export class UsersService {
     return updatedUser.toObject();
   }
 
-  async removeById(id: Types.ObjectId): Promise<void> {
-    await this.userModel.findByIdAndUpdate(id, {
+  async removeById(userId: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(userId, {
       status: EntityStatus.INACTIVE,
     });
   }
 
-  async activeById(id: Types.ObjectId): Promise<void> {
-    await this.userModel.findByIdAndUpdate(id, { status: EntityStatus.ACTIVE });
+  async activeById(userId: string): Promise<void> {
+    await this.userModel.findByIdAndUpdate(userId, {
+      status: EntityStatus.ACTIVE,
+    });
   }
 
   async updatePasswordByEmail(email: string, password: string): Promise<void> {

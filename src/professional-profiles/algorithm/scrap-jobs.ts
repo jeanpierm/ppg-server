@@ -51,13 +51,13 @@ export async function scrapJobs(
       toolsDict,
       paradigmsDict,
     );
-    if (checkRequireEnglish(jobDetail, index)) {
+    if (checkRequireEnglish(jobDetailNormalized, index)) {
       englishCount++;
     }
     console.debug(`Job #${index + 1} scrapped successfully`);
   }
 
-  const requireEnglish: RequireEnglishDict = {
+  const requireEnglishDict: RequireEnglishDict = {
     requireEnglish: englishCount,
     totalJobs: jobLinks.length,
   };
@@ -70,7 +70,7 @@ export async function scrapJobs(
   console.log('databases:', databasesDict);
   console.log('patterns:', patternsDict);
   console.log('tools:', toolsDict);
-  console.log('require english:', requireEnglish);
+  console.log('require english:', requireEnglishDict);
 
   return {
     languagesDict,
@@ -80,7 +80,7 @@ export async function scrapJobs(
     patternsDict,
     toolsDict,
     paradigmsDict,
-    requireEnglish,
+    requireEnglishDict,
   };
 }
 
@@ -93,7 +93,7 @@ async function getJobDetail(page: puppeteer.Page): Promise<string> {
   const jobDetail = await page.evaluate((selector) => {
     const paragraph: HTMLParagraphElement = document.querySelector(selector);
     const title: HTMLHeadingElement = document.querySelector('h1');
-    return `${title.innerText} ${paragraph.innerText}`;
+    return ` ${title.innerText} ${paragraph.innerText} `;
   }, jobDetailsSelector);
   console.log('Job detail obtained successfully');
   return jobDetail;

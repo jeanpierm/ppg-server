@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   registerDecorator,
@@ -20,6 +20,10 @@ export class IsUnregisteredEmailValidator
 
   async validate(email: string): Promise<boolean> {
     const isRegistered = await this.userModel.exists({ email });
+
+    if (isRegistered) {
+      throw new ConflictException('User with email already exist in database');
+    }
 
     return !isRegistered;
   }

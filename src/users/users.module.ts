@@ -20,6 +20,6 @@ import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email
     IsRegisteredEmailValidator,
     IsRegisteredValidator,
   ],
-  exports: [UsersService, UsersMapper],
+  exports: [UsersService, UsersMapper, IsUnregisteredEmailValidator],
 })
 export class UsersModule {}

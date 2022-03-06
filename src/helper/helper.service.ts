@@ -56,6 +56,7 @@ export class HelperService {
   }
 
   mapValidationErrorsToMessages(errors: ValidationError[]) {
+    console.log(errors);
     const constraints = errors.map(
       (error: ValidationError) => error.constraints,
     );

@@ -4,6 +4,7 @@ import { HelperService } from 'src/helper/helper.service';
 import { UsersMapper } from 'src/users/mapper/users.mapper';
 import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
+import { IsUnregisteredEmailValidator } from 'src/users/validators/is-unregistered-email.validator';
 import { AccountResponse } from './dto/account-response.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 
@@ -15,6 +16,7 @@ export class AccountService {
     private readonly usersService: UsersService,
     private readonly usersMapper: UsersMapper,
     private readonly helperService: HelperService,
+    private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
   ) {}
 
   async get(user: User): Promise<AccountResponse> {
@@ -24,7 +26,16 @@ export class AccountService {
   }
 
   async update(user: User, updateAccount: UpdateAccountDto): Promise<void> {
-    await this.usersService.updateById(user._id, updateAccount);
+    // si es un email distinto al que ya tiene la cuenta, se lo valida
+    if (user.email !== updateAccount.email) {
+      const isUnregisteredEmail = await this.isUnregisteredEmail.validate(
+        updateAccount.email,
+      );
+      if (!isUnregisteredEmail) {
+        throw new BadRequestException('Email already registered');
+      }
+    }
+    await this.usersService.updateById(user.userId, updateAccount);
     this.logger.log('Account updated successfully');
   }
 

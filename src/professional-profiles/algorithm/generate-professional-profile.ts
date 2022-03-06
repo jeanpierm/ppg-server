@@ -3,7 +3,10 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import { patternsLength } from '../identifiers/patterns';
-import { ScrapJobsResponse } from '../interfaces/professional-profile.interface';
+import {
+  RequireEnglishDict,
+  ScrapJobsResponse,
+} from '../interfaces/professional-profile.interface';
 import { Languages, LanguagesDocument } from '../schemas/languages.schema';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 import { TechDictionary } from '../types/professional-profile.type';
@@ -55,10 +58,11 @@ export class GenerateProfessionalProfile {
    */
   async executeAlgorithm(user: User, jobTitle: string, location: string) {
     // ? headless en false hace que se muestre el browser del web scraping
-    // const browser = await puppeteer.launch({ headless: false });
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ headless: false });
+    // const browser = await puppeteer.launch({});
     const page = await browser.newPage();
-    await page.setViewport({ width: 2400, height: 1080 });
+    await this.setLanguageInEnglish(page);
+    await page.setViewport({ width: 1920, height: 2400 });
 
     await login(page);
     await searchJobs(page, jobTitle, location);
@@ -67,7 +71,12 @@ export class GenerateProfessionalProfile {
     await browser.close();
 
     // persist metadata in database
-    this.saveTechnologyMetadata(scrapJobsResponse);
+    this.saveTechnologyMetadata(
+      scrapJobsResponse,
+      jobTitle,
+      location,
+      jobLinks.length,
+    );
 
     return this.buildProfessionalProfile(
       jobTitle,
@@ -77,35 +86,207 @@ export class GenerateProfessionalProfile {
     );
   }
 
-  private saveTechnologyMetadata(scrapJobsResponse: ScrapJobsResponse) {
-    this.databasesModel.create(scrapJobsResponse.databasesDict).then(() => {
-      this.logger.log('Databases metadata saved successfully in database');
+  private async setLanguageInEnglish(page: puppeteer.Page) {
+    await page.setExtraHTTPHeaders({
+      'Accept-Language': 'en',
     });
-    this.frameworksModel.create(scrapJobsResponse.frameworksDict).then(() => {
-      this.logger.log('Frameworks metadata saved successfully in database');
-    });
-    this.languagesModel.create(scrapJobsResponse.languagesDict).then(() => {
-      this.logger.log('Languages metadata saved successfully in database');
-    });
-    this.librariesModel.create(scrapJobsResponse.librariesDict).then(() => {
-      this.logger.log('Libraries metadata saved successfully in database');
-    });
-    this.paradigmsModel.create(scrapJobsResponse.paradigmsDict).then(() => {
-      this.logger.log('Paradigms metadata saved successfully in database');
-    });
-    this.patternsModel.create(scrapJobsResponse.patternsDict).then(() => {
-      this.logger.log('Patterns metadata saved successfully in database');
-    });
+  }
+
+  private saveTechnologyMetadata(
+    scrapJobsResponse: ScrapJobsResponse,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.saveDatabaseMetadata(
+      scrapJobsResponse.databasesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveFrameworkMetadata(
+      scrapJobsResponse.frameworksDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveLanguageMetadata(
+      scrapJobsResponse.languagesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveLibraryMetadata(
+      scrapJobsResponse.librariesDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveParadigmMetadata(
+      scrapJobsResponse.paradigmsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.SavePatternMetadata(
+      scrapJobsResponse.patternsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveRequireEnglishMetadata(
+      scrapJobsResponse.requireEnglishDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+    this.saveToolMetadata(
+      scrapJobsResponse.toolsDict,
+      jobTitle,
+      location,
+      totalJobs,
+    );
+  }
+
+  private saveLanguageMetadata(
+    languagesDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.languagesModel
+      .create({
+        ...languagesDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Languages metadata saved successfully in database');
+      });
+  }
+
+  private saveLibraryMetadata(
+    librariesDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.librariesModel
+      .create({
+        ...librariesDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Libraries metadata saved successfully in database');
+      });
+  }
+
+  private saveParadigmMetadata(
+    paradigmsDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.paradigmsModel
+      .create({
+        ...paradigmsDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Paradigms metadata saved successfully in database');
+      });
+  }
+
+  private SavePatternMetadata(
+    patternsDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.patternsModel
+      .create({
+        ...patternsDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Patterns metadata saved successfully in database');
+      });
+  }
+
+  private saveRequireEnglishMetadata(
+    requireEnglish: RequireEnglishDict,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
     this.requireEnglishModel
-      .create(scrapJobsResponse.requireEnglish)
+      .create({
+        ...requireEnglish,
+        jobTitle,
+        location,
+        totalJobs,
+      })
       .then(() => {
         this.logger.log(
           'Require english metadata saved successfully in database',
         );
       });
-    this.toolsModel.create(scrapJobsResponse.toolsDict).then(() => {
-      this.logger.log('Tools metadata saved successfully in database');
-    });
+  }
+
+  private saveToolMetadata(
+    toolsDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.toolsModel
+      .create({ ...toolsDict, jobTitle, location, totalJobs })
+      .then(() => {
+        this.logger.log('Tools metadata saved successfully in database');
+      });
+  }
+
+  private saveFrameworkMetadata(
+    frameworksDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.frameworksModel
+      .create({
+        ...frameworksDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Frameworks metadata saved successfully in database');
+      });
+  }
+
+  private saveDatabaseMetadata(
+    databasesDict: TechDictionary,
+    jobTitle: string,
+    location: string,
+    totalJobs: number,
+  ) {
+    this.databasesModel
+      .create({
+        ...databasesDict,
+        jobTitle,
+        location,
+        totalJobs,
+      })
+      .then(() => {
+        this.logger.log('Databases metadata saved successfully in database');
+      });
   }
 
   /**
@@ -127,7 +308,7 @@ export class GenerateProfessionalProfile {
       patternsDict,
       toolsDict,
       paradigmsDict,
-      requireEnglish,
+      requireEnglishDict: requireEnglish,
     } = scrapJobsResponse;
     const professionalProfile = new ProfessionalProfile();
     professionalProfile.jobTitle = jobTitle;

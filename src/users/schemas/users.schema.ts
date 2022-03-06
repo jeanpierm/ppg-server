@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
 import { EntityStatus } from '../../shared/enums/status.enum';
 
@@ -14,6 +15,13 @@ export class User {
   updatedAt: Date;
 
   // user schema props
+  @Prop({
+    required: true,
+    index: { unique: true },
+    default: () => randomUUID(),
+  })
+  userId: string;
+
   @Prop({ required: true, trim: true, lowercase: true })
   name: string;
 

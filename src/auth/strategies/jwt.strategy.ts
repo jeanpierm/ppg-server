@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
@@ -21,6 +21,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload): Promise<User> {
-    return this.usersService.findByEmail(payload.sub);
+    const userLogged = await this.usersService.findById(payload.sub);
+    if (!userLogged) {
+      throw new InternalServerErrorException(
+        'An error has ocurred. Could not get user owner of the access token.',
+      );
+    }
+    return userLogged;
   }
 }

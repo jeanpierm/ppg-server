@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {
   registerDecorator,
@@ -21,7 +21,11 @@ export class IsRegisteredEmailValidator
   async validate(email: string): Promise<boolean> {
     const isRegistered = await this.userModel.exists({ email });
 
-    return isRegistered;
+    if (!isRegistered) {
+      throw new NotFoundException('User not found in database');
+    }
+
+    return true;
   }
 
   defaultMessage(): string {

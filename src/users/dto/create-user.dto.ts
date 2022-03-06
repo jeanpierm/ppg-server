@@ -18,7 +18,4 @@ export class CreateUserDto {
   @IsString()
   @Length(5, 30)
   readonly password: string;
-
-  //   status: string; // valores por defecto con la opcion "timestamp" del @Schema(), no son necesarios en el createDto
-  //   createAt: Date;
 }
