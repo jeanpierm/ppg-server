@@ -7,6 +7,7 @@ import { User } from 'src/users/schemas/users.schema';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './dto/jwt-payload.dto';
 import { LoginResponse } from './dto/login-response.dto';
+import { RefreshResponse } from './dto/refresh-response.dto';
 import { RegisterRequest } from './dto/register-request.dto';
 import { RegisterResponse } from './dto/register-response.dto';
 
@@ -64,6 +65,10 @@ export class AuthService {
       sub: user.userId,
     };
     return { accessToken: this.jwtService.sign(payload) };
+  }
+
+  async refresh(user: User): Promise<RefreshResponse> {
+    return this.login(user);
   }
 
   /**
