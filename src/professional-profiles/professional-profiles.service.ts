@@ -91,4 +91,39 @@ export class ProfessionalProfilesService {
     );
     this.logger.log(`Professional profiles deleted by user ${user._id}`);
   }
+
+  async getTechnologyCount(identifier: Record<string, string[]>, prop: string) {
+    const profiles = await this.proProfileModel.find().lean();
+    const count: Record<string, number> = {};
+    for (const key of Object.keys(identifier)) {
+      count[key] = this.getCountOfTechnology(profiles, prop, key);
+    }
+    return count;
+  }
+
+  async getEnglishCount() {
+    const profiles = await this.proProfileModel.find().lean();
+    const count = {
+      requiereEnglish: profiles.filter(this.requiereEnglish).length,
+      noRequiereEnglish: profiles.filter(this.noRequiereEnglish).length,
+    };
+    return count;
+  }
+
+  private getCountOfTechnology(
+    profiles: ProfessionalProfile[],
+    prop: string,
+    technologyName: string,
+  ) {
+    return profiles.filter((profile) => profile[prop].includes(technologyName))
+      .length;
+  }
+
+  private requiereEnglish(profile: ProfessionalProfile) {
+    return profile.requireEnglish === true;
+  }
+
+  private noRequiereEnglish(profile: ProfessionalProfile) {
+    return profile.requireEnglish === false;
+  }
 }
