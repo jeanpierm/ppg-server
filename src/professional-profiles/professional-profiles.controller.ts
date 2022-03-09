@@ -17,6 +17,12 @@ import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
 import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
 import { ProfessionalProfilesService } from './professional-profiles.service';
+import { tools } from './identifiers/tools';
+import { databases } from './identifiers/databases';
+import { frameworks } from './identifiers/frameworks';
+import { languages } from './identifiers/languages';
+import { paradigms } from './identifiers/paradigms';
+import { patterns } from './identifiers/patterns';
 
 @Controller('professional-profiles')
 export class ProfessionalProfilesController {
@@ -83,6 +89,66 @@ export class ProfessionalProfilesController {
       'Random professional profile obtained successfully',
       payload,
     );
+  }
+
+  @Get('languages/count')
+  async getLanguagesCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      languages,
+      'languages',
+    );
+    return new ApiResponse('Languages count obtained successfully', payload);
+  }
+
+  @Get('frameworks/count')
+  async getFrameworksCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      frameworks,
+      'frameworks',
+    );
+    return new ApiResponse('Frameworks count obtained successfully', payload);
+  }
+
+  @Get('databases/count')
+  async getDatabasesCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      databases,
+      'databases',
+    );
+    return new ApiResponse('Databases count obtained successfully', payload);
+  }
+
+  @Get('tools/count')
+  async getToolsCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      tools,
+      'tools',
+    );
+    return new ApiResponse('Tools count obtained successfully', payload);
+  }
+
+  @Get('paradigms/count')
+  async getParadigmsCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      paradigms,
+      'paradigms',
+    );
+    return new ApiResponse('Paradigms count obtained successfully', payload);
+  }
+
+  @Get('patterns/count')
+  async getPatternsCount() {
+    const payload = await this.proProfilesService.getTechnologyCount(
+      patterns,
+      'patterns',
+    );
+    return new ApiResponse('Patterns count obtained successfully', payload);
+  }
+
+  @Get('english/count')
+  async getRequireEnglishCount() {
+    const payload = await this.proProfilesService.getEnglishCount();
+    return new ApiResponse('English count obtained successfully', payload);
   }
 
   @Delete(':profileId')
