@@ -71,7 +71,7 @@ export class ProfessionalProfilesService {
       .find(findQuery)
       .sort({ createdAt: -1 })
       .populate('owner')
-      .exec();
+      .lean();
     this.logger.log(`Professional profiles obtained by user ${user._id}`);
     return profiles;
   }
@@ -92,8 +92,12 @@ export class ProfessionalProfilesService {
     this.logger.log(`Professional profiles deleted by user ${user._id}`);
   }
 
-  async getTechnologyCount(identifier: Record<string, string[]>, prop: string) {
-    const profiles = await this.proProfileModel.find().lean();
+  async getTechnologyCount(
+    user: User,
+    identifier: Record<string, string[]>,
+    prop: string,
+  ) {
+    const profiles = await this.getSortedByCreatedDateAsc(user);
     const count: Record<string, number> = {};
     for (const key of Object.keys(identifier)) {
       count[key] = this.getCountOfTechnology(profiles, prop, key);
@@ -101,8 +105,8 @@ export class ProfessionalProfilesService {
     return count;
   }
 
-  async getEnglishCount() {
-    const profiles = await this.proProfileModel.find().lean();
+  async getEnglishCount(user: User) {
+    const profiles = await this.getSortedByCreatedDateAsc(user);
     return {
       requiereEnglish: profiles.filter(
         ProfessionalProfilesService.requiereEnglish,

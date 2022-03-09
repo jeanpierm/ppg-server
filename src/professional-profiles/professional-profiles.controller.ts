@@ -79,7 +79,7 @@ export class ProfessionalProfilesController {
   }
 
   @Get('random')
-  @Roles(Role.User)
+  @Roles(Role.User, Role.Admin)
   async getRandom(): Promise<ApiResponse<ProfessionalProfileResponse>> {
     const profile = await this.proProfilesService.getRandom();
     const payload =
@@ -91,9 +91,11 @@ export class ProfessionalProfilesController {
     );
   }
 
+  @Roles(Role.User, Role.Admin)
   @Get('languages/count')
-  async getLanguagesCount() {
+  async getLanguagesCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       languages,
       'languages',
     );
@@ -101,8 +103,10 @@ export class ProfessionalProfilesController {
   }
 
   @Get('frameworks/count')
-  async getFrameworksCount() {
+  @Roles(Role.User, Role.Admin)
+  async getFrameworksCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       frameworks,
       'frameworks',
     );
@@ -110,8 +114,10 @@ export class ProfessionalProfilesController {
   }
 
   @Get('databases/count')
-  async getDatabasesCount() {
+  @Roles(Role.User, Role.Admin)
+  async getDatabasesCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       databases,
       'databases',
     );
@@ -119,8 +125,10 @@ export class ProfessionalProfilesController {
   }
 
   @Get('tools/count')
-  async getToolsCount() {
+  @Roles(Role.User, Role.Admin)
+  async getToolsCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       tools,
       'tools',
     );
@@ -128,8 +136,10 @@ export class ProfessionalProfilesController {
   }
 
   @Get('paradigms/count')
-  async getParadigmsCount() {
+  @Roles(Role.User, Role.Admin)
+  async getParadigmsCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       paradigms,
       'paradigms',
     );
@@ -137,8 +147,10 @@ export class ProfessionalProfilesController {
   }
 
   @Get('patterns/count')
-  async getPatternsCount() {
+  @Roles(Role.User, Role.Admin)
+  async getPatternsCount(@CurrentUser() user: User) {
     const payload = await this.proProfilesService.getTechnologyCount(
+      user,
       patterns,
       'patterns',
     );
@@ -146,8 +158,9 @@ export class ProfessionalProfilesController {
   }
 
   @Get('english/count')
-  async getRequireEnglishCount() {
-    const payload = await this.proProfilesService.getEnglishCount();
+  @Roles(Role.User, Role.Admin)
+  async getRequireEnglishCount(@CurrentUser() user: User) {
+    const payload = await this.proProfilesService.getEnglishCount(user);
     return new ApiResponse('English count obtained successfully', payload);
   }
 
