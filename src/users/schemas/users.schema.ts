@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
+import { Role } from 'src/auth/enums/role.enum';
 import { EntityStatus } from '../../shared/enums/status.enum';
 
 export type UserDocument = User & mongoose.Document;
@@ -34,11 +35,13 @@ export class User {
   @Prop({ required: true, trim: true, lowercase: true })
   surname: string;
 
+  @Prop({ default: [Role.User], type: String, enum: Role })
+  roles: Role[];
+
   @Prop({
-    default: EntityStatus.ACTIVE,
-    trim: true,
-    uppercase: true,
-    maxlength: 1,
+    default: EntityStatus.Active,
+    type: String,
+    enum: EntityStatus,
   })
   status: EntityStatus;
 }

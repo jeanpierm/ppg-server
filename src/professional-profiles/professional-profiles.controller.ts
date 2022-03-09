@@ -6,12 +6,12 @@ import {
   Param,
   Post,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import { CurrentUser } from 'src/auth/current-user.decorator';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { ApiResponse } from 'src/shared/dto/api-response.dto';
+import { Roles } from 'src/auth/decorators/role.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 import { GetProfessionalProfilesQuery } from 'src/professional-profiles/dto/get-professional-profiles-query.dto';
+import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
@@ -26,7 +26,7 @@ export class ProfessionalProfilesController {
   ) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.User, Role.Admin)
   async generate(
     @CurrentUser() user: User,
     @Body() generatePpgDto: GeneratePpgDto,
@@ -49,7 +49,7 @@ export class ProfessionalProfilesController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.User, Role.Admin)
   async get(
     @Query()
     { initDate, endDate, jobTitle, location }: GetProfessionalProfilesQuery,
@@ -73,6 +73,7 @@ export class ProfessionalProfilesController {
   }
 
   @Get('random')
+  @Roles(Role.User)
   async getRandom(): Promise<ApiResponse<ProfessionalProfileResponse>> {
     const profile = await this.proProfilesService.getRandom();
     const payload =
@@ -85,7 +86,7 @@ export class ProfessionalProfilesController {
   }
 
   @Delete(':profileId')
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.User, Role.Admin)
   async remove(
     @CurrentUser() user: User,
     @Param('profileId') profileId: string,

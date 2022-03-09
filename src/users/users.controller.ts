@@ -9,6 +9,8 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
+import { Roles } from 'src/auth/decorators/role.decorator';
+import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
@@ -25,6 +27,7 @@ export class UsersController {
   ) {}
 
   @Post()
+  @Roles(Role.Admin)
   async create(
     @Body() createUserDto: CreateUserDto,
   ): Promise<ApiResponse<UserResponse>> {
@@ -34,6 +37,7 @@ export class UsersController {
   }
 
   @Get()
+  @Roles(Role.Admin)
   async findAll(): Promise<ApiResponse<UserResponse[]>> {
     const users = await this.usersService.findAll();
     const payload = users.map((user) =>
@@ -43,6 +47,7 @@ export class UsersController {
   }
 
   @Get(':userId')
+  @Roles(Role.Admin)
   async findOne(
     @Param() { userId }: FindUserParams,
   ): Promise<ApiResponse<UserResponse>> {
@@ -52,6 +57,7 @@ export class UsersController {
   }
 
   @Patch(':userId')
+  @Roles(Role.Admin)
   async update(
     @Param() { userId }: FindUserParams,
     @Body() updateUserDto: UpdateUserDto,
@@ -63,6 +69,7 @@ export class UsersController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':userId')
+  @Roles(Role.Admin)
   async remove(@Param() { userId }: FindUserParams): Promise<void> {
     await this.usersService.removeById(userId);
   }

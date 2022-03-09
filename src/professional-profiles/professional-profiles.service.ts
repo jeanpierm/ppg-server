@@ -57,7 +57,7 @@ export class ProfessionalProfilesService {
   ): Promise<ProfessionalProfile[]> {
     const findQuery: FilterQuery<ProfessionalProfileDocument> = {
       owner: user,
-      status: EntityStatus.ACTIVE,
+      status: EntityStatus.Active,
     };
     if (initDate || endDate) findQuery.createdAt = {};
     if (initDate) findQuery.createdAt['$gte'] = initDate;
@@ -87,7 +87,7 @@ export class ProfessionalProfilesService {
   async remove(user: User, profileId: string): Promise<void> {
     await this.proProfileModel.findOneAndUpdate(
       { _id: profileId },
-      { status: EntityStatus.INACTIVE },
+      { status: EntityStatus.Inactive },
     );
     this.logger.log(`Professional profiles deleted by user ${user._id}`);
   }

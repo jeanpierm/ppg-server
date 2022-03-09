@@ -14,7 +14,7 @@ export class UsersService {
   ) {}
 
   async findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().exec();
+    return this.userModel.find().lean();
   }
 
   async existsByEmail(email: string): Promise<boolean> {
@@ -22,13 +22,13 @@ export class UsersService {
   }
 
   async findById(userId: string): Promise<User> {
-    const user = await this.userModel.findOne({ userId });
-    return user?.toObject();
+    const user = await this.userModel.findOne({ userId }).lean();
+    return user;
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({ email }).exec();
-    return user?.toObject();
+    const user = await this.userModel.findOne({ email }).lean();
+    return user;
   }
 
   async create(user: CreateUserDto): Promise<User> {
@@ -41,31 +41,33 @@ export class UsersService {
       name,
       surname,
     });
-    return (await newUser.save()).toObject();
+    return newUser.save();
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel.findOneAndUpdate(
-      { userId },
-      {
-        name: updateUser.name,
-        surname: updateUser.surname,
-        email: updateUser.email,
-      },
-      { new: true },
-    );
-    return updatedUser.toObject();
+    const updatedUser = await this.userModel
+      .findOneAndUpdate(
+        { userId },
+        {
+          name: updateUser.name,
+          surname: updateUser.surname,
+          email: updateUser.email,
+        },
+        { new: true },
+      )
+      .lean();
+    return updatedUser;
   }
 
   async removeById(userId: string): Promise<void> {
     await this.userModel.findByIdAndUpdate(userId, {
-      status: EntityStatus.INACTIVE,
+      status: EntityStatus.Inactive,
     });
   }
 
   async activeById(userId: string): Promise<void> {
     await this.userModel.findByIdAndUpdate(userId, {
-      status: EntityStatus.ACTIVE,
+      status: EntityStatus.Active,
     });
   }
 

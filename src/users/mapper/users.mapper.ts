@@ -20,6 +20,7 @@ export class UsersMapper {
       name: user.name,
       surname: user.surname,
       email: user.email,
+      roles: user.roles,
       status: user.status,
       createdAt: (user as any).createdAt,
       updatedAt: (user as any).updatedAt,

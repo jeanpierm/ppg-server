@@ -9,6 +9,9 @@ import { DatabaseModule } from './database/database.module';
 import { HelperModule } from './helper/helper.module';
 import { AccountModule } from './account/account.module';
 import { ProfessionalProfilesModule } from './professional-profiles/professional-profiles.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/guards/roles.guard';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 @Module({
   imports: [
     ConfigModule.forRoot({ load: Configs, isGlobal: true }),
@@ -25,6 +28,15 @@ import { ProfessionalProfilesModule } from './professional-profiles/professional
     ProfessionalProfilesModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

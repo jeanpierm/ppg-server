@@ -43,7 +43,9 @@ export class AuthService {
       return null;
     }
     this.logger.log('Valid credentials');
-    return { userId: user.userId };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...result } = user;
+    return result;
   }
 
   async verify(token: string): Promise<User> {

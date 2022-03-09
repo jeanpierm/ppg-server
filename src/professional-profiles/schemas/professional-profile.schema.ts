@@ -84,7 +84,7 @@ export class ProfessionalProfile {
   owner: User;
 
   @Prop({
-    default: EntityStatus.ACTIVE,
+    default: EntityStatus.Active,
     trim: true,
     uppercase: true,
     maxlength: 1,
