@@ -103,11 +103,14 @@ export class ProfessionalProfilesService {
 
   async getEnglishCount() {
     const profiles = await this.proProfileModel.find().lean();
-    const count = {
-      requiereEnglish: profiles.filter(this.requiereEnglish).length,
-      noRequiereEnglish: profiles.filter(this.noRequiereEnglish).length,
+    return {
+      requiereEnglish: profiles.filter(
+        ProfessionalProfilesService.requiereEnglish,
+      ).length,
+      noRequiereEnglish: profiles.filter(
+        ProfessionalProfilesService.noRequiereEnglish,
+      ).length,
     };
-    return count;
   }
 
   private getCountOfTechnology(
@@ -119,11 +122,11 @@ export class ProfessionalProfilesService {
       .length;
   }
 
-  private requiereEnglish(profile: ProfessionalProfile) {
+  private static requiereEnglish(profile: ProfessionalProfile) {
     return profile.requireEnglish === true;
   }
 
-  private noRequiereEnglish(profile: ProfessionalProfile) {
+  private static noRequiereEnglish(profile: ProfessionalProfile) {
     return profile.requireEnglish === false;
   }
 }
