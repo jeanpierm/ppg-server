@@ -3,7 +3,7 @@ import {
   RequireEnglishDict,
   ScrapJobsResponse,
 } from '../interfaces/professional-profile.interface';
-import { TechDictionary } from '../types/professional-profile.type';
+import { TechCountDictionary } from '../types/professional-profile.type';
 import { checkRequireEnglish } from './count-require-english';
 import { countTechnologies as countTechnologies } from './count-technologies';
 import { waitLoad } from './util';
@@ -25,13 +25,13 @@ export async function scrapJobs(
 ): Promise<ScrapJobsResponse> {
   console.debug('Init scrapping jobs...');
 
-  const languagesDict: TechDictionary = {};
-  const frameworksDict: TechDictionary = {};
-  const librariesDict: TechDictionary = {};
-  const databasesDict: TechDictionary = {};
-  const patternsDict: TechDictionary = {};
-  const toolsDict: TechDictionary = {};
-  const paradigmsDict: TechDictionary = {};
+  const languagesDict: TechCountDictionary = {};
+  const frameworksDict: TechCountDictionary = {};
+  const librariesDict: TechCountDictionary = {};
+  const databasesDict: TechCountDictionary = {};
+  const patternsDict: TechCountDictionary = {};
+  const toolsDict: TechCountDictionary = {};
+  const paradigmsDict: TechCountDictionary = {};
   let englishCount = 0;
 
   for (const [index, link] of jobLinks.entries()) {

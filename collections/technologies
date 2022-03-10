@@ -1,0 +1,3570 @@
+[{
+  "_id": {
+    "$oid": "62296a49ef020776213ec856"
+  },
+  "dictionary": {
+    "name": "AngularJS",
+    "identifiers": [
+      "angularjs"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "c566ffdd-32e8-45d7-a815-72f2ec944f42",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec855"
+  },
+  "dictionary": {
+    "name": "Angular",
+    "identifiers": [
+      "angular"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "44759535-caf4-4b2e-a5a2-0409ffb3e823",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec853"
+  },
+  "dictionary": {
+    "name": "Ruby on Rails",
+    "identifiers": [
+      "ruby on rails",
+      "ruby"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "4a4187ee-f1fc-4672-a63b-45742b3be52b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec857"
+  },
+  "dictionary": {
+    "name": "Blade",
+    "identifiers": [
+      "blade"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "16642aaa-61ad-42cf-be8b-cf29df36f617",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec854"
+  },
+  "dictionary": {
+    "name": "Spring Boot",
+    "identifiers": [
+      "spring boot",
+      "spring"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "77027292-d16a-49b5-a639-f0a60d0beb87",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec852"
+  },
+  "dictionary": {
+    "name": "Microsoft dotNET",
+    "identifiers": [
+      "dotnet",
+      "asp.net",
+      ".net",
+      "microsoft .net"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "187ccd79-6819-434a-8706-978cd96dd53c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.024Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec851"
+  },
+  "dictionary": {
+    "name": "Entity Framework",
+    "identifiers": [
+      "entity framework",
+      "entityframework"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "d9c8e696-b851-4019-b009-5bb5ff3ba5f9",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.023Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.023Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85c"
+  },
+  "dictionary": {
+    "name": "FastifyJS",
+    "identifiers": [
+      "fastifyjs",
+      "fastify.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "12348fd9-d005-4d75-b691-eb61379da504",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85d"
+  },
+  "dictionary": {
+    "name": "Flask",
+    "identifiers": [
+      "flask"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "4a464c78-4a73-4372-918c-73c224aca897",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85e"
+  },
+  "dictionary": {
+    "name": "Flutter",
+    "identifiers": [
+      "flutter"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "dec55186-6352-4976-b02d-ae71e43271b8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec859"
+  },
+  "dictionary": {
+    "name": "EmberJS",
+    "identifiers": [
+      "emberjs",
+      "ember",
+      "ember.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "8baf33bb-a693-488a-9702-de566335c2f4",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85a"
+  },
+  "dictionary": {
+    "name": "ExpressJS",
+    "identifiers": [
+      "expressjs",
+      "express.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "684d00f7-1609-4aa5-ae1b-4afca9bcb439",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85b"
+  },
+  "dictionary": {
+    "name": "FastAPI",
+    "identifiers": [
+      "fastapi"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "22059594-bab1-4fe7-a722-578e6b799b6d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec85f"
+  },
+  "dictionary": {
+    "name": "Gatsby",
+    "identifiers": [
+      "gatsby",
+      "gatsbyjs",
+      "gatsby.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "cb527fa2-f575-4221-9407-1890b9a0b330",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec858"
+  },
+  "dictionary": {
+    "name": "Django",
+    "identifiers": [
+      "django"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "c96da14f-ae24-4072-92db-ba87725581f0",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.025Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec867"
+  },
+  "dictionary": {
+    "name": "NuxtJS",
+    "identifiers": [
+      "nuxtjs",
+      "nuxt.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "5fd350e8-6f96-4452-bee7-a9652555ce5d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec866"
+  },
+  "dictionary": {
+    "name": "NextJS",
+    "identifiers": [
+      "nextjs",
+      "next.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "fbb1eebf-7725-4cd6-91c8-3a20ae5bb092",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec861"
+  },
+  "dictionary": {
+    "name": "Laravel",
+    "identifiers": [
+      "laravel"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "f736193b-cb65-4c42-a598-8b6947411e85",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec868"
+  },
+  "dictionary": {
+    "name": "Quarkus",
+    "identifiers": [
+      "quarkus",
+      "quarkus.io",
+      "quarkusio"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "43f4d454-ab29-4130-9335-28ad83aeea8b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec862"
+  },
+  "dictionary": {
+    "name": "LoopBack",
+    "identifiers": [
+      "loopback",
+      "loopback.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "6413103a-6e53-46ad-af65-c1a73010f51f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec864"
+  },
+  "dictionary": {
+    "name": "MeteorJS",
+    "identifiers": [
+      "meteorjs",
+      "meteor.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "e329be67-3d35-4f1d-bdd6-99c51e7a636c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec865"
+  },
+  "dictionary": {
+    "name": "NestJS",
+    "identifiers": [
+      "nestjs",
+      "nest.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "3b3402bf-0766-43b1-a264-24c0ec0fae5d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec863"
+  },
+  "dictionary": {
+    "name": "Lumel",
+    "identifiers": [
+      "lumen"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "2e223e1f-dac7-4ccc-9fc2-d7b77b372517",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec860"
+  },
+  "dictionary": {
+    "name": "Ionic",
+    "identifiers": [
+      "ionic"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "d31b90f6-04d3-437e-9564-bb19b8875c86",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec86e"
+  },
+  "dictionary": {
+    "name": "Xamarin",
+    "identifiers": [
+      "xamarin"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "3c3bc977-57f4-4b43-b4e8-e1cf7f411904",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec88d"
+  },
+  "dictionary": {
+    "name": "C#",
+    "identifiers": [
+      "csharp",
+      "c#"
+    ]
+  },
+  "type": "language",
+  "technologyId": "ee90d96d-4932-48b6-8db8-3f26f2fcae6b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec86a"
+  },
+  "dictionary": {
+    "name": "React Native",
+    "identifiers": [
+      "react native",
+      "reactnative"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "cd2e59bc-50f9-4339-8b9d-1f3829e1c00d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec86b"
+  },
+  "dictionary": {
+    "name": "Svelte",
+    "identifiers": [
+      "svelte",
+      "sveltejs",
+      "svelte.js"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "e33a256f-e60f-48be-8c3d-2508842f2adb",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec890"
+  },
+  "dictionary": {
+    "name": "C",
+    "identifiers": [
+      "c",
+      "language c"
+    ]
+  },
+  "type": "language",
+  "technologyId": "89c3fae0-a45b-4ffa-80e2-2405ed4e7693",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec86c"
+  },
+  "dictionary": {
+    "name": "Symfony",
+    "identifiers": [
+      "symfony"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "e718b704-34c1-4af4-915f-015eb4a27b91",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec86d"
+  },
+  "dictionary": {
+    "name": "VueJS",
+    "identifiers": [
+      "vuejs",
+      "vue.js",
+      "vue",
+      "quasar"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "599b9019-b0c7-49b1-9c9e-1a706ad62379",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.027Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec88f"
+  },
+  "dictionary": {
+    "name": "Objective-C",
+    "identifiers": [
+      "objetive c",
+      "objetive-c"
+    ]
+  },
+  "type": "language",
+  "technologyId": "a9b4562d-dd4e-4a26-adae-f9314d7e1658",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec88e"
+  },
+  "dictionary": {
+    "name": "C++",
+    "identifiers": [
+      "cplusplus",
+      "c++"
+    ]
+  },
+  "type": "language",
+  "technologyId": "f8270c95-7022-4f51-8910-2d49917f5eea",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a49ef020776213ec869"
+  },
+  "dictionary": {
+    "name": "ReactJS",
+    "identifiers": [
+      "reactjs",
+      "react.js",
+      "react"
+    ]
+  },
+  "type": "framework",
+  "technologyId": "7d8ae3f6-3928-4a28-b033-9f32b3664cda",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.026Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec896"
+  },
+  "dictionary": {
+    "name": "HTML",
+    "identifiers": [
+      "html",
+      "html5"
+    ]
+  },
+  "type": "language",
+  "technologyId": "571f8ddb-aba7-46e3-8905-ac4dab98da1c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec892"
+  },
+  "dictionary": {
+    "name": "Dart",
+    "identifiers": [
+      "dart"
+    ]
+  },
+  "type": "language",
+  "technologyId": "df1b48bc-4886-4c6b-9fd8-e9ca2c1d872b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec894"
+  },
+  "dictionary": {
+    "name": "Fortran",
+    "identifiers": [
+      "fortran"
+    ]
+  },
+  "type": "language",
+  "technologyId": "6369251c-2bdb-44c0-8e25-308e778c41cb",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec893"
+  },
+  "dictionary": {
+    "name": "Elixir",
+    "identifiers": [
+      "elixir"
+    ]
+  },
+  "type": "language",
+  "technologyId": "1c394360-734a-4a4f-bf54-8257891fc00d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89a"
+  },
+  "dictionary": {
+    "name": "Kotlin",
+    "identifiers": [
+      "kotlin"
+    ]
+  },
+  "type": "language",
+  "technologyId": "02026301-2b9e-4412-bd9a-022b535a120c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec895"
+  },
+  "dictionary": {
+    "name": "Go",
+    "identifiers": [
+      "go",
+      "golang"
+    ]
+  },
+  "type": "language",
+  "technologyId": "79223d07-f6d9-4102-9dee-18ec1aa90ec8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec897"
+  },
+  "dictionary": {
+    "name": "Java",
+    "identifiers": [
+      "java"
+    ]
+  },
+  "type": "language",
+  "technologyId": "6e5f94f6-a9d0-4355-bfbb-589c2f1c7085",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec899"
+  },
+  "dictionary": {
+    "name": "JSON",
+    "identifiers": [
+      "json"
+    ]
+  },
+  "type": "language",
+  "technologyId": "90507736-6c8c-4bf9-8c2b-d073fe99db58",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec898"
+  },
+  "dictionary": {
+    "name": "JavaScript",
+    "identifiers": [
+      "javascript"
+    ]
+  },
+  "type": "language",
+  "technologyId": "4bfa08d6-8ea9-4ad2-b3cf-36d701991a64",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec891"
+  },
+  "dictionary": {
+    "name": "CSS",
+    "identifiers": [
+      "css",
+      "css3"
+    ]
+  },
+  "type": "language",
+  "technologyId": "74fca8d3-3817-46d5-838c-902329e8a3d7",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.070Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89b"
+  },
+  "dictionary": {
+    "name": "Matlab",
+    "identifiers": [
+      "matlab"
+    ]
+  },
+  "type": "language",
+  "technologyId": "c4c62b3b-9e3b-4163-aba0-fa5bf858e21a",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89d"
+  },
+  "dictionary": {
+    "name": "Pascal",
+    "identifiers": [
+      "pascal"
+    ]
+  },
+  "type": "language",
+  "technologyId": "3d45e531-c1dd-49fa-a9df-f7e51eb8cb3b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a1"
+  },
+  "dictionary": {
+    "name": "R",
+    "identifiers": [
+      "r",
+      "language r"
+    ]
+  },
+  "type": "language",
+  "technologyId": "32020877-de9f-424c-aacf-b7a03a392942",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89e"
+  },
+  "dictionary": {
+    "name": "Perl",
+    "identifiers": [
+      "perl"
+    ]
+  },
+  "type": "language",
+  "technologyId": "5eb901a1-27a4-4449-8991-f38c171d2ccf",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89f"
+  },
+  "dictionary": {
+    "name": "PHP",
+    "identifiers": [
+      "php"
+    ]
+  },
+  "type": "language",
+  "technologyId": "675e33e3-08b0-41e7-abe9-9e294504564e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a0"
+  },
+  "dictionary": {
+    "name": "Python",
+    "identifiers": [
+      "python"
+    ]
+  },
+  "type": "language",
+  "technologyId": "50e1f516-0923-449e-a5f7-9582bb74a113",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a6"
+  },
+  "dictionary": {
+    "name": "TypeScript",
+    "identifiers": [
+      "typescript"
+    ]
+  },
+  "type": "language",
+  "technologyId": "1663d73d-5a8a-461e-b0fc-72a319dea4b8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a3"
+  },
+  "dictionary": {
+    "name": "SASS",
+    "identifiers": [
+      "sass"
+    ]
+  },
+  "type": "language",
+  "technologyId": "6d0dc01f-e689-4e00-b53c-d99b33c9b0cf",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a2"
+  },
+  "dictionary": {
+    "name": "Ruby",
+    "identifiers": [
+      "ruby"
+    ]
+  },
+  "type": "language",
+  "technologyId": "d295a5ce-1618-4d82-b223-96f681e0a1ee",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a4"
+  },
+  "dictionary": {
+    "name": "SQL",
+    "identifiers": [
+      "sql"
+    ]
+  },
+  "type": "language",
+  "technologyId": "ab67aaad-489c-4369-b294-be65a2ce1acd",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a5"
+  },
+  "dictionary": {
+    "name": "Swift",
+    "identifiers": [
+      "swift"
+    ]
+  },
+  "type": "language",
+  "technologyId": "017b8d72-c29d-4ea5-b1d0-59ccceb0c001",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8a7"
+  },
+  "dictionary": {
+    "name": "XML",
+    "identifiers": [
+      "xml"
+    ]
+  },
+  "type": "language",
+  "technologyId": "896a944b-52e9-4838-8b5b-4cfbeccd5ae8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec89c"
+  },
+  "dictionary": {
+    "name": "NodeJS",
+    "identifiers": [
+      "nodejs",
+      "node.js",
+      "node"
+    ]
+  },
+  "type": "language",
+  "technologyId": "43eeff99-5f62-4533-95a5-523ee0b73fee",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.074Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ca"
+  },
+  "dictionary": {
+    "name": "Neo4j",
+    "identifiers": [
+      "neo4j"
+    ]
+  },
+  "type": "database",
+  "technologyId": "7dfbf037-caec-4aba-9476-655a1da39440",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ce"
+  },
+  "dictionary": {
+    "name": "Riak",
+    "identifiers": [
+      "riak"
+    ]
+  },
+  "type": "database",
+  "technologyId": "82ed8548-2a0c-44be-8063-98eeddbd7e13",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8cf"
+  },
+  "dictionary": {
+    "name": "SQLite",
+    "identifiers": [
+      "sqlite"
+    ]
+  },
+  "type": "database",
+  "technologyId": "6f0e09b5-f29c-4703-95ed-55b48de674cb",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c9"
+  },
+  "dictionary": {
+    "name": "MySQL",
+    "identifiers": [
+      "mysql"
+    ]
+  },
+  "type": "database",
+  "technologyId": "27139531-5e6c-4030-bf11-d0acc39d2edf",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c5"
+  },
+  "dictionary": {
+    "name": "CouchDB",
+    "identifiers": [
+      "couchdb"
+    ]
+  },
+  "type": "database",
+  "technologyId": "61df7918-0a6e-4ea4-8560-a1ca1f244117",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c6"
+  },
+  "dictionary": {
+    "name": "Hadoop",
+    "identifiers": [
+      "hadoop",
+      "hbase"
+    ]
+  },
+  "type": "database",
+  "technologyId": "660b6652-a936-400f-ad5d-eab990019078",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8cd"
+  },
+  "dictionary": {
+    "name": "Redis",
+    "identifiers": [
+      "redis"
+    ]
+  },
+  "type": "database",
+  "technologyId": "29188fd6-e95d-4518-98a3-556cb1aa397f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c8"
+  },
+  "dictionary": {
+    "name": "MongoDB",
+    "identifiers": [
+      "mongodb",
+      "mongo"
+    ]
+  },
+  "type": "database",
+  "technologyId": "3a8ec161-4607-4951-9af7-4fe2e1f01cb8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8cc"
+  },
+  "dictionary": {
+    "name": "PostgreSQL",
+    "identifiers": [
+      "postgresql",
+      "postgres"
+    ]
+  },
+  "type": "database",
+  "technologyId": "6723a7a1-9c70-4602-b9c0-b61af01fd5f4",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c7"
+  },
+  "dictionary": {
+    "name": "MariaDB",
+    "identifiers": [
+      "mariadb"
+    ]
+  },
+  "type": "database",
+  "technologyId": "388209f9-f1c6-4da6-9197-edd991a70190",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8cb"
+  },
+  "dictionary": {
+    "name": "Oracle",
+    "identifiers": [
+      "oracle"
+    ]
+  },
+  "type": "database",
+  "technologyId": "3c85924d-585a-4f64-bd5e-5c822c340a96",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c3"
+  },
+  "dictionary": {
+    "name": "Microsoft SQL Server",
+    "identifiers": [
+      "mssql",
+      "sql server"
+    ]
+  },
+  "type": "database",
+  "technologyId": "854e1554-52a5-44f3-adf9-3a2d14b286d9",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8c4"
+  },
+  "dictionary": {
+    "name": "Cassandra",
+    "identifiers": [
+      "cassandra"
+    ]
+  },
+  "type": "database",
+  "technologyId": "f224ba3a-feb9-4d14-b7db-a1fefd90b630",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.095Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8df"
+  },
+  "dictionary": {
+    "name": "Entity Framework",
+    "identifiers": [
+      "entity framework",
+      "entityframework"
+    ]
+  },
+  "type": "library",
+  "technologyId": "b7d516dc-3a96-4ac4-a19b-b93df8487fc5",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e1"
+  },
+  "dictionary": {
+    "name": "Ruby on Rails",
+    "identifiers": [
+      "ruby on rails",
+      "ruby"
+    ]
+  },
+  "type": "library",
+  "technologyId": "7237d990-086e-49cb-811a-3d9456b01f28",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e0"
+  },
+  "dictionary": {
+    "name": "Microsoft dotNET",
+    "identifiers": [
+      "dotnet",
+      "asp.net",
+      ".net",
+      "microsoft .net"
+    ]
+  },
+  "type": "library",
+  "technologyId": "5263092e-3d78-4376-91e8-d29eefe4803d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e2"
+  },
+  "dictionary": {
+    "name": "Spring Boot",
+    "identifiers": [
+      "spring boot",
+      "spring"
+    ]
+  },
+  "type": "library",
+  "technologyId": "9a2c110b-9aec-439f-82af-7c6a24e3bcf0",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e3"
+  },
+  "dictionary": {
+    "name": "Angular",
+    "identifiers": [
+      "angular"
+    ]
+  },
+  "type": "library",
+  "technologyId": "ed7c4abc-ac4a-4e5a-ad7a-5ac55fd17a61",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e4"
+  },
+  "dictionary": {
+    "name": "AngularJS",
+    "identifiers": [
+      "angularjs"
+    ]
+  },
+  "type": "library",
+  "technologyId": "2677ad74-ceb2-463f-8b12-a47a6ede50af",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e6"
+  },
+  "dictionary": {
+    "name": "Django",
+    "identifiers": [
+      "django"
+    ]
+  },
+  "type": "library",
+  "technologyId": "a7dc3391-7561-4fd0-9f0c-d543e2a718fe",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e5"
+  },
+  "dictionary": {
+    "name": "Blade",
+    "identifiers": [
+      "blade"
+    ]
+  },
+  "type": "library",
+  "technologyId": "4aa62c04-d133-4c2b-beda-82fc2ac49e4f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.625Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e7"
+  },
+  "dictionary": {
+    "name": "EmberJS",
+    "identifiers": [
+      "emberjs",
+      "ember",
+      "ember.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "bab7d922-b71a-4e71-a990-58f588ae8c6b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e8"
+  },
+  "dictionary": {
+    "name": "ExpressJS",
+    "identifiers": [
+      "expressjs",
+      "express.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "410acf18-9a4e-4bd0-b6a2-74ea827d3eb3",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8e9"
+  },
+  "dictionary": {
+    "name": "FastAPI",
+    "identifiers": [
+      "fastapi"
+    ]
+  },
+  "type": "library",
+  "technologyId": "2a5a2d32-6895-40ce-be95-6d8583038989",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ea"
+  },
+  "dictionary": {
+    "name": "FastifyJS",
+    "identifiers": [
+      "fastifyjs",
+      "fastify.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "ef33a13e-864f-4c90-9a9b-4adf12d4270f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ed"
+  },
+  "dictionary": {
+    "name": "Gatsby",
+    "identifiers": [
+      "gatsby",
+      "gatsbyjs",
+      "gatsby.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "5affec65-0616-40cb-ba49-49df6391c936",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f0"
+  },
+  "dictionary": {
+    "name": "LoopBack",
+    "identifiers": [
+      "loopback",
+      "loopback.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "1edf8e4c-8f6d-4f7f-835e-d571e9a9cf02",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ef"
+  },
+  "dictionary": {
+    "name": "Laravel",
+    "identifiers": [
+      "laravel"
+    ]
+  },
+  "type": "library",
+  "technologyId": "f0cc020a-d041-4eb6-bbaa-b54abd0f7f05",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ee"
+  },
+  "dictionary": {
+    "name": "Ionic",
+    "identifiers": [
+      "ionic"
+    ]
+  },
+  "type": "library",
+  "technologyId": "3a9e1fe1-766d-4cfc-9d44-24a4e5ba357f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f1"
+  },
+  "dictionary": {
+    "name": "Lumel",
+    "identifiers": [
+      "lumen"
+    ]
+  },
+  "type": "library",
+  "technologyId": "94154948-87f1-4734-b448-b40eeda9a1bf",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f8"
+  },
+  "dictionary": {
+    "name": "React Native",
+    "identifiers": [
+      "react native",
+      "reactnative"
+    ]
+  },
+  "type": "library",
+  "technologyId": "fc8e34b2-5abf-4a0d-8a1c-34b8005f568e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f7"
+  },
+  "dictionary": {
+    "name": "ReactJS",
+    "identifiers": [
+      "reactjs",
+      "react.js",
+      "react"
+    ]
+  },
+  "type": "library",
+  "technologyId": "5574291e-4bf2-4ff3-8231-1f2821f2cd68",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f4"
+  },
+  "dictionary": {
+    "name": "NextJS",
+    "identifiers": [
+      "nextjs",
+      "next.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "ee96b5ca-fcd5-4ee9-90ce-7f87832e3e5b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f5"
+  },
+  "dictionary": {
+    "name": "NuxtJS",
+    "identifiers": [
+      "nuxtjs",
+      "nuxt.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "e1e5def1-36f4-4623-96be-5834958c2152",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f9"
+  },
+  "dictionary": {
+    "name": "Svelte",
+    "identifiers": [
+      "svelte",
+      "sveltejs",
+      "svelte.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "f56edc1b-1c44-4d07-86c9-67bdcc843e61",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f2"
+  },
+  "dictionary": {
+    "name": "MeteorJS",
+    "identifiers": [
+      "meteorjs",
+      "meteor.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "d4ec9489-b551-45fa-949d-5b290a362c48",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f3"
+  },
+  "dictionary": {
+    "name": "NestJS",
+    "identifiers": [
+      "nestjs",
+      "nest.js"
+    ]
+  },
+  "type": "library",
+  "technologyId": "126d6ccf-5f83-46ea-819d-01c70f9118fa",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8eb"
+  },
+  "dictionary": {
+    "name": "Flask",
+    "identifiers": [
+      "flask"
+    ]
+  },
+  "type": "library",
+  "technologyId": "95fcb1c9-f232-4618-ae35-8fe01872abf4",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8f6"
+  },
+  "dictionary": {
+    "name": "Quarkus",
+    "identifiers": [
+      "quarkus",
+      "quarkus.io",
+      "quarkusio"
+    ]
+  },
+  "type": "library",
+  "technologyId": "21f37144-fa9a-40de-a575-80e0a5b6ff45",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8ec"
+  },
+  "dictionary": {
+    "name": "Flutter",
+    "identifiers": [
+      "flutter"
+    ]
+  },
+  "type": "library",
+  "technologyId": "4a2fa7ee-d07e-43f2-926d-d58ceb370443",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.626Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8fb"
+  },
+  "dictionary": {
+    "name": "VueJS",
+    "identifiers": [
+      "vuejs",
+      "vue.js",
+      "vue",
+      "quasar"
+    ]
+  },
+  "type": "library",
+  "technologyId": "991e8b48-7781-437b-825c-9db9e811b683",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec91c"
+  },
+  "dictionary": {
+    "name": "Microsoft dotNET",
+    "identifiers": [
+      "dotnet",
+      "asp.net",
+      ".net",
+      "microsoft .net"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "8cf13c05-1814-4fee-8b8e-ca86a8896ef6",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec91d"
+  },
+  "dictionary": {
+    "name": "Ruby on Rails",
+    "identifiers": [
+      "ruby on rails",
+      "ruby"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "f9514c89-6d1d-40f5-be3f-1dab3fd6df0a",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8fc"
+  },
+  "dictionary": {
+    "name": "Xamarin",
+    "identifiers": [
+      "xamarin"
+    ]
+  },
+  "type": "library",
+  "technologyId": "c494c91e-fa44-4bc1-8bd6-c0ac4a95e253",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec91b"
+  },
+  "dictionary": {
+    "name": "Entity Framework",
+    "identifiers": [
+      "entity framework",
+      "entityframework"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "f4e8bea4-90ae-4f24-9d11-a484477d0384",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec924"
+  },
+  "dictionary": {
+    "name": "ExpressJS",
+    "identifiers": [
+      "expressjs",
+      "express.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "c7868c5c-9b51-4e61-9fcf-3f385f4a01f5",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec91e"
+  },
+  "dictionary": {
+    "name": "Spring Boot",
+    "identifiers": [
+      "spring boot",
+      "spring"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "c1ddc811-e925-4feb-bbc6-d04cee968964",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec925"
+  },
+  "dictionary": {
+    "name": "FastAPI",
+    "identifiers": [
+      "fastapi"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "9606605c-aebd-4bea-bdaf-f67efe7dc2ac",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec921"
+  },
+  "dictionary": {
+    "name": "Blade",
+    "identifiers": [
+      "blade"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "7bd1bedd-2cbf-4614-9885-f1ae25a118f1",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec920"
+  },
+  "dictionary": {
+    "name": "AngularJS",
+    "identifiers": [
+      "angularjs"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "51562d8a-38c8-427d-9e2b-639df23ceef1",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec91f"
+  },
+  "dictionary": {
+    "name": "Angular",
+    "identifiers": [
+      "angular"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "c88f98f1-1178-4ce4-81f4-11a215c6e2bb",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec923"
+  },
+  "dictionary": {
+    "name": "EmberJS",
+    "identifiers": [
+      "emberjs",
+      "ember",
+      "ember.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "ba95f9dd-e601-4f2e-b817-6f9035aafe05",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec922"
+  },
+  "dictionary": {
+    "name": "Django",
+    "identifiers": [
+      "django"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "98f5d6ea-140a-4fcd-abc7-373ec79109e5",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.678Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec927"
+  },
+  "dictionary": {
+    "name": "Flask",
+    "identifiers": [
+      "flask"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "6cd13072-00bb-4744-bcf1-1ed92a3acce9",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec926"
+  },
+  "dictionary": {
+    "name": "FastifyJS",
+    "identifiers": [
+      "fastifyjs",
+      "fastify.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "ff233454-1df1-4b4a-8b90-55f4ba0c3c1c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec8fa"
+  },
+  "dictionary": {
+    "name": "Symfony",
+    "identifiers": [
+      "symfony"
+    ]
+  },
+  "type": "library",
+  "technologyId": "648f2078-90b0-4794-966f-9c8b2b593168",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.627Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92a"
+  },
+  "dictionary": {
+    "name": "Ionic",
+    "identifiers": [
+      "ionic"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "d88c1821-0656-463d-8f9f-f65f98da0cf4",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92b"
+  },
+  "dictionary": {
+    "name": "Laravel",
+    "identifiers": [
+      "laravel"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "fad47fc4-7a58-4f53-8540-3748bcbae4f6",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92e"
+  },
+  "dictionary": {
+    "name": "MeteorJS",
+    "identifiers": [
+      "meteorjs",
+      "meteor.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "414377f7-8308-4b8d-a68c-606dad8d99a2",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec930"
+  },
+  "dictionary": {
+    "name": "NextJS",
+    "identifiers": [
+      "nextjs",
+      "next.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "4cea6e83-7efe-481f-b997-8d49f5a60480",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92c"
+  },
+  "dictionary": {
+    "name": "LoopBack",
+    "identifiers": [
+      "loopback",
+      "loopback.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "4832e906-390b-472e-b185-2b9a918e1879",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92d"
+  },
+  "dictionary": {
+    "name": "Lumel",
+    "identifiers": [
+      "lumen"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "a48471c0-5732-4fc4-9b07-0b6551723b89",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec92f"
+  },
+  "dictionary": {
+    "name": "NestJS",
+    "identifiers": [
+      "nestjs",
+      "nest.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "7cd7a0bb-9228-4247-a232-b1360026363d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec931"
+  },
+  "dictionary": {
+    "name": "NuxtJS",
+    "identifiers": [
+      "nuxtjs",
+      "nuxt.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "e21c3a55-1048-4aea-96b5-5a7bdcf4ee3b",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec933"
+  },
+  "dictionary": {
+    "name": "ReactJS",
+    "identifiers": [
+      "reactjs",
+      "react.js",
+      "react"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "a509e6bb-1325-4325-a279-60c11d27b2ce",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec934"
+  },
+  "dictionary": {
+    "name": "React Native",
+    "identifiers": [
+      "react native",
+      "reactnative"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "874e6664-e393-4873-a81f-99220a01f78e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec935"
+  },
+  "dictionary": {
+    "name": "Svelte",
+    "identifiers": [
+      "svelte",
+      "sveltejs",
+      "svelte.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "96f17f88-a849-4982-afe7-1e63515c26b1",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec936"
+  },
+  "dictionary": {
+    "name": "Symfony",
+    "identifiers": [
+      "symfony"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "087334fc-20b2-4cc4-98fe-b889dde469fa",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec932"
+  },
+  "dictionary": {
+    "name": "Quarkus",
+    "identifiers": [
+      "quarkus",
+      "quarkus.io",
+      "quarkusio"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "fac9c9a7-fa18-486d-8653-bc03a33e84fe",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec929"
+  },
+  "dictionary": {
+    "name": "Gatsby",
+    "identifiers": [
+      "gatsby",
+      "gatsbyjs",
+      "gatsby.js"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "8bdb38f6-7d5b-4158-a2b7-54b0a6070c4f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec937"
+  },
+  "dictionary": {
+    "name": "VueJS",
+    "identifiers": [
+      "vuejs",
+      "vue.js",
+      "vue",
+      "quasar"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "2578f78a-3f04-46b1-a82b-dd18271cf63a",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec928"
+  },
+  "dictionary": {
+    "name": "Flutter",
+    "identifiers": [
+      "flutter"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "356a009e-3847-4000-ac74-ea84e83d7e08",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec938"
+  },
+  "dictionary": {
+    "name": "Xamarin",
+    "identifiers": [
+      "xamarin"
+    ]
+  },
+  "type": "paradigm",
+  "technologyId": "c2331829-d68f-4340-ae1d-31f6297292d3",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.679Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec958"
+  },
+  "dictionary": {
+    "name": "Microsoft dotNET",
+    "identifiers": [
+      "dotnet",
+      "asp.net",
+      ".net",
+      "microsoft .net"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "7a9a8717-0635-413d-8768-0fdb63c0d903",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec959"
+  },
+  "dictionary": {
+    "name": "Ruby on Rails",
+    "identifiers": [
+      "ruby on rails",
+      "ruby"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "41b9f4ca-b6b5-4725-8eb8-046ddda3dc45",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec963"
+  },
+  "dictionary": {
+    "name": "Flask",
+    "identifiers": [
+      "flask"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "0e61cf3e-ff2e-4f76-a0d6-bc9bcf281acd",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95b"
+  },
+  "dictionary": {
+    "name": "Angular",
+    "identifiers": [
+      "angular"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "bf08b291-5451-4ece-b927-8d6ac7c3039c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95c"
+  },
+  "dictionary": {
+    "name": "AngularJS",
+    "identifiers": [
+      "angularjs"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "6e2c3446-7c20-4326-ae33-6b0e7029870f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95d"
+  },
+  "dictionary": {
+    "name": "Blade",
+    "identifiers": [
+      "blade"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "fb16cbf7-13e8-4e47-a346-6601353457d3",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec964"
+  },
+  "dictionary": {
+    "name": "Flutter",
+    "identifiers": [
+      "flutter"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "5f72912b-76dd-4ea0-8479-e1f21bbe725d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95a"
+  },
+  "dictionary": {
+    "name": "Spring Boot",
+    "identifiers": [
+      "spring boot",
+      "spring"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "6a669ecc-9a98-4a7d-9300-ed23ae93a988",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95f"
+  },
+  "dictionary": {
+    "name": "EmberJS",
+    "identifiers": [
+      "emberjs",
+      "ember",
+      "ember.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "af506aae-af03-4ce7-9fe3-545cc3a5b326",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec960"
+  },
+  "dictionary": {
+    "name": "ExpressJS",
+    "identifiers": [
+      "expressjs",
+      "express.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "4cbb45cd-1dac-4eac-9f51-fb82fc75c65c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec962"
+  },
+  "dictionary": {
+    "name": "FastifyJS",
+    "identifiers": [
+      "fastifyjs",
+      "fastify.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "b9e80721-6270-4862-b037-9718aa22afbc",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec95e"
+  },
+  "dictionary": {
+    "name": "Django",
+    "identifiers": [
+      "django"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "d00af423-2bda-4d02-b428-e9239ca83ed2",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec968"
+  },
+  "dictionary": {
+    "name": "LoopBack",
+    "identifiers": [
+      "loopback",
+      "loopback.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "415d8d80-109a-4146-8f4e-d2ad7f3bee49",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec967"
+  },
+  "dictionary": {
+    "name": "Laravel",
+    "identifiers": [
+      "laravel"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "f2623272-a438-4c77-a9bd-a4cf8602a754",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec965"
+  },
+  "dictionary": {
+    "name": "Gatsby",
+    "identifiers": [
+      "gatsby",
+      "gatsbyjs",
+      "gatsby.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "57edd86f-5280-4d50-9300-eb3a5677f2ed",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec957"
+  },
+  "dictionary": {
+    "name": "Entity Framework",
+    "identifiers": [
+      "entity framework",
+      "entityframework"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "46536e3d-c148-4a8a-9549-23c479d1b06a",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec966"
+  },
+  "dictionary": {
+    "name": "Ionic",
+    "identifiers": [
+      "ionic"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "089f1c9c-1e95-469a-b8b7-dd4bdcad1d49",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec961"
+  },
+  "dictionary": {
+    "name": "FastAPI",
+    "identifiers": [
+      "fastapi"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "ec8a9c12-6ca6-48a4-960e-f72e64c0bfdc",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96f"
+  },
+  "dictionary": {
+    "name": "ReactJS",
+    "identifiers": [
+      "reactjs",
+      "react.js",
+      "react"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "c78620ef-173f-44b9-b5fa-38899ad8f925",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96b"
+  },
+  "dictionary": {
+    "name": "NestJS",
+    "identifiers": [
+      "nestjs",
+      "nest.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "c1112ae3-cf71-45ab-8313-76e7f5faa7b2",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96a"
+  },
+  "dictionary": {
+    "name": "MeteorJS",
+    "identifiers": [
+      "meteorjs",
+      "meteor.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "fa4516fb-7c13-4716-a0a1-43cce56c16f9",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96d"
+  },
+  "dictionary": {
+    "name": "NuxtJS",
+    "identifiers": [
+      "nuxtjs",
+      "nuxt.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "84bf2c9e-ac2b-4cbd-a9f2-e03d816ccb40",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec974"
+  },
+  "dictionary": {
+    "name": "Xamarin",
+    "identifiers": [
+      "xamarin"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "6198256f-85f4-484f-bac1-38fd3d24106f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec971"
+  },
+  "dictionary": {
+    "name": "Svelte",
+    "identifiers": [
+      "svelte",
+      "sveltejs",
+      "svelte.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "922c4254-6de5-4fcf-8d53-8ed5b7f46ea7",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96e"
+  },
+  "dictionary": {
+    "name": "Quarkus",
+    "identifiers": [
+      "quarkus",
+      "quarkus.io",
+      "quarkusio"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "dbe459e4-bcd4-4dc4-8b77-f7a75a3334a2",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec96c"
+  },
+  "dictionary": {
+    "name": "NextJS",
+    "identifiers": [
+      "nextjs",
+      "next.js"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "113a520a-01e0-420f-9bff-7efce059658e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec996"
+  },
+  "dictionary": {
+    "name": "Spring Boot",
+    "identifiers": [
+      "spring boot",
+      "spring"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "9874de4d-769f-4bed-8cdf-79c76651bcb5",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec972"
+  },
+  "dictionary": {
+    "name": "Symfony",
+    "identifiers": [
+      "symfony"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "e5e64aa8-a08c-49ac-a174-ef26865db6b9",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec970"
+  },
+  "dictionary": {
+    "name": "React Native",
+    "identifiers": [
+      "react native",
+      "reactnative"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "91818124-928a-43ea-b248-6ddcea022643",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec993"
+  },
+  "dictionary": {
+    "name": "Entity Framework",
+    "identifiers": [
+      "entity framework",
+      "entityframework"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "a72ec819-551d-410c-be36-e51a43f6bf9c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec994"
+  },
+  "dictionary": {
+    "name": "Microsoft dotNET",
+    "identifiers": [
+      "dotnet",
+      "asp.net",
+      ".net",
+      "microsoft .net"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "76dffb9a-8f1e-443d-9c62-f7e5995e9c5c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec973"
+  },
+  "dictionary": {
+    "name": "VueJS",
+    "identifiers": [
+      "vuejs",
+      "vue.js",
+      "vue",
+      "quasar"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "41bd0278-0d23-4409-a4b3-675cefde158c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec995"
+  },
+  "dictionary": {
+    "name": "Ruby on Rails",
+    "identifiers": [
+      "ruby on rails",
+      "ruby"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "06db3916-e914-4972-9f73-1a12a474ec00",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec997"
+  },
+  "dictionary": {
+    "name": "Angular",
+    "identifiers": [
+      "angular"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "0787915e-2833-4477-a596-fc79c35da690",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec969"
+  },
+  "dictionary": {
+    "name": "Lumel",
+    "identifiers": [
+      "lumen"
+    ]
+  },
+  "type": "pattern",
+  "technologyId": "f3eb731f-a1e4-4012-8a3b-3f7cee16f1c1",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.703Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec999"
+  },
+  "dictionary": {
+    "name": "Blade",
+    "identifiers": [
+      "blade"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "8d0fb5e2-88b2-45a4-8e85-abee94d8ba23",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec998"
+  },
+  "dictionary": {
+    "name": "AngularJS",
+    "identifiers": [
+      "angularjs"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "2c5db35d-db59-4cc9-8afd-d8a0f4167aab",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99d"
+  },
+  "dictionary": {
+    "name": "FastAPI",
+    "identifiers": [
+      "fastapi"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "0a564453-9286-46cc-a0be-3477c1f47c7d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99e"
+  },
+  "dictionary": {
+    "name": "FastifyJS",
+    "identifiers": [
+      "fastifyjs",
+      "fastify.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "f6e77add-3cfc-45f0-af35-738489062155",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a0"
+  },
+  "dictionary": {
+    "name": "Flutter",
+    "identifiers": [
+      "flutter"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "2fad5eba-310e-4a17-bec4-226831e39d5c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99b"
+  },
+  "dictionary": {
+    "name": "EmberJS",
+    "identifiers": [
+      "emberjs",
+      "ember",
+      "ember.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "24fb0b19-66bb-40dc-87f6-9ee476722da8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99c"
+  },
+  "dictionary": {
+    "name": "ExpressJS",
+    "identifiers": [
+      "expressjs",
+      "express.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "da8f860c-7046-4ebb-8dea-fc84b146aa50",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99f"
+  },
+  "dictionary": {
+    "name": "Flask",
+    "identifiers": [
+      "flask"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "75208a7f-b7d3-4642-9001-13e5433ec52c",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a3"
+  },
+  "dictionary": {
+    "name": "Laravel",
+    "identifiers": [
+      "laravel"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "536f5298-2f05-4bde-9f4d-9ca00c940463",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9aa"
+  },
+  "dictionary": {
+    "name": "Quarkus",
+    "identifiers": [
+      "quarkus",
+      "quarkus.io",
+      "quarkusio"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "76d13b4a-4169-4985-b248-1b521ff6c014",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a1"
+  },
+  "dictionary": {
+    "name": "Gatsby",
+    "identifiers": [
+      "gatsby",
+      "gatsbyjs",
+      "gatsby.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "f79d004b-61ff-4426-bdc4-571deec1dd7a",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a2"
+  },
+  "dictionary": {
+    "name": "Ionic",
+    "identifiers": [
+      "ionic"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "9b94befd-da05-4973-8803-2deaae60806e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9ab"
+  },
+  "dictionary": {
+    "name": "ReactJS",
+    "identifiers": [
+      "reactjs",
+      "react.js",
+      "react"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "3b51bd55-e55e-4fcb-a95f-21d2f64858cd",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a6"
+  },
+  "dictionary": {
+    "name": "MeteorJS",
+    "identifiers": [
+      "meteorjs",
+      "meteor.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "1a4a66b4-33d7-43dc-b07a-c3513f3c3dd6",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a5"
+  },
+  "dictionary": {
+    "name": "Lumel",
+    "identifiers": [
+      "lumen"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "753aa964-239d-4e57-a97f-b54c72662391",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a8"
+  },
+  "dictionary": {
+    "name": "NextJS",
+    "identifiers": [
+      "nextjs",
+      "next.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "6afaeb7e-ff6f-4e29-9cf9-d4d85d4d15e6",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a4"
+  },
+  "dictionary": {
+    "name": "LoopBack",
+    "identifiers": [
+      "loopback",
+      "loopback.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "2f21dfcb-5786-4067-b68b-fe572bda5812",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a9"
+  },
+  "dictionary": {
+    "name": "NuxtJS",
+    "identifiers": [
+      "nuxtjs",
+      "nuxt.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "b50fe906-32dd-461b-85cc-4a9ab9e60678",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9ac"
+  },
+  "dictionary": {
+    "name": "React Native",
+    "identifiers": [
+      "react native",
+      "reactnative"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "478fffb0-45ca-40fb-bd10-d4769993925f",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9ad"
+  },
+  "dictionary": {
+    "name": "Svelte",
+    "identifiers": [
+      "svelte",
+      "sveltejs",
+      "svelte.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "9a147849-31ce-4ea3-8571-660ac6924c7e",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9a7"
+  },
+  "dictionary": {
+    "name": "NestJS",
+    "identifiers": [
+      "nestjs",
+      "nest.js"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "e443a13f-7c71-4bdd-849d-6e87509967e8",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec99a"
+  },
+  "dictionary": {
+    "name": "Django",
+    "identifiers": [
+      "django"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "b488da4f-a9d0-4995-91df-256bb5c6db7d",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.735Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9af"
+  },
+  "dictionary": {
+    "name": "VueJS",
+    "identifiers": [
+      "vuejs",
+      "vue.js",
+      "vue",
+      "quasar"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "1ca7b4ef-c8e7-47df-8b19-1f574e337342",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9b0"
+  },
+  "dictionary": {
+    "name": "Xamarin",
+    "identifiers": [
+      "xamarin"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "1853b935-3942-42ef-81b2-157b2a0305ee",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+},{
+  "_id": {
+    "$oid": "62296a4aef020776213ec9ae"
+  },
+  "dictionary": {
+    "name": "Symfony",
+    "identifiers": [
+      "symfony"
+    ]
+  },
+  "type": "tool",
+  "technologyId": "84fc4b7e-9850-4f37-9fa4-8993005728d7",
+  "createdAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  },
+  "updatedAt": {
+    "$date": "2022-03-10T03:02:34.736Z"
+  }
+}]

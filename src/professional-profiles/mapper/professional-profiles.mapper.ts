@@ -22,7 +22,7 @@ export class ProfessionalProfilesMapper {
       createdAt: proProfile.createdAt,
       updatedAt: proProfile.createdAt,
       owner: new AccountResponse({
-        userId: proProfile.owner._id.toString(),
+        userId: proProfile.owner.userId,
         name: proProfile.owner.name,
         surname: proProfile.owner.surname,
         email: proProfile.owner.email,

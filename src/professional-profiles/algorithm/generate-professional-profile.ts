@@ -1,36 +1,38 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { TechnologiesService } from 'src/technologies/technologies.service';
 import { User } from 'src/users/schemas/users.schema';
 import { patternsLength } from '../identifiers/patterns';
 import {
   RequireEnglishDict,
   ScrapJobsResponse,
 } from '../interfaces/professional-profile.interface';
-import { Languages, LanguagesDocument } from '../schemas/languages.schema';
-import { ProfessionalProfile } from '../schemas/professional-profile.schema';
-import { TechDictionary } from '../types/professional-profile.type';
-import { login } from './login.algorithm';
-import { scrapJobLinks } from './scrap-job-links';
-import { scrapJobs as scrapJobs } from './scrap-jobs';
-import { searchJobs } from './search-jobs';
-import puppeteer = require('puppeteer');
 import { Databases, DatabasesDocument } from '../schemas/databases.schema';
 import { Frameworks, FrameworksDocument } from '../schemas/frameworks.schema';
+import { Languages, LanguagesDocument } from '../schemas/languages.schema';
 import { Libraries, LibrariesDocument } from '../schemas/libraries.schema';
 import { Paradigms, ParadigmsDocument } from '../schemas/paradigms.schema';
 import { Patterns, PatternsDocument } from '../schemas/patterns.schema';
+import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 import {
   RequireEnglish,
   RequireEnglishDocument,
 } from '../schemas/require-english.schema';
 import { Tools, ToolsDocument } from '../schemas/tools.schema';
+import { TechCountDictionary } from '../types/professional-profile.type';
+import { login } from './login.algorithm';
+import { scrapJobLinks } from './scrap-job-links';
+import { scrapJobs } from './scrap-jobs';
+import { searchJobs } from './search-jobs';
+import puppeteer = require('puppeteer');
 
 @Injectable()
 export class GenerateProfessionalProfile {
   private readonly logger = new Logger(GenerateProfessionalProfile.name);
 
   constructor(
+    private readonly technologiesService: TechnologiesService,
     @InjectModel(Databases.name)
     private readonly databasesModel: Model<DatabasesDocument>,
     @InjectModel(Frameworks.name)
@@ -149,7 +151,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveLanguageMetadata(
-    languagesDict: TechDictionary,
+    languagesDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -167,7 +169,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveLibraryMetadata(
-    librariesDict: TechDictionary,
+    librariesDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -185,7 +187,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveParadigmMetadata(
-    paradigmsDict: TechDictionary,
+    paradigmsDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -203,7 +205,7 @@ export class GenerateProfessionalProfile {
   }
 
   private SavePatternMetadata(
-    patternsDict: TechDictionary,
+    patternsDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -241,7 +243,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveToolMetadata(
-    toolsDict: TechDictionary,
+    toolsDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -254,7 +256,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveFrameworkMetadata(
-    frameworksDict: TechDictionary,
+    frameworksDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -272,7 +274,7 @@ export class GenerateProfessionalProfile {
   }
 
   private saveDatabaseMetadata(
-    databasesDict: TechDictionary,
+    databasesDict: TechCountDictionary,
     jobTitle: string,
     location: string,
     totalJobs: number,
@@ -347,7 +349,7 @@ export class GenerateProfessionalProfile {
    * @returns un arreglo de las tecnologías más demandadas (de las más repetida a la menos repetida)
    */
   private static getMostDemanded(
-    techDict: TechDictionary,
+    techDict: TechCountDictionary,
     maxLength = 3,
   ): string[] {
     const technologiesOrdered = Object.keys(techDict)

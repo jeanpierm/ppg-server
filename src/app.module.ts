@@ -12,6 +12,7 @@ import { ProfessionalProfilesModule } from './professional-profiles/professional
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { TechnologiesModule } from './technologies/technologies.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ load: Configs, isGlobal: true }),
@@ -26,6 +27,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     AuthModule,
     AccountModule,
     ProfessionalProfilesModule,
+    TechnologiesModule,
   ],
   controllers: [],
   providers: [

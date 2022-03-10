@@ -1,4 +1,13 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
+import { Role } from 'src/auth/enums/role.enum';
 import { IsUnregisteredEmail } from '../validators/is-unregistered-email.validator';
 
 export class CreateUserDto {
@@ -18,4 +27,9 @@ export class CreateUserDto {
   @IsString()
   @Length(5, 30)
   readonly password: string;
+
+  @IsOptional()
+  @ArrayMinSize(1)
+  @IsEnum(Role)
+  readonly roles: Role[];
 }

@@ -1,13 +1,13 @@
-import { TechDictionary } from '../types/professional-profile.type';
+import { TechCountDictionary } from '../types/professional-profile.type';
 
 export interface ScrapJobsResponse {
-  languagesDict: TechDictionary;
-  frameworksDict: TechDictionary;
-  librariesDict: TechDictionary;
-  databasesDict: TechDictionary;
-  patternsDict: TechDictionary;
-  toolsDict: TechDictionary;
-  paradigmsDict: TechDictionary;
+  languagesDict: TechCountDictionary;
+  frameworksDict: TechCountDictionary;
+  librariesDict: TechCountDictionary;
+  databasesDict: TechCountDictionary;
+  patternsDict: TechCountDictionary;
+  toolsDict: TechCountDictionary;
+  paradigmsDict: TechCountDictionary;
   requireEnglishDict: RequireEnglishDict;
 }
 

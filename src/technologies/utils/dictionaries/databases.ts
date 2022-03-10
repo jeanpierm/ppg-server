@@ -1,0 +1,15 @@
+export const databases = {
+  'Microsoft SQL Server': ['mssql', 'sql server'],
+  Cassandra: ['cassandra'],
+  CouchDB: ['couchdb'],
+  Hadoop: ['hadoop', 'hbase'],
+  MariaDB: ['mariadb'],
+  MongoDB: ['mongodb', 'mongo'],
+  MySQL: ['mysql'],
+  Neo4j: ['neo4j'],
+  Oracle: ['oracle'],
+  PostgreSQL: ['postgresql', 'postgres'],
+  Redis: ['redis'],
+  Riak: ['riak'],
+  SQLite: ['sqlite'],
+};

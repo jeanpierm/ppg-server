@@ -6,8 +6,8 @@ import { libraries } from '../identifiers/libraries';
 import { tools } from '../identifiers/tools';
 import { paradigms } from '../identifiers/paradigms';
 import {
-  TechDictionary,
-  TechDictionaryWithMeta,
+  TechCountDictionary,
+  TechCountDictionaryWithMeta,
   Identifier,
 } from '../types/professional-profile.type';
 
@@ -23,17 +23,17 @@ import {
 export function countTechnologies(
   jobDetail: string,
   jobIndex: number,
-  languagesDict: TechDictionary,
-  frameworksDict: TechDictionary,
-  librariesDict: TechDictionary,
-  databasesDict: TechDictionary,
-  patternsDict: TechDictionary,
-  toolsDict: TechDictionary,
-  paradigmsDict: TechDictionary,
+  languagesDict: TechCountDictionary,
+  frameworksDict: TechCountDictionary,
+  librariesDict: TechCountDictionary,
+  databasesDict: TechCountDictionary,
+  patternsDict: TechCountDictionary,
+  toolsDict: TechCountDictionary,
+  paradigmsDict: TechCountDictionary,
 ) {
   console.log(`[Job ${jobIndex + 1}] detail: ${jobDetail}`);
 
-  const dictionaries: TechDictionaryWithMeta[] = [
+  const dictionaries: TechCountDictionaryWithMeta[] = [
     { name: 'language', identifier: languages, dictionary: languagesDict },
     { name: 'framework', identifier: frameworks, dictionary: frameworksDict },
     { name: 'library', identifier: libraries, dictionary: librariesDict },
@@ -61,7 +61,7 @@ export function countTechnologies(
  */
 function countTechnology(
   dictName: string,
-  dictionary: TechDictionary,
+  dictionary: TechCountDictionary,
   identifier: Identifier,
   jobDetail: string,
   jobIndex: number,

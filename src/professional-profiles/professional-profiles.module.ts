@@ -45,6 +45,12 @@ import {
   RequireEnglishSchema,
 } from './schemas/require-english.schema';
 import { Tools, ToolsName, ToolsSchema } from './schemas/tools.schema';
+import {
+  Technology,
+  TechnologyName,
+  TechnologySchema,
+} from '../technologies/schemas/technology.schema';
+import { TechnologiesModule } from 'src/technologies/technologies.module';
 
 @Module({
   imports: [
@@ -53,6 +59,11 @@ import { Tools, ToolsName, ToolsSchema } from './schemas/tools.schema';
         name: ProfessionalProfile.name,
         schema: ProfessionalProfileSchema,
         collection: ProfessionalProfileName,
+      },
+      {
+        name: Technology.name,
+        schema: TechnologySchema,
+        collection: TechnologyName,
       },
       {
         name: Databases.name,
@@ -95,6 +106,7 @@ import { Tools, ToolsName, ToolsSchema } from './schemas/tools.schema';
         collection: ToolsName,
       },
     ]),
+    TechnologiesModule,
   ],
   controllers: [ProfessionalProfilesController],
   providers: [

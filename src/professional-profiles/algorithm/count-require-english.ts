@@ -1,4 +1,12 @@
-import { requireEnglish } from '../identifiers/require-english';
+const requireEnglish = [
+  'advanced english',
+  'advanced fluent english',
+  'english language proficiency',
+  'fluent english',
+  'inglés avanzado',
+  'require english',
+  'requirements english',
+];
 
 export function checkRequireEnglish(
   jobDetail: string,
