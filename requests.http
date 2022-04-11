@@ -1,0 +1,21 @@
+@base = http://localhost:3000/ppg-api/v1
+@contentType = application/json
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NmE1ZjljMC1kYzAyLTQ0MTItYTA5ZC1jMGY0NTFmOGZiMjMiLCJpYXQiOjE2NDk2NTAwMjUsImV4cCI6MTY0OTY1MzYyNX0.TCfczS02VA-4TGb0Y_F9aqm0yC4EgfijJtQ9lYQUAec
+
+### LOGIN
+POST {{base}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "jeanpier@gmail.com",
+  "password": "123456"
+}
+
+### GET TECHNOLOGIES
+GET {{base}}/technologies
+Authorization: Bearer {{jwt}}
+
+
+### GET TECHNOLOGY BY ID¿
+GET {{base}}/technologies/6d5158c9-1e89-47c9-8809-1dd7a9d65da8
+Authorization: Bearer {{jwt}}

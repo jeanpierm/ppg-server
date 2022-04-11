@@ -35,7 +35,7 @@ export class TechnologiesController {
   }
 
   @Get(':technologyId')
-  @Roles(Role.User, Role.Admin)
+  @Roles(Role.Admin)
   async findOne(@Param() { technologyId }: FindTechnologyParams) {
     const technology = await this.technologiesService.findById(technologyId);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
