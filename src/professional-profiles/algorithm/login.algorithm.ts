@@ -21,6 +21,6 @@ export async function login(page: puppeteer.Page) {
   await page.type(usernameSelector, username);
   await page.type(passwordSelector, password);
   await page.$eval(formSelector, (form: HTMLFormElement) => form.submit());
-  console.debug('Login successfully');
   await page.waitForNavigation();
+  console.debug('Login successfully');
 }

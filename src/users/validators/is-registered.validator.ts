@@ -14,9 +14,7 @@ import { User, UserDocument } from '../schemas/users.schema';
 export class IsRegisteredValidator implements ValidatorConstraintInterface {
   private readonly logger = new Logger(IsRegisteredValidator.name);
 
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-  ) {}
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   async validate(id: string): Promise<boolean> {
     const isRegistered = await this.userModel.exists({ _id: id });

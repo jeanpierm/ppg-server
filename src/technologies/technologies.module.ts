@@ -1,19 +1,9 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
-import { TechnologiesService } from './technologies.service';
-import { TechnologiesController } from './technologies.controller';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import {
-  Technology,
-  TechnologyName,
-  TechnologySchema,
-} from './schemas/technology.schema';
 import { ValidateTechnologyExistsMiddleware } from './middlewares/validate-technology-exists.middleware';
-import { TechnologiesMapper } from './mappers/technologies.mapper';
+import { Technology, TechnologyName, TechnologySchema } from './schemas/technology.schema';
+import { TechnologiesController } from './technologies.controller';
+import { TechnologiesService } from './technologies.service';
 
 @Module({
   imports: [
@@ -26,8 +16,8 @@ import { TechnologiesMapper } from './mappers/technologies.mapper';
     ]),
   ],
   controllers: [TechnologiesController],
-  providers: [TechnologiesService, TechnologiesMapper],
-  exports: [TechnologiesService, TechnologiesMapper],
+  providers: [TechnologiesService],
+  exports: [TechnologiesService],
 })
 export class TechnologiesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

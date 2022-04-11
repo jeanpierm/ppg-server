@@ -48,11 +48,7 @@ export class AccountController {
     @CurrentUser() user: User,
     @Body() { currentPassword, newPassword }: UpdatePasswordDto,
   ): Promise<ApiResponse> {
-    await this.accountService.updatePassword(
-      user,
-      currentPassword,
-      newPassword,
-    );
+    await this.accountService.updatePassword(user, currentPassword, newPassword);
     return new ApiResponse('Password updated successfully');
   }
 }

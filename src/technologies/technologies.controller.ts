@@ -21,17 +21,14 @@ import { TechnologiesService } from './technologies.service';
 
 @Controller('technologies')
 export class TechnologiesController {
-  constructor(
-    private readonly technologiesService: TechnologiesService,
-    private readonly technologiesMapper: TechnologiesMapper,
-  ) {}
+  constructor(private readonly technologiesService: TechnologiesService) {}
 
   @Get()
   @Public()
   async findAll(@Query() { type }: FindTechnologiesParams) {
     const technologies = await this.technologiesService.findAll(type);
     const payload = technologies.map((technology) =>
-      this.technologiesMapper.mapToResponse(technology),
+      TechnologiesMapper.toTechnologyResponse(technology),
     );
     return new ApiResponse('Technologies obtained successfully', payload);
   }
@@ -40,17 +37,15 @@ export class TechnologiesController {
   @Public()
   async findOne(@Param() { technologyId }: FindTechnologyParams) {
     const technology = await this.technologiesService.findById(technologyId);
-    const payload = this.technologiesMapper.mapToResponse(technology);
+    const payload = TechnologiesMapper.toTechnologyResponse(technology);
     return new ApiResponse('Technology obtained successfully', payload);
   }
 
   @Post()
   @Public()
   async create(@Body() createTechnologyDto: CreateTechnologyDto) {
-    const technology = await this.technologiesService.create(
-      createTechnologyDto,
-    );
-    const payload = this.technologiesMapper.mapToResponse(technology);
+    const technology = await this.technologiesService.create(createTechnologyDto);
+    const payload = TechnologiesMapper.toTechnologyResponse(technology);
     return new ApiResponse('Technology created successfully', payload);
   }
 

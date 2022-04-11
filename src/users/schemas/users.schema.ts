@@ -8,16 +8,7 @@ export type UserDocument = User & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class User {
-  // props for the types
-  _id: mongoose.Types.ObjectId;
-
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  // user schema props
   @Prop({
-    required: true,
     index: { unique: true },
     default: () => randomUUID(),
   })
@@ -26,14 +17,14 @@ export class User {
   @Prop({ required: true, trim: true, lowercase: true })
   name: string;
 
+  @Prop({ required: true, trim: true, lowercase: true })
+  surname: string;
+
   @Prop({ required: true, index: { unique: true }, lowercase: true })
   email: string;
 
   @Prop({ required: true })
   password: string;
-
-  @Prop({ required: true, trim: true, lowercase: true })
-  surname: string;
 
   @Prop({ default: [Role.User], type: String, enum: Role })
   roles: Role[];

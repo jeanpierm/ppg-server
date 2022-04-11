@@ -11,12 +11,8 @@ import { User, UserDocument } from '../schemas/users.schema';
 
 @ValidatorConstraint({ name: 'IsUnregisteredEmail', async: true })
 @Injectable()
-export class IsUnregisteredEmailValidator
-  implements ValidatorConstraintInterface
-{
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-  ) {}
+export class IsUnregisteredEmailValidator implements ValidatorConstraintInterface {
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   async validate(email: string): Promise<boolean> {
     const isRegistered = await this.userModel.exists({ email });

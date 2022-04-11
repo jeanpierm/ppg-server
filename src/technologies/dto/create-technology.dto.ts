@@ -1,22 +1,19 @@
-import { Type } from 'class-transformer';
-import {
-  IsEnum,
-  IsNotEmpty,
-  IsNotEmptyObject,
-  ValidateNested,
-} from 'class-validator';
+import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
-import { TechDictionary } from './tech-dictionary.dto';
+import { TechnologyIntf } from '../interfaces/technology.interface';
 
-export class CreateTechnologyDto {
+export class CreateTechnologyDto implements TechnologyIntf {
   @IsEnum(TechType, {
     message: `technology type must be ${Object.values(TechType).join(' or ')}`,
   })
   @IsNotEmpty()
-  readonly type: TechType;
+  type: TechType;
 
-  @ValidateNested()
-  @IsNotEmptyObject()
-  @Type(() => TechDictionary)
-  readonly dictionary: TechDictionary;
+  @IsString()
+  @IsNotEmpty()
+  name: string;
+
+  @ArrayMinSize(1)
+  @IsArray()
+  identifiers: string[];
 }

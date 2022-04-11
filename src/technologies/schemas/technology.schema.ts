@@ -1,12 +1,12 @@
-import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 import { TechType } from '../../professional-profiles/enums/tech-type.enum';
-import { TechDictionary } from '../dto/tech-dictionary.dto';
+import { TechnologyIntf } from '../interfaces/technology.interface';
 
 export type TechnologyDocument = Technology & Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class Technology {
+export class Technology implements TechnologyIntf {
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),
@@ -22,18 +22,16 @@ export class Technology {
   type: TechType;
 
   @Prop({
-    _id: false,
     required: true,
-    type: raw({
-      name: String,
-      identifiers: {
-        type: [String],
-        lowercase: true,
-        trim: true,
-      },
-    }),
+    index: true,
   })
-  dictionary: TechDictionary;
+  name: string;
+
+  @Prop({
+    required: true,
+    type: [String],
+  })
+  identifiers: string[];
 }
 
 export const TechnologySchema = SchemaFactory.createForClass(Technology);

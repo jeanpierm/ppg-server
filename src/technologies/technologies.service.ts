@@ -2,6 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
+import { libraries } from '../professional-profiles/identifiers/libraries';
+import { paradigms } from '../professional-profiles/identifiers/paradigms';
+import { patterns } from '../professional-profiles/identifiers/patterns';
+import { tools } from '../professional-profiles/identifiers/tools';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
@@ -17,129 +21,51 @@ export class TechnologiesService {
     @InjectModel(Technology.name)
     private readonly technologyModel: Model<TechnologyDocument>,
   ) {
-    this.initLanguages();
-    this.initDatabases();
-    this.initFrameworks();
-    this.initLibraries();
-    this.initParadigms();
-    this.initPatterns();
-    this.initTools();
+    Object.values(TechType).forEach((type) => {
+      this.initTechnology(type);
+    });
   }
 
-  async initLanguages() {
-    const type = TechType.Language;
+  async initTechnology(type: TechType) {
     const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug('Ya existen lenguajes, inicialización omitida');
+    if (collections && collections.length) {
+      return this.logger.debug(`Ya existen ${type}, inicialización omitida.`);
     }
-    Object.entries(languages).forEach(([key, values]) => {
+    let technologies: Record<string, string[]>;
+    switch (type) {
+      case TechType.Language:
+        technologies = languages;
+        break;
+      case TechType.Database:
+        technologies = databases;
+        break;
+      case TechType.Framework:
+        technologies = frameworks;
+        break;
+      case TechType.Library:
+        technologies = libraries;
+        break;
+      case TechType.Paradigm:
+        technologies = paradigms;
+        break;
+      case TechType.Pattern:
+        technologies = patterns;
+        break;
+      case TechType.Tool:
+        technologies = tools;
+        break;
+      default:
+        break;
+    }
+    Object.entries(technologies).forEach(([key, values]) => {
       const dto: CreateTechnologyDto = {
         type,
-        dictionary: { name: key, identifiers: values },
+        name: key,
+        identifiers: values,
       };
       this.create(dto);
     });
-    this.logger.debug('Lenguajes inicializadas');
-  }
-
-  async initDatabases() {
-    const type = TechType.Database;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug(
-        'Ya existen bases de datos, inicialización omitida',
-      );
-    }
-    Object.entries(databases).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Bases de datos inicializadas');
-  }
-
-  async initFrameworks() {
-    const type = TechType.Framework;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug('Ya existen frameworks, inicialización omitida');
-    }
-    Object.entries(frameworks).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Frameworks inicializadas');
-  }
-
-  async initLibraries() {
-    const type = TechType.Library;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug('Ya existen librerías, inicialización omitida');
-    }
-    Object.entries(frameworks).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Librerías inicializadas');
-  }
-
-  async initParadigms() {
-    const type = TechType.Paradigm;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug('Ya existen paradigmas, inicialización omitida');
-    }
-    Object.entries(frameworks).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Paradigmas inicializadas');
-  }
-
-  async initPatterns() {
-    const type = TechType.Pattern;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug('Ya existen patrones, inicialización omitida');
-    }
-    Object.entries(frameworks).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Patrones inicializadas');
-  }
-
-  async initTools() {
-    const type = TechType.Tool;
-    const collections = await this.findAll(type);
-    if (collections.length) {
-      return this.logger.debug(
-        'Ya existen herramientas, inicialización omitida',
-      );
-    }
-    Object.entries(frameworks).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        dictionary: { name: key, identifiers: values },
-      };
-      this.create(dto);
-    });
-    this.logger.debug('Herramientas inicializadas');
+    this.logger.debug(`tecnologías de tipo ${type} inicializadas`);
   }
 
   async findAll(type?: TechType): Promise<TechnologyDocument[]> {
@@ -157,16 +83,11 @@ export class TechnologiesService {
     return this.technologyModel.find({ type }).lean();
   }
 
-  async create(
-    createTechnologyDto: CreateTechnologyDto,
-  ): Promise<TechnologyDocument> {
+  async create(createTechnologyDto: CreateTechnologyDto): Promise<TechnologyDocument> {
     return this.technologyModel.create(createTechnologyDto);
   }
 
-  async update(
-    id: string,
-    updateTechnologyDto: UpdateTechnologyDto,
-  ): Promise<void> {
+  async update(id: string, updateTechnologyDto: UpdateTechnologyDto): Promise<void> {
     await this.technologyModel
       .updateOne({ technologyId: id }, updateTechnologyDto, { new: true })
       .lean();

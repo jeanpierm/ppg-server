@@ -1,15 +1,11 @@
-import { Injectable } from '@nestjs/common';
 import { AccountResponse } from 'src/account/dto/account-response.dto';
-import { ProfessionalProfileResponse as ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
+import { ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 
-@Injectable()
 export class ProfessionalProfilesMapper {
-  mapToProfessionalProfileResponse(
-    proProfile: ProfessionalProfile,
-  ): ProfessionalProfileResponse {
+  static toResponse(proProfile: ProfessionalProfile): ProfessionalProfileResponse {
     return new ProfessionalProfileResponse({
-      ppId: proProfile._id.toString(),
+      ppId: proProfile.ppId,
       jobTitle: proProfile.jobTitle,
       location: proProfile.location,
       languages: proProfile.languages,
@@ -19,8 +15,8 @@ export class ProfessionalProfilesMapper {
       tools: proProfile.tools,
       paradigms: proProfile.paradigms,
       requireEnglish: proProfile.requireEnglish,
-      createdAt: proProfile.createdAt,
-      updatedAt: proProfile.createdAt,
+      createdAt: (proProfile as any).createdAt,
+      updatedAt: (proProfile as any).createdAt,
       owner: new AccountResponse({
         userId: proProfile.owner.userId,
         name: proProfile.owner.name,

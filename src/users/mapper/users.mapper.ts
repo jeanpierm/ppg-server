@@ -1,11 +1,9 @@
-import { Injectable } from '@nestjs/common';
 import { AccountResponse } from 'src/account/dto/account-response.dto';
 import { UserResponse } from '../dto/user-response.dto';
 import { User } from '../schemas/users.schema';
 
-@Injectable()
 export class UsersMapper {
-  mapToAccountResponse(user: User): AccountResponse {
+  static toAccountResponse(user: User): AccountResponse {
     return new AccountResponse({
       userId: user.userId,
       name: user.name,
@@ -14,7 +12,7 @@ export class UsersMapper {
     });
   }
 
-  mapToUserResponse(user: User): UserResponse {
+  static toUserResponse(user: User): UserResponse {
     return new UserResponse({
       userId: user.userId,
       name: user.name,

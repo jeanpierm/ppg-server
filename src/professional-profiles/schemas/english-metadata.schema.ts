@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-export type RequireEnglishDocument = RequireEnglish & mongoose.Document;
+export type RequireEnglishDocument = EnglishMetadata & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class RequireEnglish {
+export class EnglishMetadata {
   @Prop({ required: true, trim: true, lowercase: true })
   jobTitle: string;
 
@@ -12,13 +12,12 @@ export class RequireEnglish {
   location: string;
 
   @Prop({ required: true, trim: true })
-  totalJobs: number;
+  jobsCount: number;
 
   @Prop({ required: true, trim: true })
-  requireEnglish: number;
+  requireCount: number;
 }
 
-export const RequireEnglishSchema =
-  SchemaFactory.createForClass(RequireEnglish);
+export const EnglishMetadataSchema = SchemaFactory.createForClass(EnglishMetadata);
 
-export const RequireEnglishName = 'requireEnglishMetadata';
+export const EnglishName = 'requireEnglishMetadata';

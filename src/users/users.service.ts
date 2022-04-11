@@ -9,9 +9,7 @@ import { User, UserDocument } from './schemas/users.schema';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
-  ) {}
+  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().lean();
@@ -74,9 +72,6 @@ export class UsersService {
   async updatePasswordByEmail(email: string, password: string): Promise<void> {
     const passwordSalt = await genSalt();
     const passwordHash = await hash(password, passwordSalt);
-    await this.userModel.findOneAndUpdate(
-      { email },
-      { password: passwordHash },
-    );
+    await this.userModel.findOneAndUpdate({ email }, { password: passwordHash });
   }
 }

@@ -1,0 +1,2 @@
+export const PATTERNS_LENGTH = 6;
+export const MIN_PERCENTAGE_TO_REQUIERE_ENGLISH = 0.5;

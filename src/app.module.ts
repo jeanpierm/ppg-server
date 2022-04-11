@@ -19,8 +19,7 @@ import { TechnologiesModule } from './technologies/technologies.module';
     MongooseModule.forRootAsync({
       imports: [DatabaseModule],
       inject: [DatabaseService],
-      useFactory: (databaseService: DatabaseService) =>
-        databaseService.createMongooseOptions(),
+      useFactory: (databaseService: DatabaseService) => databaseService.createMongooseOptions(),
     }),
     HelperModule,
     UsersModule,

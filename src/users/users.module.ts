@@ -9,9 +9,7 @@ import { IsRegisteredValidator } from './validators/is-registered.validator';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [UsersController],
   providers: [
     UsersService,
@@ -20,6 +18,6 @@ import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email
     IsRegisteredEmailValidator,
     IsRegisteredValidator,
   ],
-  exports: [UsersService, UsersMapper, IsUnregisteredEmailValidator],
+  exports: [UsersService, IsUnregisteredEmailValidator],
 })
 export class UsersModule {}

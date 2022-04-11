@@ -57,13 +57,9 @@ export class HelperService {
 
   mapValidationErrorsToMessages(errors: ValidationError[]) {
     console.log(errors);
-    const constraints = errors.map(
-      (error: ValidationError) => error.constraints,
-    );
+    const constraints = errors.map((error: ValidationError) => error.constraints);
     return constraints
-      .map((constraint: { [type: string]: string }) =>
-        Object.values(constraint),
-      )
+      .map((constraint: { [type: string]: string }) => Object.values(constraint))
       .flat();
   }
 }

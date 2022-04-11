@@ -3,19 +3,18 @@ import { Document } from 'mongoose';
 import { User } from 'src/users/schemas/users.schema';
 import * as mongoose from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
+import { randomUUID } from 'crypto';
 
 export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class ProfessionalProfile {
-  // props for the types
-  _id: mongoose.Types.ObjectId;
+  @Prop({
+    index: { unique: true },
+    default: () => randomUUID(),
+  })
+  ppId: string;
 
-  createdAt: Date;
-
-  updatedAt: Date;
-
-  // schema props
   @Prop({
     required: true,
     index: true,
@@ -92,7 +91,6 @@ export class ProfessionalProfile {
   status: EntityStatus;
 }
 
-export const ProfessionalProfileSchema =
-  SchemaFactory.createForClass(ProfessionalProfile);
+export const ProfessionalProfileSchema = SchemaFactory.createForClass(ProfessionalProfile);
 
 export const ProfessionalProfileName = 'professionalProfiles';

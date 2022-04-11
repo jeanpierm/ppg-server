@@ -1,56 +1,24 @@
 import { Module } from '@nestjs/common';
-import { ProfessionalProfilesService } from './professional-profiles.service';
-import { ProfessionalProfilesController } from './professional-profiles.controller';
 import { MongooseModule } from '@nestjs/mongoose';
+import { TechnologiesModule } from 'src/technologies/technologies.module';
+import { GenerateProfessionalProfile } from './algorithm/generate-professional-profile';
+import { ProfessionalProfilesController } from './professional-profiles.controller';
+import { ProfessionalProfilesService } from './professional-profiles.service';
+import {
+  EnglishMetadata,
+  EnglishMetadataSchema,
+  EnglishName,
+} from './schemas/english-metadata.schema';
 import {
   ProfessionalProfile,
   ProfessionalProfileName,
   ProfessionalProfileSchema,
 } from './schemas/professional-profile.schema';
-import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
-import { GenerateProfessionalProfile } from './algorithm/generate-professional-profile';
 import {
-  Languages,
-  LanguagesName,
-  LanguagesSchema,
-} from './schemas/languages.schema';
-import {
-  Databases,
-  DatabasesName,
-  DatabasesSchema,
-} from './schemas/databases.schema';
-import {
-  Frameworks,
-  FrameworksName,
-  FrameworksSchema,
-} from './schemas/frameworks.schema';
-import {
-  Libraries,
-  LibrariesName,
-  LibrariesSchema,
-} from './schemas/libraries.schema';
-import {
-  Paradigms,
-  ParadigmsName,
-  ParadigmsSchema,
-} from './schemas/paradigms.schema';
-import {
-  Patterns,
-  PatternsName,
-  PatternsSchema,
-} from './schemas/patterns.schema';
-import {
-  RequireEnglishName,
-  RequireEnglish,
-  RequireEnglishSchema,
-} from './schemas/require-english.schema';
-import { Tools, ToolsName, ToolsSchema } from './schemas/tools.schema';
-import {
-  Technology,
-  TechnologyName,
-  TechnologySchema,
-} from '../technologies/schemas/technology.schema';
-import { TechnologiesModule } from 'src/technologies/technologies.module';
+  TechnologyMetadata,
+  TechnologyMetadataName,
+  TechnologyMetadataSchema,
+} from './schemas/technology-metadata.schema';
 
 @Module({
   imports: [
@@ -61,58 +29,19 @@ import { TechnologiesModule } from 'src/technologies/technologies.module';
         collection: ProfessionalProfileName,
       },
       {
-        name: Technology.name,
-        schema: TechnologySchema,
-        collection: TechnologyName,
+        name: TechnologyMetadata.name,
+        schema: TechnologyMetadataSchema,
+        collection: TechnologyMetadataName,
       },
       {
-        name: Databases.name,
-        schema: DatabasesSchema,
-        collection: DatabasesName,
-      },
-      {
-        name: Frameworks.name,
-        schema: FrameworksSchema,
-        collection: FrameworksName,
-      },
-      {
-        name: Languages.name,
-        schema: LanguagesSchema,
-        collection: LanguagesName,
-      },
-      {
-        name: Libraries.name,
-        schema: LibrariesSchema,
-        collection: LibrariesName,
-      },
-      {
-        name: Paradigms.name,
-        schema: ParadigmsSchema,
-        collection: ParadigmsName,
-      },
-      {
-        name: Patterns.name,
-        schema: PatternsSchema,
-        collection: PatternsName,
-      },
-      {
-        name: RequireEnglish.name,
-        schema: RequireEnglishSchema,
-        collection: RequireEnglishName,
-      },
-      {
-        name: Tools.name,
-        schema: ToolsSchema,
-        collection: ToolsName,
+        name: EnglishMetadata.name,
+        schema: EnglishMetadataSchema,
+        collection: EnglishName,
       },
     ]),
     TechnologiesModule,
   ],
   controllers: [ProfessionalProfilesController],
-  providers: [
-    ProfessionalProfilesService,
-    ProfessionalProfilesMapper,
-    GenerateProfessionalProfile,
-  ],
+  providers: [ProfessionalProfilesService, GenerateProfessionalProfile],
 })
 export class ProfessionalProfilesModule {}
