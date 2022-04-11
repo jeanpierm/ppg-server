@@ -5,7 +5,7 @@ import { Technology } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
 import { User } from 'src/users/schemas/users.schema';
 import { TechType } from '../enums/tech-type.enum';
-import { ProfessionalProfileIntf } from '../interface/professional-profile.interface';
+import { ProfessionalProfileIntf } from '../interfaces/professional-profile.interface';
 import { ProfessionalProfileBuilder } from '../professional-profile.builder';
 import { EnglishMetadata } from '../schemas/english-metadata.schema';
 import { TechnologyMetadata } from '../schemas/technology-metadata.schema';

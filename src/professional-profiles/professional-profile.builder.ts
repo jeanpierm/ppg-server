@@ -1,6 +1,6 @@
 import { User } from '../users/schemas/users.schema';
 import { TechType } from './enums/tech-type.enum';
-import { ProfessionalProfileIntf } from './interface/professional-profile.interface';
+import { ProfessionalProfileIntf } from './interfaces/professional-profile.interface';
 import {
   PATTERNS_LENGTH,
   MIN_PERCENTAGE_TO_REQUIERE_ENGLISH,
