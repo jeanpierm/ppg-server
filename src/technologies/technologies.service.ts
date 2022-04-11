@@ -1,18 +1,11 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import * as fs from 'fs';
 import { Model } from 'mongoose';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
-import { libraries } from '../professional-profiles/identifiers/libraries';
-import { paradigms } from '../professional-profiles/identifiers/paradigms';
-import { patterns } from '../professional-profiles/identifiers/patterns';
-import { tools } from '../professional-profiles/identifiers/tools';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
-import { databases } from './utils/dictionaries/databases';
-import { frameworks } from './utils/dictionaries/frameworks';
-import { languages } from './utils/dictionaries/languages';
-
 @Injectable()
 export class TechnologiesService {
   private readonly logger = new Logger(TechnologiesService.name);
@@ -21,51 +14,35 @@ export class TechnologiesService {
     @InjectModel(Technology.name)
     private readonly technologyModel: Model<TechnologyDocument>,
   ) {
-    Object.values(TechType).forEach((type) => {
-      this.initTechnology(type);
-    });
+    this.init();
   }
 
-  async initTechnology(type: TechType) {
-    const collections = await this.findAll(type);
-    if (collections && collections.length) {
-      return this.logger.debug(`Ya existen ${type}, inicialización omitida.`);
+  async init() {
+    const jsonPath = __dirname + '/../../collections/technologies.json';
+    const hasTechnologies = !!(await this.technologyModel.find().limit(1).lean()).length;
+    this.logger.debug(`Existen tecnologías guardadas: ${hasTechnologies}`);
+    const hasJsonCollection = fs.existsSync(jsonPath);
+    this.logger.debug(`Existe archivo "technologies.json": ${hasJsonCollection}`);
+    if (hasTechnologies || !hasJsonCollection) {
+      this.logger.debug('Carga de JSON a MongoDB omitida');
+      return;
     }
-    let technologies: Record<string, string[]>;
-    switch (type) {
-      case TechType.Language:
-        technologies = languages;
-        break;
-      case TechType.Database:
-        technologies = databases;
-        break;
-      case TechType.Framework:
-        technologies = frameworks;
-        break;
-      case TechType.Library:
-        technologies = libraries;
-        break;
-      case TechType.Paradigm:
-        technologies = paradigms;
-        break;
-      case TechType.Pattern:
-        technologies = patterns;
-        break;
-      case TechType.Tool:
-        technologies = tools;
-        break;
-      default:
-        break;
+    try {
+      this.logger.debug('Iniciando carga de tecnologías a MongoDB desde JSON...');
+      const technologiesJson = fs.readFileSync(jsonPath, 'utf-8');
+      this.logger.debug('Tecnologías obtenidas de JSON exitosamente');
+      const technologies = JSON.parse(technologiesJson);
+      console.log(technologies[0]);
+      await this.technologyModel.insertMany(technologies);
+      this.logger.debug('Tecnologías cargadas a MongoDB desde JSON exitosamente');
+    } catch (err) {
+      if (err instanceof Error) {
+        this.logger.warn(
+          `Ocurrió un error y no se pudo cargar tecnologías desde JSON: ${err.message}`,
+        );
+        console.error(err);
+      }
     }
-    Object.entries(technologies).forEach(([key, values]) => {
-      const dto: CreateTechnologyDto = {
-        type,
-        name: key,
-        identifiers: values,
-      };
-      this.create(dto);
-    });
-    this.logger.debug(`tecnologías de tipo ${type} inicializadas`);
   }
 
   async findAll(type?: TechType): Promise<TechnologyDocument[]> {
