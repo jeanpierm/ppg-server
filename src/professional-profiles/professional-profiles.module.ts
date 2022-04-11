@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TechnologiesModule } from 'src/technologies/technologies.module';
-import { GenerateProfessionalProfile } from './algorithm/generate-professional-profile';
+import { ProfessionalProfileGenerator } from './ppg-algorithm/ppg';
 import { ProfessionalProfilesController } from './professional-profiles.controller';
 import { ProfessionalProfilesService } from './professional-profiles.service';
 import {
@@ -42,6 +42,6 @@ import {
     TechnologiesModule,
   ],
   controllers: [ProfessionalProfilesController],
-  providers: [ProfessionalProfilesService, GenerateProfessionalProfile],
+  providers: [ProfessionalProfilesService, ProfessionalProfileGenerator],
 })
 export class ProfessionalProfilesModule {}

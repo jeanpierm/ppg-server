@@ -4,7 +4,7 @@ import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User } from 'src/users/schemas/users.schema';
 import { TechnologiesService } from '../technologies/technologies.service';
-import { GenerateProfessionalProfile } from './algorithm/generate-professional-profile';
+import { ProfessionalProfileGenerator } from './ppg-algorithm/ppg';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
 import {
@@ -19,7 +19,7 @@ export class ProfessionalProfilesService {
   constructor(
     @InjectModel(ProfessionalProfile.name)
     private readonly proProfileModel: Model<ProfessionalProfileDocument>,
-    private readonly generateProfessionalProfile: GenerateProfessionalProfile,
+    private readonly generateProfessionalProfile: ProfessionalProfileGenerator,
     private readonly technologiesService: TechnologiesService,
   ) {}
 

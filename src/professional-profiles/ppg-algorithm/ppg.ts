@@ -18,8 +18,8 @@ import { searchJobs } from './search-jobs';
 import puppeteer = require('puppeteer');
 
 @Injectable()
-export class GenerateProfessionalProfile {
-  private readonly logger = new Logger(GenerateProfessionalProfile.name);
+export class ProfessionalProfileGenerator {
+  private readonly logger = new Logger(ProfessionalProfileGenerator.name);
 
   constructor(
     @InjectModel(TechnologyMetadata.name)
