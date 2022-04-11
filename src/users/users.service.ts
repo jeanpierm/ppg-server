@@ -15,10 +15,6 @@ export class UsersService {
     return this.userModel.find().lean();
   }
 
-  async existsByEmail(email: string): Promise<boolean> {
-    return this.userModel.exists({ email });
-  }
-
   async findById(userId: string): Promise<User> {
     const user = await this.userModel.findOne({ userId }).lean();
     return user;

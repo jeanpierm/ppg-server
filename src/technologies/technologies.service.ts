@@ -32,7 +32,6 @@ export class TechnologiesService {
       const technologiesJson = fs.readFileSync(jsonPath, 'utf-8');
       this.logger.debug('Tecnologías obtenidas de JSON exitosamente');
       const technologies = JSON.parse(technologiesJson);
-      console.log(technologies[0]);
       await this.technologyModel.insertMany(technologies);
       this.logger.debug('Tecnologías cargadas a MongoDB desde JSON exitosamente');
     } catch (err) {

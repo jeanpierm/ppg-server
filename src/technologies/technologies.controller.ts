@@ -10,7 +10,8 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
-import { Public } from 'src/auth/decorators/public.decorator';
+import { Roles } from '../auth/decorators/role.decorator';
+import { Role } from '../auth/enums/role.enum';
 import { ApiResponse } from '../shared/dto/api-response.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { FindTechnologiesParams } from './dto/find-technologies-params.dto';
@@ -24,7 +25,7 @@ export class TechnologiesController {
   constructor(private readonly technologiesService: TechnologiesService) {}
 
   @Get()
-  @Public()
+  @Roles(Role.Admin)
   async findAll(@Query() { type }: FindTechnologiesParams) {
     const technologies = await this.technologiesService.findAll(type);
     const payload = technologies.map((technology) =>
@@ -34,7 +35,7 @@ export class TechnologiesController {
   }
 
   @Get(':technologyId')
-  @Public()
+  @Roles(Role.User, Role.Admin)
   async findOne(@Param() { technologyId }: FindTechnologyParams) {
     const technology = await this.technologiesService.findById(technologyId);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
@@ -42,7 +43,7 @@ export class TechnologiesController {
   }
 
   @Post()
-  @Public()
+  @Roles(Role.Admin)
   async create(@Body() createTechnologyDto: CreateTechnologyDto) {
     const technology = await this.technologiesService.create(createTechnologyDto);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
@@ -51,7 +52,7 @@ export class TechnologiesController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Patch(':technologyId')
-  @Public()
+  @Roles(Role.Admin)
   async update(
     @Param() { technologyId }: FindTechnologyParams,
     @Body() updateTechnologyDto: UpdateTechnologyDto,
@@ -61,7 +62,7 @@ export class TechnologiesController {
 
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':technologyId')
-  @Public()
+  @Roles(Role.Admin)
   async remove(@Param() { technologyId }: FindTechnologyParams): Promise<void> {
     await this.technologiesService.remove(technologyId);
   }
