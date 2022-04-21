@@ -23,7 +23,7 @@ export class ValidateTechnologyExistsMiddleware implements NestMiddleware {
         throw new NotFoundException('Technology not found in database');
       }
       res.locals.technology = technology;
-      this.logger.debug(`Tecnología ${technologyId} guardada en variables locales`);
+      this.logger.debug(`Tecnología ${technologyId} guardada en res.locals`);
     }
     next();
   }

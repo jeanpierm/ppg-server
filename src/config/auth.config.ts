@@ -12,7 +12,7 @@ export default registerAs(
   (): AuthConfig => ({
     jwt: {
       secretKey: process.env.JWT_SECRET_KEY || '12345',
-      expirationTime: process.env.JWT_EXPIRATION_TIME || '1h',
+      expirationTime: process.env.JWT_EXPIRATION_TIME || '6h',
     },
   }),
 );

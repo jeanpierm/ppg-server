@@ -1,9 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { User } from 'src/users/schemas/users.schema';
-import * as mongoose from 'mongoose';
-import { EntityStatus } from 'src/shared/enums/status.enum';
 import { randomUUID } from 'crypto';
+import * as mongoose from 'mongoose';
+import { Document } from 'mongoose';
+import { EntityStatus } from 'src/shared/enums/status.enum';
+import { User } from 'src/users/schemas/users.schema';
 
 export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
@@ -89,8 +89,20 @@ export class ProfessionalProfile {
     maxlength: 1,
   })
   status: EntityStatus;
+
+  isActive: () => boolean;
+
+  isInactive: () => boolean;
 }
 
 export const ProfessionalProfileSchema = SchemaFactory.createForClass(ProfessionalProfile);
 
 export const ProfessionalProfileName = 'professionalProfiles';
+
+ProfessionalProfileSchema.methods.isActive = function (): boolean {
+  return this.status === EntityStatus.Active;
+};
+
+ProfessionalProfileSchema.methods.isInactive = function (): boolean {
+  return this.status === EntityStatus.Inactive;
+};

@@ -1,13 +1,13 @@
 import { TechType } from '../../professional-profiles/enums/tech-type.enum';
 import { TechnologyIntf } from '../interfaces/technology.interface';
 
-export class TechnologyResponseDto implements TechnologyIntf {
+export class TechnologyResponse implements TechnologyIntf {
   readonly technologyId: string;
   readonly type: TechType;
   readonly name: string;
   readonly identifiers: string[];
 
-  constructor(dto: TechnologyResponseDto) {
+  constructor(dto: TechnologyResponse) {
     Object.assign(this, dto);
   }
 }

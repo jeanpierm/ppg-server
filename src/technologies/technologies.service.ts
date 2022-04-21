@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as fs from 'fs';
 import { Model } from 'mongoose';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { Pagination } from '../shared/interfaces/pagination.interface';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
@@ -44,11 +46,36 @@ export class TechnologiesService {
     }
   }
 
-  async findAll(type?: TechType): Promise<TechnologyDocument[]> {
-    if (type) {
-      return this.findByType(type);
+  async findAll(pagination: PaginationParams, type?: TechType): Promise<Pagination<Technology[]>> {
+    const { size, search, page } = pagination;
+    const filterQuery: Record<string, any> = {};
+
+    if (search) {
+      filterQuery['$or'] = [
+        { name: new RegExp(search, 'i') },
+        { identifiers: new RegExp(search, 'i') },
+      ];
     }
-    return this.technologyModel.find().lean();
+
+    if (type) filterQuery.type = type;
+
+    const technologies = await this.technologyModel
+      .find(filterQuery)
+      .sort({ _id: 1 })
+      .skip((page - 1) * size)
+      .limit(size)
+      .lean();
+
+    const totalItems = await this.technologyModel.count(filterQuery);
+    const totalPages = Math.ceil(totalItems / size);
+
+    return {
+      totalItems,
+      currentPage: page,
+      pageSize: size,
+      data: technologies,
+      totalPages,
+    };
   }
 
   async findById(id: string): Promise<TechnologyDocument> {

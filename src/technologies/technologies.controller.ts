@@ -9,10 +9,12 @@ import {
   Patch,
   Post,
   Query,
+  SerializeOptions,
 } from '@nestjs/common';
 import { Roles } from '../auth/decorators/role.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { ApiResponse } from '../shared/dto/api-response.dto';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { FindTechnologiesParams } from './dto/find-technologies-params.dto';
 import { FindTechnologyParams } from './dto/find-technology-params.dto';
@@ -25,13 +27,19 @@ export class TechnologiesController {
   constructor(private readonly technologiesService: TechnologiesService) {}
 
   @Get()
+  @SerializeOptions({
+    excludeExtraneousValues: true,
+  })
   @Roles(Role.Admin)
-  async findAll(@Query() { type }: FindTechnologiesParams) {
-    const technologies = await this.technologiesService.findAll(type);
-    const payload = technologies.map((technology) =>
+  async findAll(
+    @Query() paginationParams: PaginationParams,
+    @Query() { type }: FindTechnologiesParams,
+  ) {
+    const payload = await this.technologiesService.findAll(paginationParams, type);
+    payload.data = payload.data.map((technology) =>
       TechnologiesMapper.toTechnologyResponse(technology),
     );
-    return new ApiResponse('Technologies obtained successfully', payload);
+    return payload;
   }
 
   @Get(':technologyId')
