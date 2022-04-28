@@ -9,7 +9,6 @@ import {
   Patch,
   Post,
   Query,
-  SerializeOptions,
 } from '@nestjs/common';
 import { Roles } from '../auth/decorators/role.decorator';
 import { Role } from '../auth/enums/role.enum';
@@ -27,9 +26,6 @@ export class TechnologiesController {
   constructor(private readonly technologiesService: TechnologiesService) {}
 
   @Get()
-  @SerializeOptions({
-    excludeExtraneousValues: true,
-  })
   @Roles(Role.Admin)
   async findAll(
     @Query() paginationParams: PaginationParams,
