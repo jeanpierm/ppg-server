@@ -1,6 +1,6 @@
 @base = http://localhost:3000/ppg-api/v1
 @contentType = application/json
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NmE1ZjljMC1kYzAyLTQ0MTItYTA5ZC1jMGY0NTFmOGZiMjMiLCJpYXQiOjE2NDk2NTAwMjUsImV4cCI6MTY0OTY1MzYyNX0.TCfczS02VA-4TGb0Y_F9aqm0yC4EgfijJtQ9lYQUAec
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NmE1ZjljMC1kYzAyLTQ0MTItYTA5ZC1jMGY0NTFmOGZiMjMiLCJpYXQiOjE2NTExOTgzMjUsImV4cCI6MTY1MTIxOTkyNX0.sFnQUiAvNbCC9pjl35UuniTGAdR56VJzJkNZZfrKs6Q
 
 ### LOGIN
 POST {{base}}/auth/login
@@ -19,3 +19,14 @@ Authorization: Bearer {{jwt}}
 ### GET TECHNOLOGY BY ID¿
 GET {{base}}/technologies/6d5158c9-1e89-47c9-8809-1dd7a9d65da8
 Authorization: Bearer {{jwt}}
+
+### GENERATE PROFILE
+
+POST {{base}}/professional-profiles
+Authorization: Bearer {{jwt}}
+Content-Type: {{contentType}}
+
+{
+  "jobTitle": "Java Developer",
+  "location": "Madrid"
+}

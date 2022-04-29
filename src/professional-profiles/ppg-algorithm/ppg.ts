@@ -126,8 +126,12 @@ async function extractJobDetails(jobLinks: string[], page: puppeteer.Page) {
   console.log('Init extract job details...');
   const jobDetails: string[] = [];
   for (const [index, jobLink] of jobLinks.entries()) {
-    const detail = await extractJobDetail(page, jobLink, index);
-    jobDetails.push(detail);
+    try {
+      const detail = await extractJobDetail(page, jobLink, index);
+      jobDetails.push(detail);
+    } catch (err) {
+      console.error(`Ocurrió un error mientras se extraía el detalle del trabajo #${index}`, err);
+    }
   }
   console.log('Job details extracted successfully');
   return jobDetails;

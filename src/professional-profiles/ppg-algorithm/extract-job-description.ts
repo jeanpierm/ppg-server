@@ -10,7 +10,7 @@ export async function extractJobDetail(
 ): Promise<string> {
   console.log(`Init extract job detail #${jobIndex + 1}...`);
   await page.goto(jobLink, waitLoad);
-  await page.waitForSelector(jobDetailsSelector);
+  await page.waitForSelector(jobDetailsSelector, { timeout: 5000 });
   const jobDetailRaw = await getRawJobDetail(page);
   const jobDetail = normalizeJobDetail(jobDetailRaw);
   console.log(`Job detail #${jobIndex + 1} extracted successfully`);

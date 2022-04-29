@@ -1,6 +1,7 @@
 import puppeteer = require('puppeteer');
 
 const jobElementSelector = '.job-card-container__link.job-card-list__title';
+// const jobElementSelector = 'a.job-card-container__link';
 // const jobListSelector = '.jobs-search-results__list.list-style-none';
 
 /**
@@ -14,5 +15,6 @@ export async function scrapJobLinks(page: puppeteer.Page): Promise<string[]> {
     return Array.from(elements).map((element: HTMLLinkElement) => element.href);
   }, jobElementSelector);
   console.debug(`Job links scrapped successfully (count: ${links.length})`);
+  console.debug('Job links scrapped', links);
   return links;
 }

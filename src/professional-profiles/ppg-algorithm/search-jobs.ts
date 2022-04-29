@@ -1,12 +1,7 @@
 import puppeteer = require('puppeteer');
 import { waitLoad } from './util';
 
-const searchJobsUrl = 'https://www.linkedin.com/jobs';
-
-// selectors
-const jobTitleSelector = 'input[aria-label="Search by title, skill, or company"]';
-const locationSelector = 'input[aria-label="City, state, or zip code"]';
-const submitSearchJobSelector = '.jobs-search-box__submit-button';
+const searchJobsUrl = 'https://www.linkedin.com/jobs/search/';
 
 /**
  * Se dirige a la página de trabajos y busca ofertas.
@@ -16,10 +11,16 @@ const submitSearchJobSelector = '.jobs-search-box__submit-button';
  */
 export async function searchJobs(page: puppeteer.Page, jobTitle: string, location: string) {
   console.debug('Init search jobs...');
-  await page.goto(searchJobsUrl, waitLoad);
-  await page.type(jobTitleSelector, jobTitle);
-  await page.type(locationSelector, location);
-  await page.click(submitSearchJobSelector);
-  await page.waitForNavigation(waitLoad);
+  const jobsUrl = getEncodedSearchJobsUrl(jobTitle, location);
+  await page.goto(jobsUrl, waitLoad);
   console.debug('Jobs searched successfully');
+}
+
+/**
+ * @param jobTitle
+ * @param location
+ * @returns el URL de la búsqueda de trabajos según el jobTitle y location
+ */
+export function getEncodedSearchJobsUrl(jobTitle: string, location: string): string {
+  return `${searchJobsUrl}?keywords=${encodeURI(jobTitle)}&location=${encodeURI(location)}`;
 }
