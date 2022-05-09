@@ -10,10 +10,9 @@ const searchJobsUrl = 'https://www.linkedin.com/jobs/search/';
  * @param location - localidad del trabajo
  */
 export async function searchJobs(page: puppeteer.Page, jobTitle: string, location: string) {
-  console.debug('Init search jobs...');
   const jobsUrl = getEncodedSearchJobsUrl(jobTitle, location);
   await page.goto(jobsUrl, waitLoad);
-  console.debug('Jobs searched successfully');
+  console.debug(`Jobs searched successfully with title: "${jobTitle}" and location "${location}"`);
 }
 
 /**
@@ -22,5 +21,8 @@ export async function searchJobs(page: puppeteer.Page, jobTitle: string, locatio
  * @returns el URL de la búsqueda de trabajos según el jobTitle y location
  */
 export function getEncodedSearchJobsUrl(jobTitle: string, location: string): string {
-  return `${searchJobsUrl}?keywords=${encodeURI(jobTitle)}&location=${encodeURI(location)}`;
+  const url = new URL(searchJobsUrl);
+  url.searchParams.set('keywords', jobTitle);
+  url.searchParams.set(location, location);
+  return url.toString();
 }

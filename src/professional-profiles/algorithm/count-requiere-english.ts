@@ -13,7 +13,7 @@ export function countRequireEnglish(jobDetails: string[]): number {
     for (const englishName of requireEnglish) {
       if (jobDetail.includes(englishName)) {
         ++requiereCounter;
-        console.log(`[Job: ${jobIndex + 1}] require english`);
+        console.log(`[Job ${jobIndex + 1}] require english`);
         break;
       }
     }

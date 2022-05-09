@@ -80,6 +80,7 @@ function getMostDemanded(techDict: Record<string, number>, maxLength = 3): strin
  * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
  */
 function calculateRequireEnglish(englishCount: number, jobsCount: number): boolean {
-  console.log(`${englishCount}/${jobsCount} jobs require english`);
-  return englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
+  const require: boolean = englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
+  console.log(`[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`, require);
+  return require;
 }

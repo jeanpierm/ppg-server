@@ -19,13 +19,13 @@ export function countTechnology(
         if (jobDetail.includes(` ${identifier} `)) {
           ++countDictionary[name];
           console.log(
-            `[Job: ${jobIndex + 1}] ${type} "${name}" found! (count: ${countDictionary[name]})`,
+            `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${countDictionary[name]})`,
           );
           break;
         }
       }
     }
-    console.debug(`Job #${jobIndex + 1} scrapped successfully`);
+    console.debug(`[Job ${jobIndex + 1}] finished scraping`);
   }
   return countDictionary;
 }

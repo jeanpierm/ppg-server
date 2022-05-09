@@ -2,7 +2,7 @@ import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/c
 import { MongooseModule } from '@nestjs/mongoose';
 import { TechnologiesModule } from 'src/technologies/technologies.module';
 import { ValidateProfileIsActiveMiddleware } from './middlewares/validate-profile-is-active.middleware';
-import { ProfessionalProfileGenerator } from './ppg-algorithm/ppg';
+import { ProfessionalProfileGenerator } from './algorithm/main';
 import { ProfessionalProfilesController } from './professional-profiles.controller';
 import { ProfessionalProfilesService } from './professional-profiles.service';
 import {

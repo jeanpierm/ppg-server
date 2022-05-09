@@ -19,7 +19,7 @@ export default registerAs(
   (): AppConfig => ({
     name: process.env.APP_NAME || 'ppg-api',
     globalPrefix: process.env.APP_GLOBAL_PREFIX || 'ppg-api/v1',
-    env: process.env.APP_ENV || 'development',
+    env: process.env.NODE_ENV || 'development',
     timeout: parseInt(process.env.APP_TIMEOUT_IN_MS) || 180_000,
     language: process.env.APP_LANGUAGE || 'es',
     http: {

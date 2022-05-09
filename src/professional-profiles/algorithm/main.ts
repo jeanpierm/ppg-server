@@ -11,11 +11,13 @@ import { EnglishMetadata } from '../schemas/english-metadata.schema';
 import { TechnologyMetadata } from '../schemas/technology-metadata.schema';
 import { countRequireEnglish } from './count-requiere-english';
 import { countTechnology as countTechnologies } from './count-technology';
-import { extractJobDetail } from './extract-job-description';
+import { extractJobDetail } from './extract-job-detail';
 import { login } from './login.algorithm';
 import { scrapJobLinks } from './scrap-job-links';
 import { searchJobs } from './search-jobs';
 import puppeteer = require('puppeteer');
+
+const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
 
 @Injectable()
 export class ProfessionalProfileGenerator {
@@ -48,6 +50,7 @@ export class ProfessionalProfileGenerator {
     jobTitle: string,
     location: string,
   ): Promise<ProfessionalProfileIntf> {
+    console.time(PPG_ALGORITHM_LABEL);
     const technologiesCountMap = new Map<TechType, Record<string, number>>();
 
     const browser = await puppeteer.launch({ headless: false });
@@ -60,33 +63,34 @@ export class ProfessionalProfileGenerator {
     const jobLinks: string[] = await scrapJobLinks(page);
     const jobsCount: number = jobLinks.length;
 
-    console.debug('Init scrapping jobs...');
-
     const jobDetails: string[] = await extractJobDetails(jobLinks, page);
 
     for (const type of Object.values(TechType)) {
       const technologies: Technology[] = await this.technologiesService.findByType(type);
       const countDictionary: Record<string, number> = countTechnologies(technologies, jobDetails);
       technologiesCountMap.set(type, countDictionary);
-      console.log('Mapa resultante', technologiesCountMap.get(type));
+      console.log(`Mapa resultante de ${type}:`, technologiesCountMap.get(type));
     }
 
     const englishCount = countRequireEnglish(jobDetails);
 
     await browser.close();
-    console.debug('Jobs scrapped successfully');
 
     // persist metadata in database
     this.saveTechnologiesMetadata(technologiesCountMap, jobTitle, location, jobLinks.length);
     this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
 
-    return new ProfessionalProfileBuilder()
+    const professionalProfile = new ProfessionalProfileBuilder()
       .jobTitle(jobTitle)
       .location(location)
       .owner(user)
       .requireEnglish(englishCount, jobsCount)
       .technologiesCountMap(technologiesCountMap)
       .build();
+
+    console.timeEnd(PPG_ALGORITHM_LABEL);
+
+    return professionalProfile;
   }
 
   private saveEnglishMetadata(
@@ -123,14 +127,16 @@ export class ProfessionalProfileGenerator {
 }
 
 async function extractJobDetails(jobLinks: string[], page: puppeteer.Page) {
-  console.log('Init extract job details...');
   const jobDetails: string[] = [];
   for (const [index, jobLink] of jobLinks.entries()) {
     try {
       const detail = await extractJobDetail(page, jobLink, index);
       jobDetails.push(detail);
     } catch (err) {
-      console.error(`Ocurrió un error mientras se extraía el detalle del trabajo #${index}`, err);
+      console.error(
+        `Ocurrió un error mientras se extraía el detalle del trabajo #${index} con link "${jobLink}"`,
+        err,
+      );
     }
   }
   console.log('Job details extracted successfully');

@@ -3,18 +3,25 @@ import { waitLoad } from './util';
 
 export const jobDetailsSelector = '#job-details';
 
+/**
+ * Navega hasta el enlace del trabajo, espera a que se carguen los detalles del trabajo y luego extrae
+ * los detalles del trabajo.
+ * @param {Page} page - Página: el objeto de la página del scrapper
+ * @param {string} jobLink - el enlace a la página de detalles del trabajo
+ * @param {number} jobIndex - el índice del trabajo en la lista de trabajos
+ * @returns Un string con el detalle del trabajo
+ */
 export async function extractJobDetail(
   page: Page,
   jobLink: string,
   jobIndex: number,
 ): Promise<string> {
-  console.log(`Init extract job detail #${jobIndex + 1}...`);
   await page.goto(jobLink, waitLoad);
   await page.waitForSelector(jobDetailsSelector, { timeout: 5000 });
   const jobDetailRaw = await getRawJobDetail(page);
   const jobDetail = normalizeJobDetail(jobDetailRaw);
-  console.log(`Job detail #${jobIndex + 1} extracted successfully`);
-  console.log(`[Job ${jobIndex + 1}] detail: ${jobDetail}`);
+  console.log(`[Job ${jobIndex + 1}] detail extracted successfully`);
+  console.log(`[Job ${jobIndex + 1}] detail:`, jobDetail, '\n');
   return jobDetail;
 }
 

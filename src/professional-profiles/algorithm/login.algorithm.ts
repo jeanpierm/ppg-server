@@ -16,7 +16,6 @@ const formSelector = '.login__form';
  * @param page
  */
 export async function login(page: puppeteer.Page) {
-  console.debug('Init login...');
   await page.goto(loginUrl, waitLoad);
   await page.type(usernameSelector, username);
   await page.type(passwordSelector, password);
