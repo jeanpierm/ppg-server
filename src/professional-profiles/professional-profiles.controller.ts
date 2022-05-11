@@ -5,6 +5,7 @@ import { Role } from 'src/auth/enums/role.enum';
 import { GetProfessionalProfilesQuery } from 'src/professional-profiles/dto/get-professional-profiles-query.dto';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User, UserDocument } from 'src/users/schemas/users.schema';
+import { CountQuery, COUNT_ENGLISH_QUERY } from './dto/count-query.dto';
 import { FindProfessionalProfileParams } from './dto/find-professional-profile-params.dto';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
@@ -41,17 +42,6 @@ export class ProfessionalProfilesController {
     return new ApiResponse('Professional profiles obtained successfully', payload);
   }
 
-  @Get(':ppId')
-  @Roles(Role.User, Role.Admin)
-  async findOne(
-    @CurrentUser() user: UserDocument,
-    @Param() { ppId }: FindProfessionalProfileParams,
-  ): Promise<ApiResponse<ProfessionalProfileResponse>> {
-    const profile = await this.proProfilesService.findActiveProfileOfUserById(ppId, user);
-    const payload = ProfessionalProfilesMapper.toResponse(profile);
-    return new ApiResponse('Professional profile obtained successfully', payload);
-  }
-
   @Get('random')
   @Roles(Role.User, Role.Admin)
   async getRandom(): Promise<ApiResponse<ProfessionalProfileResponse>> {
@@ -61,58 +51,25 @@ export class ProfessionalProfilesController {
   }
 
   @Roles(Role.User, Role.Admin)
-  @Get('languages/count')
-  async getLanguagesCount(@CurrentUser() user: UserDocument) {
+  @Get('count')
+  async count(@CurrentUser() user: UserDocument, @Query() { q }: CountQuery) {
     const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Language);
-    return new ApiResponse('Languages count obtained successfully', payload);
+    const payload =
+      q === COUNT_ENGLISH_QUERY
+        ? await this.proProfilesService.getEnglishCount(user)
+        : await this.proProfilesService.getTechnologyCount(profiles, q as TechType);
+    return new ApiResponse(`${q} count obtained successfully`, payload);
   }
 
-  @Get('frameworks/count')
+  @Get(':ppId')
   @Roles(Role.User, Role.Admin)
-  async getFrameworksCount(@CurrentUser() user: UserDocument) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Framework);
-    return new ApiResponse('Frameworks count obtained successfully', payload);
-  }
-
-  @Get('databases/count')
-  @Roles(Role.User, Role.Admin)
-  async getDatabasesCount(@CurrentUser() user: UserDocument) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Database);
-    return new ApiResponse('Databases count obtained successfully', payload);
-  }
-
-  @Get('tools/count')
-  @Roles(Role.User, Role.Admin)
-  async getToolsCount(@CurrentUser() user: UserDocument) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Tool);
-    return new ApiResponse('Tools count obtained successfully', payload);
-  }
-
-  @Get('paradigms/count')
-  @Roles(Role.User, Role.Admin)
-  async getParadigmsCount(@CurrentUser() user: UserDocument) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Paradigm);
-    return new ApiResponse('Paradigms count obtained successfully', payload);
-  }
-
-  @Get('patterns/count')
-  @Roles(Role.User, Role.Admin)
-  async getPatternsCount(@CurrentUser() user: UserDocument) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(user);
-    const payload = await this.proProfilesService.getTechnologyCount(profiles, TechType.Pattern);
-    return new ApiResponse('Patterns count obtained successfully', payload);
-  }
-
-  @Get('english/count')
-  @Roles(Role.User, Role.Admin)
-  async getRequireEnglishCount(@CurrentUser() user: UserDocument) {
-    const payload = await this.proProfilesService.getEnglishCount(user);
-    return new ApiResponse('English count obtained successfully', payload);
+  async findOne(
+    @CurrentUser() user: UserDocument,
+    @Param() { ppId }: FindProfessionalProfileParams,
+  ): Promise<ApiResponse<ProfessionalProfileResponse>> {
+    const profile = await this.proProfilesService.findActiveProfileOfUserById(ppId, user);
+    const payload = ProfessionalProfilesMapper.toResponse(profile);
+    return new ApiResponse('Professional profile obtained successfully', payload);
   }
 
   @Delete(':ppId')

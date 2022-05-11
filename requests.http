@@ -1,6 +1,6 @@
 @base = http://localhost:3000/ppg-api/v1
 @json = application/json
-@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NmE1ZjljMC1kYzAyLTQ0MTItYTA5ZC1jMGY0NTFmOGZiMjMiLCJpYXQiOjE2NTIxMjgxMTcsImV4cCI6MTY1MjE0OTcxN30.LphX2_tScU2fzclVvQvCP8p6Y_cm2UWd6xZosOM9wr0
+@jwt = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI5NmE1ZjljMC1kYzAyLTQ0MTItYTA5ZC1jMGY0NTFmOGZiMjMiLCJpYXQiOjE2NTIyMzI4MTUsImV4cCI6MTY1MjI1NDQxNX0.-J5jjF5LnPqFuNcRYb0VCs-6IXeb34-haqZfr5-_Dc4
 
 ### LOGIN
 POST {{base}}/auth/login
@@ -30,3 +30,15 @@ Content-Type: {{json}}
   "jobTitle": "Java Developer",
   "location": "Quito"
 }
+
+### GET RANDOM PROFILE
+GET {{base}}/professional-profiles/random
+Authorization: Bearer {{jwt}}
+
+### GET PROFILE BY ID
+GET {{base}}/professional-profiles/c9231a28-ffd2-4de6-b960-bd617d91cbcd
+Authorization: Bearer {{jwt}}
+
+### GET COUNT
+GET {{base}}/professional-profiles/count?type=frameworksss
+Authorization: Bearer {{jwt}}

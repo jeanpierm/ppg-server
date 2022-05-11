@@ -4,9 +4,9 @@ import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User, UserDocument } from 'src/users/schemas/users.schema';
 import { TechnologiesService } from '../technologies/technologies.service';
+import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
-import { ProfessionalProfileGenerator } from './algorithm/main';
 import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
@@ -148,8 +148,8 @@ export class ProfessionalProfilesService {
   async getEnglishCount(user: UserDocument) {
     const profiles = await this.findActivesProfilesOfUser(user);
     return {
-      requiereEnglish: profiles.filter((profile) => profile.requireEnglish === true).length,
-      noRequiereEnglish: profiles.filter((profile) => profile.requireEnglish === false).length,
+      Yes: profiles.filter((profile) => profile.requireEnglish === true).length,
+      No: profiles.filter((profile) => profile.requireEnglish === false).length,
     };
   }
 }
