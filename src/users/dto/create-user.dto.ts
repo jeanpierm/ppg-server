@@ -14,6 +14,7 @@ const formatter = new (Intl as any).ListFormat('en', {
   style: 'short',
   type: 'disjunction',
 });
+
 export class CreateUserDto {
   @IsEmail()
   @IsUnregisteredEmail()

@@ -54,15 +54,21 @@ export class UsersService {
   }
 
   async removeById(userId: string): Promise<void> {
-    await this.userModel.findByIdAndUpdate(userId, {
-      status: EntityStatus.Inactive,
-    });
+    await this.userModel.findOneAndUpdate(
+      { userId },
+      {
+        status: EntityStatus.Inactive,
+      },
+    );
   }
 
   async activeById(userId: string): Promise<void> {
-    await this.userModel.findByIdAndUpdate(userId, {
-      status: EntityStatus.Active,
-    });
+    await this.userModel.findOneAndUpdate(
+      { userId },
+      {
+        status: EntityStatus.Active,
+      },
+    );
   }
 
   async updatePasswordByEmail(email: string, password: string): Promise<void> {

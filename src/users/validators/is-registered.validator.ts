@@ -16,8 +16,8 @@ export class IsRegisteredValidator implements ValidatorConstraintInterface {
 
   constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
 
-  async validate(id: string): Promise<boolean> {
-    const isRegistered = await this.userModel.exists({ _id: id });
+  async validate(userId: string): Promise<boolean> {
+    const isRegistered = await this.userModel.exists({ userId });
 
     if (!isRegistered) {
       throw new NotFoundException('User not found in database');
