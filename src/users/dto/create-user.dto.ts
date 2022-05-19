@@ -10,6 +10,10 @@ import {
 import { Role } from 'src/auth/enums/role.enum';
 import { IsUnregisteredEmail } from '../validators/is-unregistered-email.validator';
 
+const formatter = new (Intl as any).ListFormat('en', {
+  style: 'short',
+  type: 'disjunction',
+});
 export class CreateUserDto {
   @IsEmail()
   @IsUnregisteredEmail()
@@ -30,6 +34,9 @@ export class CreateUserDto {
 
   @IsOptional()
   @ArrayMinSize(1)
-  @IsEnum(Role)
+  @IsEnum(Role, {
+    each: true,
+    message: `each value in roles must be ${formatter.format(Object.values(Role))}`,
+  })
   readonly roles: Role[];
 }
