@@ -1,14 +1,18 @@
 import { Body, Controller, Get, Logger, Patch } from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { Roles } from 'src/auth/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { User } from 'src/users/schemas/users.schema';
+import { ApiOkCustomResponse } from '../shared/decorators/api-response.decorator';
 import { AccountService } from './account.service';
 import { AccountResponse } from './dto/account-response.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
+@ApiTags('account')
+@ApiBearerAuth()
 @Controller('account')
 export class AccountController {
   private readonly logger = new Logger(AccountController.name);
@@ -16,10 +20,11 @@ export class AccountController {
   constructor(private readonly accountService: AccountService) {}
 
   /**
-   * Obtiene los datos de la cuenta del usuario.
-   * @param user - Usuario actual autenticado asociado al JWT.
+   * Obtiene los datos de la cuenta de usuario perteneciente al token (JWT).
    */
   @Get()
+  @ApiOperation({ summary: 'obtener datos de la cuenta' })
+  @ApiOkCustomResponse(AccountResponse)
   @Roles(Role.User, Role.Admin)
   async get(@CurrentUser() user: User): Promise<ApiResponse<AccountResponse>> {
     const account = await this.accountService.get(user);
@@ -29,6 +34,8 @@ export class AccountController {
   /**
    * Actualiza los datos de la cuenta del usuario.
    */
+  @ApiOperation({ summary: 'actualizar datos de la cuenta' })
+  @ApiOkResponse({ type: ApiResponse })
   @Patch()
   @Roles(Role.User, Role.Admin)
   async update(
@@ -42,6 +49,8 @@ export class AccountController {
   /**
    * Actualiza la contraseña con la contraseña actual.
    */
+  @ApiOperation({ summary: 'actualizar contraseña' })
+  @ApiOkResponse({ type: ApiResponse })
   @Patch('password')
   @Roles(Role.User, Role.Admin)
   async updatePassword(

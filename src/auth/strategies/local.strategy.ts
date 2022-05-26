@@ -2,7 +2,6 @@ import { Injectable, Logger, NotFoundException, UnauthorizedException } from '@n
 import { PassportStrategy } from '@nestjs/passport';
 import { validateOrReject } from 'class-validator';
 import { Strategy } from 'passport-local';
-import { HelperService } from 'src/helper/helper.service';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User } from 'src/users/schemas/users.schema';
 import { AuthService } from '../auth.service';
@@ -12,10 +11,7 @@ import { LoginRequest } from '../dto/login-request.dto';
 export class LocalStrategy extends PassportStrategy(Strategy) {
   private readonly logger = new Logger(LocalStrategy.name);
 
-  constructor(
-    private readonly authService: AuthService,
-    private readonly helperService: HelperService,
-  ) {
+  constructor(private readonly authService: AuthService) {
     super({ usernameField: 'email' });
   }
 

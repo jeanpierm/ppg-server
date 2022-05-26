@@ -1,16 +1,13 @@
 import { IsEnum, IsNotEmpty } from 'class-validator';
+import { generateValidationMessageByValues } from '../../shared/util';
 import { TechType } from '../enums/tech-type.enum';
 
 export const COUNT_ENGLISH_QUERY = 'english';
-const formatter = new (Intl as any).ListFormat('en', {
-  style: 'short',
-  type: 'disjunction',
-});
-const countQueryValues = [...Object.values(TechType), COUNT_ENGLISH_QUERY];
+export const countQueryValues = [...Object.values(TechType), COUNT_ENGLISH_QUERY];
 
 export class CountQuery {
   @IsEnum(countQueryValues, {
-    message: `type should be ${formatter.format(countQueryValues)}`,
+    message: generateValidationMessageByValues('q', countQueryValues),
   })
   @IsNotEmpty()
   readonly q: string;

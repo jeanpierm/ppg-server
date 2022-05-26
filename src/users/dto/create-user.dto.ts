@@ -8,12 +8,8 @@ import {
   Length,
 } from 'class-validator';
 import { Role } from 'src/auth/enums/role.enum';
+import { generateValidationMessageByValues } from '../../shared/util';
 import { IsUnregisteredEmail } from '../validators/is-unregistered-email.validator';
-
-const formatter = new (Intl as any).ListFormat('en', {
-  style: 'short',
-  type: 'disjunction',
-});
 
 export class CreateUserDto {
   @IsEmail()
@@ -37,7 +33,7 @@ export class CreateUserDto {
   @ArrayMinSize(1)
   @IsEnum(Role, {
     each: true,
-    message: `each value in roles must be ${formatter.format(Object.values(Role))}`,
+    message: generateValidationMessageByValues('roles', Object.values(Role)),
   })
   readonly roles: Role[];
 }

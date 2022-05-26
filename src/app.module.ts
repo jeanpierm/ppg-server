@@ -6,7 +6,6 @@ import { UsersModule } from './users/users.module';
 import Configs from './config/index';
 import { DatabaseService } from './database/database.service';
 import { DatabaseModule } from './database/database.module';
-import { HelperModule } from './helper/helper.module';
 import { AccountModule } from './account/account.module';
 import { ProfessionalProfilesModule } from './professional-profiles/professional-profiles.module';
 import { APP_GUARD } from '@nestjs/core';
@@ -22,7 +21,6 @@ import { TechnologiesModule } from './technologies/technologies.module';
       inject: [DatabaseService],
       useFactory: (databaseService: DatabaseService) => databaseService.createMongooseOptions(),
     }),
-    HelperModule,
     UsersModule,
     AuthModule,
     AccountModule,

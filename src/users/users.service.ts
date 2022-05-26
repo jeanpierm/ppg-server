@@ -6,10 +6,14 @@ import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './schemas/users.schema';
+import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
+  ) {}
 
   async findAll(): Promise<UserDocument[]> {
     return this.userModel.find().lean();
@@ -39,18 +43,13 @@ export class UsersService {
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
-    const updatedUser = await this.userModel
-      .findOneAndUpdate(
-        { userId },
-        {
-          name: updateUser.name,
-          surname: updateUser.surname,
-          email: updateUser.email,
-        },
-        { new: true },
-      )
-      .lean();
-    return updatedUser;
+    const userToUpdate = await this.userModel.findOne({ userId });
+    const wantUpdateEmail = updateUser.email && userToUpdate.email !== updateUser.email;
+    if (wantUpdateEmail) {
+      await this.isUnregisteredEmail.validate(updateUser.email);
+    }
+
+    return this.userModel.findOneAndUpdate({ userId }, updateUser, { new: true }).lean();
   }
 
   async removeById(userId: string): Promise<void> {
