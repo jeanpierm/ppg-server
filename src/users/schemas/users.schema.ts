@@ -1,13 +1,15 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Expose } from 'class-transformer';
 import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
 import { Role } from 'src/auth/enums/role.enum';
 import { EntityStatus } from '../../shared/enums/status.enum';
+import { UserInf } from '../interfaces/user.interface';
 
 export type UserDocument = User & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class User {
+export class User implements UserInf {
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),

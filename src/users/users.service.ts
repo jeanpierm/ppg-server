@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
+import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
+import { Pagination } from 'src/shared/interfaces/pagination.interface';
 import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -15,8 +17,34 @@ export class UsersService {
     private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
   ) {}
 
-  async findAll(): Promise<UserDocument[]> {
-    return this.userModel.find().lean();
+  async findAll(pagination: PaginationParams): Promise<Pagination<any[]>> {
+    const { size, search, page } = pagination;
+    const filterQuery: Record<string, any> = {};
+    if (search) {
+      filterQuery['$or'] = [
+        { name: new RegExp(search, 'i') },
+        { surname: new RegExp(search, 'i') },
+        { email: new RegExp(search, 'i') },
+      ];
+    }
+
+    const users = await this.userModel
+      .find(filterQuery)
+      .sort({ _id: 1 })
+      .skip((page - 1) * size)
+      .limit(size)
+      .lean();
+
+    const totalItems = await this.userModel.count(filterQuery);
+    const totalPages = Math.ceil(totalItems / size);
+
+    return {
+      totalItems,
+      currentPage: page,
+      pageSize: size,
+      data: users,
+      totalPages,
+    };
   }
 
   async findById(userId: string): Promise<User> {

@@ -1,7 +1,8 @@
 import { Role } from 'src/auth/enums/role.enum';
 import { EntityStatus } from '../../shared/enums/status.enum';
+import { UserInf } from '../interfaces/user.interface';
 
-export class UserResponse {
+export class UserResponse implements UserInf {
   readonly userId: string;
 
   readonly email: string;
@@ -18,7 +19,7 @@ export class UserResponse {
 
   readonly updatedAt: Date;
 
-  constructor(partial: Partial<UserResponse>) {
-    Object.assign(this, partial);
+  constructor(dto: UserResponse) {
+    Object.assign(this, dto);
   }
 }
