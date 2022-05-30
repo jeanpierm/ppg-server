@@ -3,7 +3,7 @@ import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 
 export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
@@ -95,7 +95,8 @@ export class ProfessionalProfile {
   isInactive: () => boolean;
 }
 
-export const ProfessionalProfileSchema = SchemaFactory.createForClass(ProfessionalProfile);
+export const ProfessionalProfileSchema =
+  SchemaFactory.createForClass(ProfessionalProfile);
 
 export const ProfessionalProfileName = 'professionalProfiles';
 

@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Expose } from 'class-transformer';
 import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
-import { Role } from 'src/auth/enums/role.enum';
+import { RoleEntity } from '../../roles/schemas/role.schema';
 import { EntityStatus } from '../../shared/enums/status.enum';
 import { UserInf } from '../interfaces/user.interface';
 
@@ -16,20 +15,35 @@ export class User implements UserInf {
   })
   userId: string;
 
-  @Prop({ required: true, trim: true, lowercase: true })
+  @Prop({
+    required: true,
+    trim: true,
+    lowercase: true,
+  })
   name: string;
 
-  @Prop({ required: true, trim: true, lowercase: true })
+  @Prop({
+    required: true,
+    trim: true,
+    lowercase: true,
+  })
   surname: string;
 
-  @Prop({ required: true, index: { unique: true }, lowercase: true })
+  @Prop({
+    required: true,
+    index: { unique: true },
+    lowercase: true,
+  })
   email: string;
 
   @Prop({ required: true })
   password: string;
 
-  @Prop({ default: [Role.User], type: [String] })
-  roles: Role[];
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: RoleEntity.name,
+  })
+  roles: RoleEntity[];
 
   @Prop({
     default: EntityStatus.Active,

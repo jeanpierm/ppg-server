@@ -1,10 +1,15 @@
 import { Body, Controller, Get, Logger, Patch } from '@nestjs/common';
-import { ApiBearerAuth, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { Roles } from 'src/auth/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { ApiOkCustomResponse } from '../shared/decorators/api-response.decorator';
 import { AccountService } from './account.service';
 import { AccountResponse } from './dto/account-response.dto';
@@ -57,7 +62,11 @@ export class AccountController {
     @CurrentUser() user: User,
     @Body() { currentPassword, newPassword }: UpdatePasswordDto,
   ): Promise<ApiResponse> {
-    await this.accountService.updatePassword(user, currentPassword, newPassword);
+    await this.accountService.updatePassword(
+      user,
+      currentPassword,
+      newPassword,
+    );
     return new ApiResponse('Password updated successfully');
   }
 }

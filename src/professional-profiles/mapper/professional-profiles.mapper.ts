@@ -3,7 +3,9 @@ import { ProfessionalProfileResponse } from '../dto/professional-profile-respons
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 
 export class ProfessionalProfilesMapper {
-  static toResponse(proProfile: ProfessionalProfile): ProfessionalProfileResponse {
+  static toResponse(
+    proProfile: ProfessionalProfile,
+  ): ProfessionalProfileResponse {
     return new ProfessionalProfileResponse({
       ppId: proProfile.ppId,
       jobTitle: proProfile.jobTitle,

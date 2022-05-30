@@ -1,6 +1,6 @@
 import { AccountResponse } from 'src/account/dto/account-response.dto';
 import { UserResponse } from '../dto/user-response.dto';
-import { User } from '../schemas/users.schema';
+import { User } from '../schemas/user.schema';
 
 export class UsersMapper {
   static toAccountResponse(user: User): AccountResponse {
@@ -9,6 +9,7 @@ export class UsersMapper {
       name: user.name,
       surname: user.surname,
       email: user.email,
+      options: user.roles?.flatMap((rol) => rol.options),
     });
   }
 

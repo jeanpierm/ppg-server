@@ -18,6 +18,7 @@ export class EnglishMetadata {
   requireCount: number;
 }
 
-export const EnglishMetadataSchema = SchemaFactory.createForClass(EnglishMetadata);
+export const EnglishMetadataSchema =
+  SchemaFactory.createForClass(EnglishMetadata);
 
 export const EnglishName = 'requireEnglishMetadata';

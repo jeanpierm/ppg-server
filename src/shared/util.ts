@@ -12,7 +12,10 @@ const formatter = new (Intl as any).ListFormat('en', {
  * @param {unknown[]} values - The values that the property must be one of.
  * @returns A function that takes two parameters, propertyName and values, and returns a string.
  */
-export function generateValidationMessageByValues(propertyName: string, values: unknown[]) {
+export function generateValidationMessageByValues(
+  propertyName: string,
+  values: unknown[],
+) {
   const isPlural = propertyName.at(-1) === 's';
   if (isPlural) {
     return `each value in ${propertyName} must be ${formatter.format(values)}`;

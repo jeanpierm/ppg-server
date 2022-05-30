@@ -1,4 +1,10 @@
-import { ArrayMinSize, IsArray, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsArray,
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+} from 'class-validator';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
 import { generateValidationMessageByValues } from '../../shared/util';
 import { TechnologyIntf } from '../interfaces/technology.interface';

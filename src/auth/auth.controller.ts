@@ -1,6 +1,13 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './current-user.decorator';
 import { Public } from './decorators/public.decorator';
@@ -36,7 +43,9 @@ export class AuthController {
   @HttpCode(HttpStatus.CREATED)
   @Post('register')
   @Public()
-  async register(@Body() registerRequest: RegisterRequest): Promise<RegisterResponse> {
+  async register(
+    @Body() registerRequest: RegisterRequest,
+  ): Promise<RegisterResponse> {
     return this.authService.register(registerRequest);
   }
 

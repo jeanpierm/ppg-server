@@ -1,5 +1,6 @@
 import {
   ArrayMinSize,
+  ArrayUnique,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -31,6 +32,7 @@ export class CreateUserDto {
 
   @IsOptional()
   @ArrayMinSize(1)
+  @ArrayUnique()
   @IsEnum(Role, {
     each: true,
     message: generateValidationMessageByValues('roles', Object.values(Role)),

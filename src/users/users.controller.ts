@@ -15,13 +15,12 @@ import { Roles } from 'src/auth/decorators/role.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
-import { Pagination } from 'src/shared/interfaces/pagination.interface';
 import {
   ApiCreatedCustomResponse,
   ApiOkCustomResponse,
-  ApiOkCustomResponseArray,
   ApiPaginatedResponse,
 } from '../shared/decorators/api-response.decorator';
+import { PaginationDto } from '../shared/dto/pagination.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -42,10 +41,16 @@ export class UsersController {
   @ApiPaginatedResponse(UserResponse)
   @Get()
   @Roles(Role.Admin)
-  async findAll(@Query() paginationParams: PaginationParams): Promise<Pagination<UserResponse[]>> {
-    const payload = await this.usersService.findAll(paginationParams);
-    payload.data = payload.data.map((user) => UsersMapper.toUserResponse(user));
-    //return new ApiResponse('Users obtained successfully', payload);
+  async findAll(
+    @Query() paginationParams: PaginationParams,
+  ): Promise<PaginationDto<UserResponse>> {
+    const usersPagination = await this.usersService.findAll(paginationParams);
+    const payload: PaginationDto<UserResponse> = {
+      ...usersPagination,
+      data: usersPagination.data.map((user) =>
+        UsersMapper.toUserResponse(user),
+      ),
+    };
     return payload;
   }
 
@@ -56,7 +61,9 @@ export class UsersController {
   @ApiOkCustomResponse(UserResponse)
   @Get(':userId')
   @Roles(Role.Admin)
-  async findOne(@Param() { userId }: FindUserParams): Promise<ApiResponse<UserResponse>> {
+  async findOne(
+    @Param() { userId }: FindUserParams,
+  ): Promise<ApiResponse<UserResponse>> {
     const user = await this.usersService.findById(userId);
     const payload = UsersMapper.toUserResponse(user);
     return new ApiResponse('User obtained successfully', payload);
@@ -69,7 +76,9 @@ export class UsersController {
   @ApiCreatedCustomResponse(UserResponse)
   @Post()
   @Roles(Role.Admin)
-  async create(@Body() createUserDto: CreateUserDto): Promise<ApiResponse<UserResponse>> {
+  async create(
+    @Body() createUserDto: CreateUserDto,
+  ): Promise<ApiResponse<UserResponse>> {
     const user = await this.usersService.create(createUserDto);
     const payload = UsersMapper.toUserResponse(user);
     return new ApiResponse('User created successfully', payload);

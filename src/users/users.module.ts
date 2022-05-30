@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RolesModule } from '../roles/roles.module';
 import { UsersMapper } from './mapper/users.mapper';
-import { User, UserSchema } from './schemas/users.schema';
+import { User, UserSchema } from './schemas/user.schema';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { IsRegisteredEmailValidator } from './validators/is-registered-email.validator';
@@ -9,7 +10,10 @@ import { IsRegisteredValidator } from './validators/is-registered.validator';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    RolesModule,
+  ],
   controllers: [UsersController],
   providers: [
     UsersService,
@@ -18,6 +22,10 @@ import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email
     IsRegisteredEmailValidator,
     IsRegisteredValidator,
   ],
-  exports: [UsersService, IsUnregisteredEmailValidator],
+  exports: [
+    UsersService,
+    IsUnregisteredEmailValidator,
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+  ],
 })
 export class UsersModule {}

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { compare } from 'bcrypt';
 import { UsersMapper } from 'src/users/mapper/users.mapper';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { AccountResponse } from './dto/account-response.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
@@ -13,6 +13,7 @@ export class AccountService {
   constructor(private readonly usersService: UsersService) {}
 
   async get(user: User): Promise<AccountResponse> {
+    console.log(user);
     const account = UsersMapper.toAccountResponse(user);
     this.logger.log('Account obtained successfully');
     return account;
@@ -23,10 +24,16 @@ export class AccountService {
     this.logger.log('Account updated successfully');
   }
 
-  async updatePassword(user: User, currentPassword: string, newPassword: string): Promise<void> {
+  async updatePassword(
+    user: User,
+    currentPassword: string,
+    newPassword: string,
+  ): Promise<void> {
     const passwordMatch = await compare(currentPassword, user.password);
     if (!passwordMatch) {
-      this.logger.error('Error trying to update password: passwords do not match');
+      this.logger.error(
+        'Error trying to update password: passwords do not match',
+      );
       throw new BadRequestException('Invalid password');
     }
     await this.usersService.updatePasswordByEmail(user.email, newPassword);

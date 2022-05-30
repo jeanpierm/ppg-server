@@ -1,8 +1,16 @@
 export const patterns = {
   'Clean Code': ['clean code'],
-  'Domain-Driven Design (DDD)': ['ddd', 'domain-driven design', 'domain driven design'],
+  'Domain-Driven Design (DDD)': [
+    'ddd',
+    'domain-driven design',
+    'domain driven design',
+  ],
   'Inyección de dependencias': ['dependency injection'],
-  'Test-Driven Development (TDD)': ['tdd', 'test-driven development', 'test driven development'],
+  'Test-Driven Development (TDD)': [
+    'tdd',
+    'test-driven development',
+    'test driven development',
+  ],
   AJAX: ['ajax'],
   Flux: ['flux'],
   GrapQl: ['graphql'],

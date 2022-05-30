@@ -27,6 +27,7 @@ export class TechnologyMetadata {
   countResult: Record<string, number>;
 }
 
-export const TechnologyMetadataSchema = SchemaFactory.createForClass(TechnologyMetadata);
+export const TechnologyMetadataSchema =
+  SchemaFactory.createForClass(TechnologyMetadata);
 
 export const TechnologyMetadataName = 'technologiesMetadata';

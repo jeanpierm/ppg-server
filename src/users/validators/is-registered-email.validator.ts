@@ -7,12 +7,16 @@ import {
   ValidatorConstraintInterface,
 } from 'class-validator';
 import { Model } from 'mongoose';
-import { User, UserDocument } from '../schemas/users.schema';
+import { User, UserDocument } from '../schemas/user.schema';
 
 @ValidatorConstraint({ name: 'IsRegisteredEmail', async: true })
 @Injectable()
-export class IsRegisteredEmailValidator implements ValidatorConstraintInterface {
-  constructor(@InjectModel(User.name) private readonly userModel: Model<UserDocument>) {}
+export class IsRegisteredEmailValidator
+  implements ValidatorConstraintInterface
+{
+  constructor(
+    @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+  ) {}
 
   async validate(email: string): Promise<boolean> {
     const isRegistered = await this.userModel.exists({ email });

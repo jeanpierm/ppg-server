@@ -20,10 +20,9 @@ import {
 } from '../shared/decorators/api-response.decorator';
 import { ApiResponse } from '../shared/dto/api-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { Pagination } from '../shared/interfaces/pagination.interface';
+import { PaginationDto } from '../shared/dto/pagination.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { FindTechnologiesParams } from './dto/find-technologies-params.dto';
-import { FindTechnologyParams } from './dto/find-technology-params.dto';
 import { TechnologyResponse } from './dto/technology-response.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { TechnologiesMapper } from './mappers/technologies.mapper';
@@ -45,11 +44,17 @@ export class TechnologiesController {
   async findAll(
     @Query() paginationParams: PaginationParams,
     @Query() { type }: FindTechnologiesParams,
-  ): Promise<Pagination<TechnologyResponse[]>> {
-    const payload = await this.technologiesService.findAll(paginationParams, type);
-    payload.data = payload.data.map((technology) =>
-      TechnologiesMapper.toTechnologyResponse(technology),
+  ): Promise<PaginationDto<TechnologyResponse>> {
+    const technologiesPagination = await this.technologiesService.findAll(
+      paginationParams,
+      type,
     );
+    const payload: PaginationDto<TechnologyResponse> = {
+      ...technologiesPagination,
+      data: technologiesPagination.data.map((technology) =>
+        TechnologiesMapper.toTechnologyResponse(technology),
+      ),
+    };
     return payload;
   }
 
@@ -60,7 +65,7 @@ export class TechnologiesController {
   @ApiOkCustomResponse(TechnologyResponse)
   @Get(':technologyId')
   @Roles(Role.Admin)
-  async findOne(@Param() { technologyId }: FindTechnologyParams) {
+  async findOne(@Param('technologyId') technologyId: string) {
     const technology = await this.technologiesService.findById(technologyId);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
     return new ApiResponse('Technology obtained successfully', payload);
@@ -74,7 +79,9 @@ export class TechnologiesController {
   @Post()
   @Roles(Role.Admin)
   async create(@Body() createTechnologyDto: CreateTechnologyDto) {
-    const technology = await this.technologiesService.create(createTechnologyDto);
+    const technology = await this.technologiesService.create(
+      createTechnologyDto,
+    );
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
     return new ApiResponse('Technology created successfully', payload);
   }
@@ -87,7 +94,7 @@ export class TechnologiesController {
   @Patch(':technologyId')
   @Roles(Role.Admin)
   async update(
-    @Param() { technologyId }: FindTechnologyParams,
+    @Param('technologyId') technologyId: string,
     @Body() updateTechnologyDto: UpdateTechnologyDto,
   ): Promise<void> {
     await this.technologiesService.update(technologyId, updateTechnologyDto);
@@ -100,7 +107,7 @@ export class TechnologiesController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':technologyId')
   @Roles(Role.Admin)
-  async remove(@Param() { technologyId }: FindTechnologyParams): Promise<void> {
+  async remove(@Param('technologyId') technologyId: string): Promise<void> {
     await this.technologiesService.remove(technologyId);
   }
 }

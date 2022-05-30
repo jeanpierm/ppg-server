@@ -1,7 +1,11 @@
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
+import {
+  DocumentBuilder,
+  SwaggerCustomOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
 import { useContainer } from 'class-validator';
 import { AppModule } from './app.module';
 import { AppConfig } from './config/app.config';
@@ -35,7 +39,8 @@ async function bootstrap() {
   setupOpenApi(app);
 
   const server = await app.listen(appConfig.http.port, appConfig.http.host);
-  if (process.env.NODE_ENV === 'production') server.setTimeout(appConfig.timeout);
+  if (process.env.NODE_ENV === 'production')
+    server.setTimeout(appConfig.timeout);
 
   logger.debug(`Server environment set to ${appConfig.env}`);
   logger.log(`Database running on ${dbConfig.host}/${dbConfig.name}`);
@@ -60,7 +65,12 @@ function setupOpenApi(app: INestApplication) {
     .build();
 
   const document = SwaggerModule.createDocument(app, config, {
-    extraModels: [ApiResponse, UserResponse, ProfessionalProfileResponse, TechnologyResponse],
+    extraModels: [
+      ApiResponse,
+      UserResponse,
+      ProfessionalProfileResponse,
+      TechnologyResponse,
+    ],
   });
   const options: SwaggerCustomOptions = {
     swaggerOptions: {

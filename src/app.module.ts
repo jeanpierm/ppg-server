@@ -12,6 +12,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guards/roles.guard';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TechnologiesModule } from './technologies/technologies.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -19,13 +20,15 @@ import { TechnologiesModule } from './technologies/technologies.module';
     MongooseModule.forRootAsync({
       imports: [DatabaseModule],
       inject: [DatabaseService],
-      useFactory: (databaseService: DatabaseService) => databaseService.createMongooseOptions(),
+      useFactory: (databaseService: DatabaseService) =>
+        databaseService.createMongooseOptions(),
     }),
     UsersModule,
     AuthModule,
     AccountModule,
     ProfessionalProfilesModule,
     TechnologiesModule,
+    RolesModule,
   ],
   controllers: [],
   providers: [

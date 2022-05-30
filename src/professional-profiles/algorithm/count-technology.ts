@@ -19,7 +19,9 @@ export function countTechnology(
         if (jobDetail.includes(` ${identifier} `)) {
           ++countDictionary[name];
           console.log(
-            `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${countDictionary[name]})`,
+            `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${
+              countDictionary[name]
+            })`,
           );
           break;
         }

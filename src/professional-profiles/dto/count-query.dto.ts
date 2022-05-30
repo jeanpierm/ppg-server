@@ -3,7 +3,10 @@ import { generateValidationMessageByValues } from '../../shared/util';
 import { TechType } from '../enums/tech-type.enum';
 
 export const COUNT_ENGLISH_QUERY = 'english';
-export const countQueryValues = [...Object.values(TechType), COUNT_ENGLISH_QUERY];
+export const countQueryValues = [
+  ...Object.values(TechType),
+  COUNT_ENGLISH_QUERY,
+];
 
 export class CountQuery {
   @IsEnum(countQueryValues, {

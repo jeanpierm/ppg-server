@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Technology } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { TechType } from '../enums/tech-type.enum';
 import { ProfessionalProfileIntf } from '../interfaces/professional-profile.interface';
 import { ProfessionalProfileBuilder } from '../professional-profile.builder';
@@ -66,10 +66,17 @@ export class ProfessionalProfileGenerator {
     const jobDetails: string[] = await extractJobDetails(jobLinks, page);
 
     for (const type of Object.values(TechType)) {
-      const technologies: Technology[] = await this.technologiesService.findByType(type);
-      const countDictionary: Record<string, number> = countTechnologies(technologies, jobDetails);
+      const technologies: Technology[] =
+        await this.technologiesService.findByType(type);
+      const countDictionary: Record<string, number> = countTechnologies(
+        technologies,
+        jobDetails,
+      );
       technologiesCountMap.set(type, countDictionary);
-      console.log(`Mapa resultante de ${type}:`, technologiesCountMap.get(type));
+      console.log(
+        `Mapa resultante de ${type}:`,
+        technologiesCountMap.get(type),
+      );
     }
 
     const englishCount = countRequireEnglish(jobDetails);
@@ -77,7 +84,12 @@ export class ProfessionalProfileGenerator {
     await browser.close();
 
     // persist metadata in database
-    this.saveTechnologiesMetadata(technologiesCountMap, jobTitle, location, jobLinks.length);
+    this.saveTechnologiesMetadata(
+      technologiesCountMap,
+      jobTitle,
+      location,
+      jobLinks.length,
+    );
     this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
 
     const professionalProfile = new ProfessionalProfileBuilder()

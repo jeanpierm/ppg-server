@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { AuthConfig } from 'src/config/auth.config';
-import { User } from 'src/users/schemas/users.schema';
-import { UsersService } from 'src/users/users.service';
+import { User } from 'src/users/schemas/user.schema';
+import { UsersService } from '../../users/users.service';
 import { JwtPayload } from '../dto/jwt-payload.dto';
 
 @Injectable()
@@ -27,6 +27,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         'An error has ocurred. Could not get user owner of the access token.',
       );
     }
+
     return userLogged;
   }
 }

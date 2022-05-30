@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { AuthConfig } from 'src/config/auth.config';
-import { User } from 'src/users/schemas/users.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { JwtPayload } from './dto/jwt-payload.dto';
 import { LoginResponse } from './dto/login-response.dto';
@@ -45,6 +45,7 @@ export class AuthService {
     this.logger.log('Valid credentials');
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user;
+
     return result;
   }
 

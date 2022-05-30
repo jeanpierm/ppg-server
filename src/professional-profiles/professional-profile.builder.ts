@@ -1,4 +1,4 @@
-import { User } from '../users/schemas/users.schema';
+import { User } from '../users/schemas/user.schema';
 import { TechType } from './enums/tech-type.enum';
 import { ProfessionalProfileIntf } from './interfaces/professional-profile.interface';
 import {
@@ -38,7 +38,10 @@ export class ProfessionalProfileBuilder {
     this.professionalProfile.frameworks = getMostDemanded(frameworks);
     this.professionalProfile.libraries = getMostDemanded(libraries);
     this.professionalProfile.databases = getMostDemanded(databases);
-    this.professionalProfile.patterns = getMostDemanded(patterns, PATTERNS_LENGTH);
+    this.professionalProfile.patterns = getMostDemanded(
+      patterns,
+      PATTERNS_LENGTH,
+    );
     this.professionalProfile.tools = getMostDemanded(tools);
     this.professionalProfile.paradigms = getMostDemanded(paradigms);
     return this;
@@ -49,8 +52,14 @@ export class ProfessionalProfileBuilder {
     return this;
   }
 
-  requireEnglish(englishCount: number, jobsCount: number): ProfessionalProfileBuilder {
-    this.professionalProfile.requireEnglish = calculateRequireEnglish(englishCount, jobsCount);
+  requireEnglish(
+    englishCount: number,
+    jobsCount: number,
+  ): ProfessionalProfileBuilder {
+    this.professionalProfile.requireEnglish = calculateRequireEnglish(
+      englishCount,
+      jobsCount,
+    );
     return this;
   }
 
@@ -64,7 +73,10 @@ export class ProfessionalProfileBuilder {
  * @param maxLength - máximo de tecnologías a retornar
  * @returns un arreglo de las tecnologías más demandadas (de las más repetida a la menos repetida)
  */
-function getMostDemanded(techDict: Record<string, number>, maxLength = 3): string[] {
+function getMostDemanded(
+  techDict: Record<string, number>,
+  maxLength = 3,
+): string[] {
   const technologiesOrdered = Object.keys(techDict)
     // is different to zero
     .filter((technology) => techDict[technology] !== 0)
@@ -79,8 +91,15 @@ function getMostDemanded(techDict: Record<string, number>, maxLength = 3): strin
  * @param jobsCount
  * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
  */
-function calculateRequireEnglish(englishCount: number, jobsCount: number): boolean {
-  const require: boolean = englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
-  console.log(`[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`, require);
+function calculateRequireEnglish(
+  englishCount: number,
+  jobsCount: number,
+): boolean {
+  const require: boolean =
+    englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
+  console.log(
+    `[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`,
+    require,
+  );
   return require;
 }
