@@ -19,7 +19,7 @@ export class ValidateProfileIsActiveMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
-    const excludedValues = ['count'];
+    const excludedValues = ['count', 'random'];
     const { ppId } = req.params;
     if (ppId && !excludedValues.includes(ppId)) {
       this.logger.debug(`Validando que exista perfil con uuid '${ppId}'...`);

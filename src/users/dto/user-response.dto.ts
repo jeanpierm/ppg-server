@@ -1,4 +1,4 @@
-import { RoleEntity } from '../../roles/schemas/role.schema';
+import { RoleResponseDto } from '../../roles/dto/role-response.dto';
 import { EntityStatus } from '../../shared/enums/status.enum';
 import { UserInf } from '../interfaces/user.interface';
 
@@ -11,7 +11,7 @@ export class UserResponse implements UserInf {
 
   readonly surname: string;
 
-  readonly roles: RoleEntity[];
+  readonly role: RoleResponseDto;
 
   readonly status: EntityStatus;
 

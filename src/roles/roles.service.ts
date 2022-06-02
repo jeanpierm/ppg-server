@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateRoleDto } from './dto/create-role.dto';
@@ -13,26 +13,27 @@ export class RolesService {
     private readonly roleModel: Model<RoleDocument>,
   ) {}
 
-  async findAll(): Promise<RoleDocument[]> {
+  findAll() {
     return this.roleModel.find();
   }
 
-  async findById(roleId: string): Promise<RoleDocument> {
+  findById(roleId: string) {
     return this.roleModel.findOne({ roleId });
   }
 
-  async findByName(name: string): Promise<RoleDocument> {
-    return this.roleModel.findOne({ name });
+  findByName(name: string) {
+    return this.roleModel
+      .findOne({ name })
+      .orFail(
+        new NotFoundException(`Role with name '${name}' does not exist.`),
+      );
   }
 
-  async create(createRoleDto: CreateRoleDto): Promise<RoleDocument> {
+  create(createRoleDto: CreateRoleDto) {
     return this.roleModel.create(createRoleDto);
   }
 
-  async update(
-    roleId: string,
-    updateRoleDto: UpdateRoleDto,
-  ): Promise<RoleDocument> {
+  update(roleId: string, updateRoleDto: UpdateRoleDto) {
     return this.roleModel.findOneAndUpdate({ roleId }, updateRoleDto, {
       new: true,
     });

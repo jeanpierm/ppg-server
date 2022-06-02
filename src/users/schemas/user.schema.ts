@@ -40,10 +40,10 @@ export class User implements UserInf {
   password: string;
 
   @Prop({
-    type: [mongoose.Schema.Types.ObjectId],
+    type: mongoose.Schema.Types.ObjectId,
     ref: RoleEntity.name,
   })
-  roles: RoleEntity[];
+  role: RoleEntity;
 
   @Prop({
     default: EntityStatus.Active,
@@ -51,6 +51,10 @@ export class User implements UserInf {
     enum: EntityStatus,
   })
   status: EntityStatus;
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

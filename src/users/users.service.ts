@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
@@ -37,7 +37,7 @@ export class UsersService {
       .sort({ _id: 1 })
       .skip((page - 1) * size)
       .limit(size)
-      .populate('roles')
+      .populate('role')
       .lean();
 
     const totalItems = await this.userModel.count(filterQuery);
@@ -55,7 +55,7 @@ export class UsersService {
   async findById(userId: string): Promise<User> {
     const user = await this.userModel
       .findOne({ userId })
-      .populate('roles')
+      .populate('role')
       .lean();
 
     return user;
@@ -67,33 +67,22 @@ export class UsersService {
   }
 
   async create(user: CreateUserDto): Promise<User> {
-    const { email, password, name, surname, roles: roleNames } = user;
+    const { email, password, name, surname, role: roleName } = user;
     const passwordSalt = await genSalt();
     const passwordHash = await hash(password, passwordSalt);
-    const roles: RoleDocument[] = roleNames?.length
-      ? await Promise.all(
-          roleNames.map(async (roleName) => {
-            const role = await this.rolesService.findByName(roleName);
-            if (!role) {
-              throw new NotFoundException(
-                `Role with name '${roleName}' does not exist.`,
-              );
-            }
-
-            return role;
-          }),
-        )
-      : [await this.rolesService.findByName(Role.User)];
+    const role: RoleDocument = roleName
+      ? await this.rolesService.findByName(roleName)
+      : await this.rolesService.findByName(Role.User);
 
     const newUser = new this.userModel({
       email,
       password: passwordHash,
       name,
       surname,
-      roles,
+      role,
     });
 
-    return (await newUser.save()).populate('roles');
+    return (await newUser.save()).populate('role');
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
@@ -104,23 +93,11 @@ export class UsersService {
       await this.isUnregisteredEmail.validate(updateUser.email);
     }
 
-    const roles: RoleDocument[] =
-      updateUser.roles?.length &&
-      (await Promise.all(
-        updateUser.roles.map(async (roleName) => {
-          const role = await this.rolesService.findByName(roleName);
-          if (!role) {
-            throw new NotFoundException(
-              `Role with name '${roleName}' does not exist.`,
-            );
-          }
-
-          return role;
-        }),
-      ));
+    const role: RoleDocument =
+      updateUser.role && (await this.rolesService.findByName(updateUser.role));
 
     return this.userModel
-      .findOneAndUpdate({ userId }, { ...updateUser, roles }, { new: true })
+      .findOneAndUpdate({ userId }, { ...updateUser, role }, { new: true })
       .lean();
   }
 

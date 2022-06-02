@@ -13,7 +13,6 @@ export class AccountService {
   constructor(private readonly usersService: UsersService) {}
 
   async get(user: User): Promise<AccountResponse> {
-    console.log(user);
     const account = UsersMapper.toAccountResponse(user);
     this.logger.log('Account obtained successfully');
     return account;

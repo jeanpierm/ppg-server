@@ -8,6 +8,8 @@ export type RoleDocument = RoleEntity & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class RoleEntity {
+  _id: mongoose.Schema.Types.ObjectId;
+
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),
@@ -40,6 +42,10 @@ export class RoleEntity {
     default: [],
   })
   options: Option[];
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const RoleSchema = SchemaFactory.createForClass(RoleEntity);

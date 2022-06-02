@@ -1,6 +1,4 @@
 import {
-  ArrayMinSize,
-  ArrayUnique,
   IsEmail,
   IsEnum,
   IsNotEmpty,
@@ -31,11 +29,8 @@ export class CreateUserDto {
   readonly password: string;
 
   @IsOptional()
-  @ArrayMinSize(1)
-  @ArrayUnique()
   @IsEnum(Role, {
-    each: true,
-    message: generateValidationMessageByValues('roles', Object.values(Role)),
+    message: generateValidationMessageByValues('role', Object.values(Role)),
   })
-  readonly roles: Role[];
+  readonly role: Role;
 }
