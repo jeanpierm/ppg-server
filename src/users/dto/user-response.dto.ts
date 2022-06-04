@@ -11,6 +11,10 @@ export class UserResponse implements UserInf {
 
   readonly surname: string;
 
+  readonly linkedIn?: string;
+
+  readonly biography?: string;
+
   readonly role: RoleResponseDto;
 
   readonly status: EntityStatus;

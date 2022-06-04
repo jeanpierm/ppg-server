@@ -39,6 +39,12 @@ export class User implements UserInf {
   @Prop({ required: true })
   password: string;
 
+  @Prop({ required: false, trim: true })
+  linkedIn?: string;
+
+  @Prop({ required: false, trim: true })
+  biography?: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: RoleEntity.name,

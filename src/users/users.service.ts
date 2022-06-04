@@ -67,22 +67,15 @@ export class UsersService {
   }
 
   async create(user: CreateUserDto): Promise<User> {
-    const { email, password, name, surname, role: roleName } = user;
+    const { password, role: roleName } = user;
     const passwordSalt = await genSalt();
     const passwordHash = await hash(password, passwordSalt);
     const role: RoleDocument = roleName
       ? await this.rolesService.findByName(roleName)
       : await this.rolesService.findByName(Role.User);
-
-    const newUser = new this.userModel({
-      email,
-      password: passwordHash,
-      name,
-      surname,
-      role,
-    });
-
-    return (await newUser.save()).populate('role');
+    return (
+      await this.userModel.create({ ...user, role, password: passwordHash })
+    ).populate('role');
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
@@ -98,6 +91,7 @@ export class UsersService {
 
     return this.userModel
       .findOneAndUpdate({ userId }, { ...updateUser, role }, { new: true })
+      .populate('role')
       .lean();
   }
 

@@ -29,6 +29,14 @@ export class CreateUserDto {
   readonly password: string;
 
   @IsOptional()
+  @IsString()
+  readonly linkedIn?: string;
+
+  @IsOptional()
+  @IsString()
+  readonly biography?: string;
+
+  @IsOptional()
   @IsEnum(Role, {
     message: generateValidationMessageByValues('role', Object.values(Role)),
   })

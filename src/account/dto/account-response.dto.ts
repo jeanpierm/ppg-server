@@ -9,6 +9,10 @@ export class AccountResponse {
 
   readonly surname: string;
 
+  readonly linkedIn?: string;
+
+  readonly biography?: string;
+
   readonly options: Option[];
 
   constructor(partial: Partial<AccountResponse>) {
