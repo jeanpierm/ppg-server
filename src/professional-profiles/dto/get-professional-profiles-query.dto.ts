@@ -1,20 +1,15 @@
-import { Type } from 'class-transformer';
-import { IsOptional, IsString } from 'class-validator';
+import { IsOptional } from 'class-validator';
 
 export class GetProfessionalProfilesQuery {
   @IsOptional()
-  @Type(() => Date)
-  readonly initDate?: Date;
+  readonly initDate?: string;
 
   @IsOptional()
-  @Type(() => Date)
-  readonly endDate?: Date;
+  readonly endDate?: string;
 
   @IsOptional()
-  @IsString()
   readonly jobTitle?: string;
 
   @IsOptional()
-  @IsString()
   readonly location?: string;
 }

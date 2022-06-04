@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/current-user.decorator';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { GetProfessionalProfilesQuery } from 'src/professional-profiles/dto/get-professional-profiles-query.dto';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
@@ -80,7 +80,7 @@ export class ProfessionalProfilesController {
     getQuery: GetProfessionalProfilesQuery,
     @CurrentUser() user: UserDocument,
   ): Promise<ApiResponse<ProfessionalProfileResponse[]>> {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(
+    const profiles = await this.proProfilesService.findActiveProfilesOfUser(
       user,
       getQuery,
     );
@@ -117,7 +117,7 @@ export class ProfessionalProfilesController {
   @Roles(Role.User, Role.Admin)
   @Get('count')
   async count(@CurrentUser() user: UserDocument, @Query() { q }: CountQuery) {
-    const profiles = await this.proProfilesService.findActivesProfilesOfUser(
+    const profiles = await this.proProfilesService.findActiveProfilesOfUser(
       user,
     );
     const payload =

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Patch, Post, Res } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { Roles } from '../auth/decorators/role.decorator';
+import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { Option } from './dto/option.dto';

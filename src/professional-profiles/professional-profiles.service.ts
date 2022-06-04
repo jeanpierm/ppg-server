@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { stringToDate } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
@@ -49,7 +50,7 @@ export class ProfessionalProfilesService {
     return createdProfile.populate('owner');
   }
 
-  async findActivesProfilesOfUser(
+  async findActiveProfilesOfUser(
     user: UserDocument,
     getQuery?: GetProfessionalProfilesQuery,
   ): Promise<ProfessionalProfile[]> {
@@ -61,8 +62,8 @@ export class ProfessionalProfilesService {
     if (getQuery) {
       const { initDate, endDate, jobTitle, location } = getQuery;
       if (initDate || endDate) findQuery.createdAt = {};
-      if (initDate) findQuery.createdAt['$gte'] = initDate;
-      if (endDate) findQuery.createdAt['$lt'] = endDate;
+      if (initDate) findQuery.createdAt['$gte'] = stringToDate(initDate);
+      if (endDate) findQuery.createdAt['$lt'] = stringToDate(endDate);
       if (jobTitle)
         findQuery.jobTitle = {
           $regex: new RegExp(jobTitle.trim().replace('.', '')),

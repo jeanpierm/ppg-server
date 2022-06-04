@@ -1,4 +1,5 @@
 import { ValidationError } from '@nestjs/common';
+import { isNumberString } from 'class-validator';
 
 const formatter = new (Intl as any).ListFormat('en', {
   style: 'short',
@@ -29,4 +30,15 @@ export function mapValidationErrorsToMessages(errors: ValidationError[]) {
   return constraints
     .map((constraint: { [type: string]: string }) => Object.values(constraint))
     .flat();
+}
+
+export function stringToDate(dateString: string): Date {
+  try {
+    return isNumberString(dateString)
+      ? new Date(+dateString)
+      : new Date(dateString);
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
 }

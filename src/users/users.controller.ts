@@ -11,7 +11,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/auth/decorators/role.decorator';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
