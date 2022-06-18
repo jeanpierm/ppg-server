@@ -1,5 +1,3 @@
-import { AccountResponse } from 'src/account/dto/account-response.dto';
-
 export class ProfessionalProfileResponse {
   readonly ppId: string;
 
@@ -20,8 +18,6 @@ export class ProfessionalProfileResponse {
   readonly paradigms: string[];
 
   readonly requireEnglish: boolean;
-
-  readonly owner: AccountResponse;
 
   readonly createdAt: Date;
 

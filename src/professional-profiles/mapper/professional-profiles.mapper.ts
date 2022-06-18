@@ -1,4 +1,3 @@
-import { UsersMapper } from '../../users/mapper/users.mapper';
 import { ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 
@@ -19,7 +18,6 @@ export class ProfessionalProfilesMapper {
       requireEnglish: proProfile.requireEnglish,
       createdAt: (proProfile as any).createdAt,
       updatedAt: (proProfile as any).createdAt,
-      owner: UsersMapper.toAccountResponse(proProfile.owner),
     });
   }
 }
