@@ -3,12 +3,12 @@ import { randomUUID } from 'crypto';
 import * as mongoose from 'mongoose';
 import { RoleEntity } from '../../roles/schemas/role.schema';
 import { EntityStatus } from '../../shared/enums/status.enum';
-import { UserInf } from '../interfaces/user.interface';
+import { UserIntf } from '../interfaces/user.interface';
 
 export type UserDocument = User & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
-export class User implements UserInf {
+export class User implements UserIntf {
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),
@@ -44,6 +44,12 @@ export class User implements UserInf {
 
   @Prop({ required: false, trim: true })
   biography?: string;
+
+  @Prop({ required: true, trim: true })
+  location: string;
+
+  @Prop({ required: true, trim: true })
+  jobTitle: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

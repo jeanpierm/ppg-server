@@ -13,9 +13,13 @@ export class AccountResponse {
 
   readonly biography?: string;
 
+  readonly location: string;
+
+  readonly jobTitle: string;
+
   readonly options: Option[];
 
-  constructor(partial: Partial<AccountResponse>) {
+  constructor(partial: AccountResponse) {
     Object.assign(this, partial);
   }
 }

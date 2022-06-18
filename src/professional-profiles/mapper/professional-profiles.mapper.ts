@@ -1,4 +1,4 @@
-import { AccountResponse } from 'src/account/dto/account-response.dto';
+import { UsersMapper } from '../../users/mapper/users.mapper';
 import { ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
 
@@ -19,12 +19,7 @@ export class ProfessionalProfilesMapper {
       requireEnglish: proProfile.requireEnglish,
       createdAt: (proProfile as any).createdAt,
       updatedAt: (proProfile as any).createdAt,
-      owner: new AccountResponse({
-        userId: proProfile.owner.userId,
-        name: proProfile.owner.name,
-        surname: proProfile.owner.surname,
-        email: proProfile.owner.email,
-      }),
+      owner: UsersMapper.toAccountResponse(proProfile.owner),
     });
   }
 }

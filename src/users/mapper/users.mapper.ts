@@ -11,6 +11,8 @@ export class UsersMapper {
     email,
     linkedIn,
     biography,
+    location,
+    jobTitle,
     role,
   }: User): AccountResponse {
     return new AccountResponse({
@@ -20,6 +22,8 @@ export class UsersMapper {
       email,
       linkedIn,
       biography,
+      location,
+      jobTitle,
       options: role.options,
     });
   }
@@ -31,6 +35,8 @@ export class UsersMapper {
     email,
     linkedIn,
     biography,
+    location,
+    jobTitle,
     role,
     status,
     createdAt,
@@ -43,6 +49,8 @@ export class UsersMapper {
       email,
       linkedIn,
       biography,
+      location,
+      jobTitle,
       role: RolesMapper.toRoleResponse(role),
       status,
       createdAt,

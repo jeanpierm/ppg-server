@@ -36,6 +36,14 @@ export class CreateUserDto {
   @IsString()
   readonly biography?: string;
 
+  @IsNotEmpty()
+  @IsString()
+  readonly location: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly jobTitle: string;
+
   @IsOptional()
   @IsEnum(Role, {
     message: generateValidationMessageByValues('role', Object.values(Role)),
