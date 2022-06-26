@@ -2,7 +2,7 @@ import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/users/schemas/user.schema';
 import { stringToDate } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
@@ -32,7 +32,7 @@ export class ProfessionalProfilesService {
    * @param location
    */
   async generateProfile(
-    user: User,
+    user: UserDocument,
     jobTitle: string,
     location: string,
   ): Promise<ProfessionalProfile> {

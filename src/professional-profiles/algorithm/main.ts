@@ -3,19 +3,27 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Technology } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
-import { User } from 'src/users/schemas/user.schema';
+import { User, UserDocument } from 'src/users/schemas/user.schema';
 import { TechType } from '../enums/tech-type.enum';
 import { ProfessionalProfileIntf } from '../interfaces/professional-profile.interface';
 import { ProfessionalProfileBuilder } from '../professional-profile.builder';
-import { EnglishMetadata } from '../schemas/english-metadata.schema';
-import { TechnologyMetadata } from '../schemas/technology-metadata.schema';
+import {
+  EnglishMetadata,
+  EnglishMetadataDocument,
+} from '../schemas/english-metadata.schema';
+import {
+  TechnologyMetadata,
+  TechnologyMetadataDocument,
+} from '../schemas/technology-metadata.schema';
 import { countRequireEnglish } from './count-requiere-english';
 import { countTechnology as countTechnologies } from './count-technology';
-import { extractJobDetail } from './extract-job-detail';
+import { extractJobMetadata } from './extract-job';
 import { login } from './login.algorithm';
 import { scrapJobLinks } from './scrap-job-links';
 import { searchJobs } from './search-jobs';
 import puppeteer = require('puppeteer');
+import { JobIntf } from '../interfaces/job.interface';
+import { Job, JobDocument } from '../schemas/job.schema';
 
 const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
 
@@ -25,9 +33,11 @@ export class ProfessionalProfileGenerator {
 
   constructor(
     @InjectModel(TechnologyMetadata.name)
-    private readonly technologyMetadataModel: Model<TechnologyMetadata>,
+    private readonly technologyMetadataModel: Model<TechnologyMetadataDocument>,
     @InjectModel(EnglishMetadata.name)
-    private readonly englishMetadataModel: Model<EnglishMetadata>,
+    private readonly englishMetadataModel: Model<EnglishMetadataDocument>,
+    @InjectModel(Job.name)
+    private readonly jobModel: Model<JobDocument>,
     private readonly technologiesService: TechnologiesService,
   ) {}
 
@@ -46,26 +56,20 @@ export class ProfessionalProfileGenerator {
    * @returns a professional software development profile highly in demand according to the jobs on LinkedIn and the established parameters.
    */
   async executeAlgorithm(
-    user: User,
+    user: UserDocument,
     jobTitle: string,
     location: string,
   ): Promise<ProfessionalProfileIntf> {
     console.time(PPG_ALGORITHM_LABEL);
     const technologiesCountMap = new Map<TechType, Record<string, number>>();
 
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
-    await setLanguageInEnglish(page);
-    await page.setViewport({ width: 1920, height: 2400 });
+    const jobs = await this.scrapeWebJobOffers(jobTitle, location);
+    const jobsAnalyzed = await this.saveJobs(jobs);
 
-    await login(page);
-    await searchJobs(page, jobTitle, location);
-    const jobLinks: string[] = await scrapJobLinks(page);
-    const jobsCount: number = jobLinks.length;
-    const jobDetails: string[] = await Promise.all(
-      jobLinks.map((link, i) => extractJobDetail(browser, link, i)),
-    );
+    const jobsCount: number = jobs.length;
+    const jobDetails = jobs.map((job) => job.detail);
 
+    /* PROFESSIONAL PROFILE GENERATION */
     for (const type of Object.values(TechType)) {
       const technologies: Technology[] =
         await this.technologiesService.findByType(type);
@@ -82,21 +86,20 @@ export class ProfessionalProfileGenerator {
 
     const englishCount = countRequireEnglish(jobDetails);
 
-    await browser.close();
-
     // persist metadata in database
     this.saveTechnologiesMetadata(
       technologiesCountMap,
       jobTitle,
       location,
-      jobLinks.length,
+      jobsCount,
     );
     this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
 
     const professionalProfile = new ProfessionalProfileBuilder()
       .jobTitle(jobTitle)
       .location(location)
-      .owner(user)
+      .owner(user._id)
+      .jobsAnalyzed(jobsAnalyzed.map((job) => job._id))
       .requireEnglish(englishCount, jobsCount)
       .technologiesCountMap(technologiesCountMap)
       .build();
@@ -104,6 +107,30 @@ export class ProfessionalProfileGenerator {
     console.timeEnd(PPG_ALGORITHM_LABEL);
 
     return professionalProfile;
+  }
+
+  private async scrapeWebJobOffers(
+    jobTitle: string,
+    location: string,
+  ): Promise<JobIntf[]> {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
+    await setLanguageInEnglish(page);
+    await page.setViewport({ width: 1920, height: 2400 });
+
+    await login(page);
+    await searchJobs(page, jobTitle, location);
+    const jobLinks = await scrapJobLinks(page);
+    const jobs = await Promise.all(
+      jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
+    );
+    await browser.close();
+
+    return jobs;
+  }
+
+  private saveJobs(jobs: JobIntf[]) {
+    return this.jobModel.create(jobs);
   }
 
   private saveEnglishMetadata(

@@ -52,7 +52,7 @@ export class ProfessionalProfilesController {
   @Post()
   @Roles(Role.User, Role.Admin)
   async generate(
-    @CurrentUser() user: User,
+    @CurrentUser() user: UserDocument,
     @Body() generatePpgDto: GeneratePpgDto,
   ): Promise<ApiResponse<ProfessionalProfileResponse>> {
     const { jobTitle, location } = generatePpgDto;

@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { User } from '../users/schemas/user.schema';
 import { TechType } from './enums/tech-type.enum';
 import { ProfessionalProfileIntf } from './interfaces/professional-profile.interface';
@@ -47,8 +48,13 @@ export class ProfessionalProfileBuilder {
     return this;
   }
 
-  owner(owner: User): ProfessionalProfileBuilder {
-    this.professionalProfile.owner = owner;
+  owner(owner: Types.ObjectId): ProfessionalProfileBuilder {
+    this.professionalProfile.owner = owner as any;
+    return this;
+  }
+
+  jobsAnalyzed(jobs: Types.ObjectId[]) {
+    this.professionalProfile.jobsAnalyzed = jobs as any;
     return this;
   }
 

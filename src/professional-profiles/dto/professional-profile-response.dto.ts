@@ -1,5 +1,3 @@
-import { JobOffer } from './job-offer.dto';
-
 export class ProfessionalProfileResponse {
   readonly ppId: string;
 
@@ -22,7 +20,7 @@ export class ProfessionalProfileResponse {
   readonly requireEnglish: boolean;
 
   // TODO
-  readonly jobOffersAnalyzed?: JobOffer[];
+  // readonly jobsAnalyzed?: JobResponse[];
 
   readonly createdAt: Date;
 
