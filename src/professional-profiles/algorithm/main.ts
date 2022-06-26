@@ -62,8 +62,9 @@ export class ProfessionalProfileGenerator {
     await searchJobs(page, jobTitle, location);
     const jobLinks: string[] = await scrapJobLinks(page);
     const jobsCount: number = jobLinks.length;
-
-    const jobDetails: string[] = await extractJobDetails(jobLinks, page);
+    const jobDetails: string[] = await Promise.all(
+      jobLinks.map((link, i) => extractJobDetail(browser, link, i)),
+    );
 
     for (const type of Object.values(TechType)) {
       const technologies: Technology[] =
@@ -136,23 +137,6 @@ export class ProfessionalProfileGenerator {
     );
     this.technologyMetadataModel.create(metadataArray);
   }
-}
-
-async function extractJobDetails(jobLinks: string[], page: puppeteer.Page) {
-  const jobDetails: string[] = [];
-  for (const [index, jobLink] of jobLinks.entries()) {
-    try {
-      const detail = await extractJobDetail(page, jobLink, index);
-      jobDetails.push(detail);
-    } catch (err) {
-      console.error(
-        `Ocurrió un error mientras se extraía el detalle del trabajo #${index} con link "${jobLink}"`,
-        err,
-      );
-    }
-  }
-  console.log('Job details extracted successfully');
-  return jobDetails;
 }
 
 async function setLanguageInEnglish(page: puppeteer.Page) {
