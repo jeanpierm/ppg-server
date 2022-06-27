@@ -1,10 +1,9 @@
 import { Types } from 'mongoose';
-import { User } from '../users/schemas/user.schema';
 import { TechType } from './enums/tech-type.enum';
 import { ProfessionalProfileIntf } from './interfaces/professional-profile.interface';
 import {
-  PATTERNS_LENGTH,
   MIN_PERCENTAGE_TO_REQUIERE_ENGLISH,
+  PATTERNS_LENGTH,
 } from './professional-profile.constant';
 import { ProfessionalProfile } from './schemas/professional-profile.schema';
 

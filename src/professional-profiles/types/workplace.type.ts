@@ -1,1 +1,1 @@
-export type WorkPlace = 'remote' | 'on-site' | 'hybrid';
+export type WorkPlace = 'Remote' | 'On-site' | 'Hybrid';

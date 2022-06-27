@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Technology } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/users/schemas/user.schema';
 import { TechType } from '../enums/tech-type.enum';
 import { ProfessionalProfileIntf } from '../interfaces/professional-profile.interface';
 import { ProfessionalProfileBuilder } from '../professional-profile.builder';
@@ -24,6 +24,7 @@ import { searchJobs } from './search-jobs';
 import puppeteer = require('puppeteer');
 import { JobIntf } from '../interfaces/job.interface';
 import { Job, JobDocument } from '../schemas/job.schema';
+import { normalizeJobDetail } from './normalize-job-detail';
 
 const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
 
@@ -55,7 +56,7 @@ export class ProfessionalProfileGenerator {
    * @param location - the location where job offers will be sought
    * @returns a professional software development profile highly in demand according to the jobs on LinkedIn and the established parameters.
    */
-  async executeAlgorithm(
+  async generate(
     user: UserDocument,
     jobTitle: string,
     location: string,
@@ -63,13 +64,16 @@ export class ProfessionalProfileGenerator {
     console.time(PPG_ALGORITHM_LABEL);
     const technologiesCountMap = new Map<TechType, Record<string, number>>();
 
+    /* JOBS SCRAPING */
     const jobs = await this.scrapeWebJobOffers(jobTitle, location);
     const jobsAnalyzed = await this.saveJobs(jobs);
 
-    const jobsCount: number = jobs.length;
-    const jobDetails = jobs.map((job) => job.detail);
-
     /* PROFESSIONAL PROFILE GENERATION */
+    const jobsCount = jobs.length;
+    const jobDetails = jobs.map(({ detail, title }) => {
+      const detailNormalized = normalizeJobDetail(detail);
+      return `${title} ${detailNormalized}`;
+    });
     for (const type of Object.values(TechType)) {
       const technologies: Technology[] =
         await this.technologiesService.findByType(type);
@@ -83,18 +87,7 @@ export class ProfessionalProfileGenerator {
         technologiesCountMap.get(type),
       );
     }
-
     const englishCount = countRequireEnglish(jobDetails);
-
-    // persist metadata in database
-    this.saveTechnologiesMetadata(
-      technologiesCountMap,
-      jobTitle,
-      location,
-      jobsCount,
-    );
-    this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
-
     const professionalProfile = new ProfessionalProfileBuilder()
       .jobTitle(jobTitle)
       .location(location)
@@ -105,6 +98,15 @@ export class ProfessionalProfileGenerator {
       .build();
 
     console.timeEnd(PPG_ALGORITHM_LABEL);
+
+    /* PERSIST METADATA IN DATABASE */
+    this.saveTechnologiesMetadata(
+      technologiesCountMap,
+      jobTitle,
+      location,
+      jobsCount,
+    );
+    this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
 
     return professionalProfile;
   }
@@ -153,6 +155,29 @@ export class ProfessionalProfileGenerator {
     location: string,
     jobsCount: number,
   ) {
+    // EJEMPLO...
+    // const ex = {
+    //   professionalProfile: 'objectId',
+    //   technologies: {
+    //     languages: [
+    //       {
+    //         name: 'java',
+    //         count: 1,
+    //       },
+    //     ],
+    //     frameworks: [
+    //       {
+    //         name: 'react.js',
+    //         count: 1,
+    //       }
+    //     ],
+    //   },
+    //   english: {
+    //     requiere: 1,
+    //     noRequire: 1,
+    //   }
+    // };
+
     const metadataArray: TechnologyMetadata[] = Object.values(TechType).map(
       (type): TechnologyMetadata => ({
         jobTitle,

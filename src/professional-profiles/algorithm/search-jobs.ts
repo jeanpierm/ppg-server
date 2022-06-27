@@ -32,6 +32,6 @@ export function getEncodedSearchJobsUrl(
 ): string {
   const url = new URL(searchJobsUrl);
   url.searchParams.set('keywords', jobTitle);
-  url.searchParams.set(location, location);
+  url.searchParams.set('location', location);
   return url.toString();
 }
