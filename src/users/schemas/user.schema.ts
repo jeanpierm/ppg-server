@@ -45,11 +45,17 @@ export class User implements UserIntf {
   @Prop({ required: false, trim: true })
   biography?: string;
 
-  @Prop({ required: true, trim: true })
-  location: string;
+  @Prop({ required: false, trim: true })
+  github?: string;
+
+  @Prop({ required: false, trim: true })
+  portfolio?: string;
 
   @Prop({ required: true, trim: true })
   jobTitle: string;
+
+  @Prop({ required: true, trim: true })
+  location: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

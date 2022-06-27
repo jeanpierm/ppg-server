@@ -15,6 +15,10 @@ export class UserResponse implements UserIntf {
 
   readonly biography?: string;
 
+  readonly github?: string;
+
+  readonly portfolio?: string;
+
   readonly location: string;
 
   readonly jobTitle: string;

@@ -36,6 +36,14 @@ export class CreateUserDto {
   @IsString()
   readonly biography?: string;
 
+  @IsOptional()
+  @IsString()
+  readonly github?: string;
+
+  @IsOptional()
+  @IsString()
+  readonly portfolio?: string;
+
   @IsNotEmpty()
   @IsString()
   readonly location: string;

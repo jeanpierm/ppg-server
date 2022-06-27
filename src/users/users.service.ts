@@ -11,12 +11,18 @@ import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User, UserDocument } from './schemas/user.schema';
+import {
+  DownloadPreferences,
+  DownloadPreferencesDocument,
+} from '../download-preferences/schema/download-preferences.schema';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
+    @InjectModel(DownloadPreferences.name)
+    private readonly downloadPreferencesModel: Model<DownloadPreferencesDocument>,
     private readonly rolesService: RolesService,
     private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
   ) {}
@@ -73,9 +79,16 @@ export class UsersService {
     const role: RoleDocument = roleName
       ? await this.rolesService.findByName(roleName)
       : await this.rolesService.findByName(Role.User);
-    return (
-      await this.userModel.create({ ...user, role, password: passwordHash })
-    ).populate('role');
+
+    const newUser = await this.userModel.create({
+      ...user,
+      role,
+      password: passwordHash,
+    });
+
+    //Create download preferences
+    await this.downloadPreferencesModel.create({ user: newUser });
+    return newUser.populate('role');
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
 import { RolesModule } from '../roles/roles.module';
 import { UsersMapper } from './mapper/users.mapper';
 import { User, UserSchema } from './schemas/user.schema';
@@ -13,6 +14,7 @@ import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
     RolesModule,
+    DownloadPreferencesModule,
   ],
   controllers: [UsersController],
   providers: [

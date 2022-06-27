@@ -13,6 +13,7 @@ import { RolesGuard } from './auth/guards/roles.guard';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TechnologiesModule } from './technologies/technologies.module';
 import { RolesModule } from './roles/roles.module';
+import { DownloadPreferencesModule } from './download-preferences/download-preferences.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RolesModule } from './roles/roles.module';
     ProfessionalProfilesModule,
     TechnologiesModule,
     RolesModule,
+    DownloadPreferencesModule,
   ],
   controllers: [],
   providers: [
