@@ -25,6 +25,7 @@ import {
   TechnologyMetadataName,
   TechnologyMetadataSchema,
 } from './schemas/technology-metadata.schema';
+import { Job, JobSchema } from './schemas/job.schema';
 
 @Module({
   imports: [
@@ -43,6 +44,10 @@ import {
         name: EnglishMetadata.name,
         schema: EnglishMetadataSchema,
         collection: EnglishName,
+      },
+      {
+        name: Job.name,
+        schema: JobSchema,
       },
     ]),
     TechnologiesModule,

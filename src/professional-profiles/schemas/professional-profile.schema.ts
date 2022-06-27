@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User } from 'src/users/schemas/user.schema';
+import { Job } from './job.schema';
 
 export type ProfessionalProfileDocument = ProfessionalProfile & Document;
 
@@ -78,9 +79,15 @@ export class ProfessionalProfile {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
+    ref: User.name,
   })
   owner: User;
+
+  @Prop({
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: Job.name,
+  })
+  jobsAnalyzed: Job[];
 
   @Prop({
     default: EntityStatus.Active,

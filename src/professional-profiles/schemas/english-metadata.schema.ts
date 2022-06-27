@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
 
-export type RequireEnglishDocument = EnglishMetadata & mongoose.Document;
+export type EnglishMetadataDocument = EnglishMetadata & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class EnglishMetadata {

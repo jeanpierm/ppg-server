@@ -1,9 +1,9 @@
-import { User } from '../users/schemas/user.schema';
+import { Types } from 'mongoose';
 import { TechType } from './enums/tech-type.enum';
 import { ProfessionalProfileIntf } from './interfaces/professional-profile.interface';
 import {
-  PATTERNS_LENGTH,
   MIN_PERCENTAGE_TO_REQUIERE_ENGLISH,
+  PATTERNS_LENGTH,
 } from './professional-profile.constant';
 import { ProfessionalProfile } from './schemas/professional-profile.schema';
 
@@ -47,8 +47,13 @@ export class ProfessionalProfileBuilder {
     return this;
   }
 
-  owner(owner: User): ProfessionalProfileBuilder {
-    this.professionalProfile.owner = owner;
+  owner(owner: Types.ObjectId): ProfessionalProfileBuilder {
+    this.professionalProfile.owner = owner as any;
+    return this;
+  }
+
+  jobsAnalyzed(jobs: Types.ObjectId[]) {
+    this.professionalProfile.jobsAnalyzed = jobs as any;
     return this;
   }
 

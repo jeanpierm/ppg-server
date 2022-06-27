@@ -1,3 +1,5 @@
+import { JobResponse } from './job-response.dto';
+
 export class ProfessionalProfileResponse {
   readonly ppId: string;
 
@@ -19,11 +21,13 @@ export class ProfessionalProfileResponse {
 
   readonly requireEnglish: boolean;
 
+  readonly jobsAnalyzed: JobResponse[];
+
   readonly createdAt: Date;
 
   readonly updatedAt: Date;
 
-  constructor(partial: Partial<ProfessionalProfileResponse>) {
-    Object.assign(this, partial);
+  constructor(object: ProfessionalProfileResponse) {
+    Object.assign(this, object);
   }
 }

@@ -1,5 +1,6 @@
 import { ProfessionalProfileResponse } from '../dto/professional-profile-response.dto';
 import { ProfessionalProfile } from '../schemas/professional-profile.schema';
+import { JobsMapper } from './jobs.mapper';
 
 export class ProfessionalProfilesMapper {
   static toResponse(
@@ -16,6 +17,9 @@ export class ProfessionalProfilesMapper {
       tools: proProfile.tools,
       paradigms: proProfile.paradigms,
       requireEnglish: proProfile.requireEnglish,
+      jobsAnalyzed: proProfile.jobsAnalyzed.map((job) =>
+        JobsMapper.toResponse(job),
+      ),
       createdAt: (proProfile as any).createdAt,
       updatedAt: (proProfile as any).createdAt,
     });

@@ -16,7 +16,7 @@ export function countTechnology(
         countDictionary[name] = 0;
       }
       for (const identifier of identifiers) {
-        if (jobDetail.includes(` ${identifier} `)) {
+        if (` ${jobDetail} `.includes(` ${identifier} `)) {
           ++countDictionary[name];
           console.log(
             `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${

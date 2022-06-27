@@ -19,7 +19,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { GetProfessionalProfilesQuery } from 'src/professional-profiles/dto/get-professional-profiles-query.dto';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/users/schemas/user.schema';
 import {
   ApiCreatedCustomResponse,
   ApiOkCustomResponse,
@@ -52,7 +52,7 @@ export class ProfessionalProfilesController {
   @Post()
   @Roles(Role.User, Role.Admin)
   async generate(
-    @CurrentUser() user: User,
+    @CurrentUser() user: UserDocument,
     @Body() generatePpgDto: GeneratePpgDto,
   ): Promise<ApiResponse<ProfessionalProfileResponse>> {
     const { jobTitle, location } = generatePpgDto;
