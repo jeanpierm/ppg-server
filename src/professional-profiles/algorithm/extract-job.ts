@@ -27,7 +27,10 @@ export async function extractJobMetadata(
   let workplaceType: WorkPlace;
   const page = await browser.newPage();
   await page.goto(url, waitLoad);
-  await page.waitForSelector(DETAILS_SELECTOR, { timeout: 5000 });
+  page.setDefaultTimeout(5000);
+
+  // const detailsEl = await page.waitForSelector(DETAILS_SELECTOR);
+  // const s = detailsEl?.evaluate((el) => el.textContent);
   try {
     await page.waitForSelector(WORKPLACE_TYPE_SELECTOR, { timeout: 5000 });
     workplaceType = await extractWorkplaceType(page);

@@ -7,19 +7,19 @@ export type JobDocument = Job & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Job implements JobIntf {
-  @Prop()
+  @Prop({ trim: true })
   title: string;
 
-  @Prop()
+  @Prop({ trim: true })
   detail: string;
 
   @Prop({ type: Company })
   company: Company;
 
-  @Prop()
+  @Prop({ lowercase: true, trim: true })
   location: string;
 
-  @Prop({ type: String })
+  @Prop({ type: String, lowercase: true, trim: true })
   workplaceType?: WorkPlace;
 
   @Prop()
