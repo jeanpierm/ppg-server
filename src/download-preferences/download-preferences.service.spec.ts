@@ -9,7 +9,9 @@ describe('DownloadPreferencesService', () => {
       providers: [DownloadPreferencesService],
     }).compile();
 
-    service = module.get<DownloadPreferencesService>(DownloadPreferencesService);
+    service = module.get<DownloadPreferencesService>(
+      DownloadPreferencesService,
+    );
   });
 
   it('should be defined', () => {

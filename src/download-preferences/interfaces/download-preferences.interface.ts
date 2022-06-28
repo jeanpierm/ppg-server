@@ -1,6 +1,6 @@
 export interface DownloadPreferencesIntf {
-  photo: Boolean;
-  biography: Boolean;
-  linkedIn: Boolean;
-  email: Boolean;
+  photo: boolean;
+  biography: boolean;
+  linkedIn: boolean;
+  email: boolean;
 }

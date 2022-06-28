@@ -3,15 +3,14 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
+import { ApiOkCustomResponse } from 'src/shared/decorators/api-response.decorator';
+import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { DownloadPreferencesService } from './download-preferences.service';
-import { ApiResponse } from 'src/shared/dto/api-response.dto';
-import { DownloadPreferences } from './schema/download-preferences.schema';
-import { DownloadPreferencesMapper } from './mapper/dp-mapper';
 import { DownloadPreferencesResponse } from './dto/dp-response.dto';
-import { ApiOkCustomResponse } from 'src/shared/decorators/api-response.decorator';
 import { FindDpParams } from './dto/find-dp-params.dto';
 import { UpdateDpDto } from './dto/update-dp.dto';
+import { DownloadPreferencesMapper } from './mapper/dp-mapper';
 
 @ApiTags('download-preferences')
 @Controller('download-preferences')

@@ -9,7 +9,9 @@ describe('DownloadPreferencesController', () => {
       controllers: [DownloadPreferencesController],
     }).compile();
 
-    controller = module.get<DownloadPreferencesController>(DownloadPreferencesController);
+    controller = module.get<DownloadPreferencesController>(
+      DownloadPreferencesController,
+    );
   });
 
   it('should be defined', () => {

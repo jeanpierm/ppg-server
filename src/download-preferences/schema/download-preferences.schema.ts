@@ -17,25 +17,25 @@ export class DownloadPreferences {
     required: false,
     default: false,
   })
-  photo: Boolean;
+  photo: boolean;
 
   @Prop({
     required: false,
     default: false,
   })
-  biography: Boolean;
+  biography: boolean;
 
   @Prop({
     required: false,
     default: false,
   })
-  linkedIn: Boolean;
+  linkedIn: boolean;
 
   @Prop({
     required: false,
     default: false,
   })
-  email: Boolean;
+  email: boolean;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

@@ -3,14 +3,14 @@ import { DownloadPreferencesIntf } from '../interfaces/download-preferences.inte
 
 export class UpdateDpDto implements DownloadPreferencesIntf {
   @IsNotEmpty()
-  photo: Boolean;
+  photo: boolean;
 
   @IsNotEmpty()
-  biography: Boolean;
+  biography: boolean;
 
   @IsNotEmpty()
-  email: Boolean;
+  email: boolean;
 
   @IsNotEmpty()
-  linkedIn: Boolean;
+  linkedIn: boolean;
 }
