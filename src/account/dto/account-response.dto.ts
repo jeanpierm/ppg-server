@@ -9,13 +9,17 @@ export class AccountResponse {
 
   readonly surname: string;
 
+  readonly location: string;
+
+  readonly jobTitle: string;
+
   readonly linkedIn?: string;
 
   readonly biography?: string;
 
-  readonly location: string;
+  readonly github?: string;
 
-  readonly jobTitle: string;
+  readonly portfolio?: string;
 
   readonly options: Option[];
 

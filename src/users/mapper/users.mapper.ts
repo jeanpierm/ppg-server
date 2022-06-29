@@ -11,6 +11,8 @@ export class UsersMapper {
     email,
     linkedIn,
     biography,
+    github,
+    portfolio,
     location,
     jobTitle,
     role,
@@ -24,6 +26,8 @@ export class UsersMapper {
       biography,
       location,
       jobTitle,
+      github,
+      portfolio,
       options: role.options,
     });
   }

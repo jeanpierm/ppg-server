@@ -40,10 +40,10 @@ export class User implements UserIntf {
   password: string;
 
   @Prop({ required: false, trim: true })
-  linkedIn?: string;
+  biography?: string;
 
   @Prop({ required: false, trim: true })
-  biography?: string;
+  linkedIn?: string;
 
   @Prop({ required: false, trim: true })
   github?: string;
