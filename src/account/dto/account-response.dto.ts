@@ -21,6 +21,8 @@ export class AccountResponse {
 
   readonly portfolio?: string;
 
+  readonly photo?: string;
+
   readonly options: Option[];
 
   constructor(partial: AccountResponse) {

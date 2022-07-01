@@ -57,6 +57,9 @@ export class User implements UserIntf {
   @Prop({ required: true, trim: true })
   location: string;
 
+  @Prop({ required: false, trim: true })
+  photo?: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: RoleEntity.name,

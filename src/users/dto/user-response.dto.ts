@@ -19,6 +19,8 @@ export class UserResponse implements UserIntf {
 
   readonly portfolio?: string;
 
+  readonly photo?: string;
+
   readonly location: string;
 
   readonly jobTitle: string;
