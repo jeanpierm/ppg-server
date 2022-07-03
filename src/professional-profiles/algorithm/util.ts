@@ -9,7 +9,7 @@ export const k = 10 ** 3;
 
 export async function getTextContent(page: puppeteer.Page, selector: string) {
   const element = await page.$(selector);
-  return element?.evaluate((el) => el.textContent.trim());
+  return element?.evaluate((el) => (el as HTMLElement).innerText.trim());
 }
 
 export async function getImageSrc(page: puppeteer.Page, selector: string) {

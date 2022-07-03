@@ -23,30 +23,35 @@ export async function extractJobMetadata(
   url: string,
   i: number,
 ): Promise<JobIntf> {
-  const page = await browser.newPage();
-  await page.goto(url, waitLoad);
-  page.setDefaultTimeout(5000);
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, waitLoad);
+    page.setDefaultTimeout(10000);
+    await page.waitForSelector(DETAILS_SELECTOR);
 
-  const title = await getTextContent(page, TITLE_SELECTOR);
-  const detail = await getTextContent(page, DETAILS_SELECTOR);
-  const company = {
-    name: await getTextContent(page, COMPANY_NAME_SELECTOR),
-    photoUrl: await getImageSrc(page, COMPANY_PHOTO_SELECTOR),
-  };
-  const location = await getTextContent(page, LOCATION_SELECTOR);
-  const workplaceType = await getTextContent(page, WORKPLACE_TYPE_SELECTOR);
-  await page.close();
+    const title = await getTextContent(page, TITLE_SELECTOR);
+    const detail = await getTextContent(page, DETAILS_SELECTOR);
+    const company = {
+      name: await getTextContent(page, COMPANY_NAME_SELECTOR),
+      photoUrl: await getImageSrc(page, COMPANY_PHOTO_SELECTOR),
+    };
+    const location = await getTextContent(page, LOCATION_SELECTOR);
+    const workplaceType = await getTextContent(page, WORKPLACE_TYPE_SELECTOR);
+    await page.close();
 
-  const job: JobIntf = {
-    title,
-    detail,
-    company,
-    location,
-    url,
-    workplaceType: workplaceType as WorkPlace,
-  };
-  console.log(`[Job ${i + 1}] extracted successfully`);
-  console.log(`[Job ${i + 1}]:`, job, '\n');
+    const job: JobIntf = {
+      title,
+      detail,
+      company,
+      location,
+      url,
+      workplaceType: workplaceType as WorkPlace,
+    };
+    console.log(`[Job ${i + 1}] extracted successfully`);
+    console.log(`[Job ${i + 1}]:`, job, '\n');
 
-  return job;
+    return job;
+  } catch (err) {
+    console.error(err);
+  }
 }

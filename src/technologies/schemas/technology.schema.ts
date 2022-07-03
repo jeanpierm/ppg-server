@@ -24,12 +24,13 @@ export class Technology implements TechnologyIntf {
   @Prop({
     required: true,
     index: true,
+    trim: true,
   })
   name: string;
 
   @Prop({
     required: true,
-    type: [String],
+    type: [{ type: String, lowercase: true, trim: true }],
   })
   identifiers: string[];
 
