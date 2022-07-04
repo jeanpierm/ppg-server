@@ -1,8 +1,7 @@
-import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 import mongoose from 'mongoose';
 import { Role } from '../../auth/enums/role.enum';
-import { Option } from '../dto/option.dto';
 
 export type RoleDocument = RoleEntity & mongoose.Document;
 
@@ -22,26 +21,6 @@ export class RoleEntity {
     index: { unique: true },
   })
   name: Role;
-
-  @Prop({
-    schema: raw({
-      icon: {
-        type: String,
-        required: false,
-      },
-      title: {
-        type: String,
-        required: true,
-      },
-      path: {
-        type: String,
-        required: true,
-      },
-    }),
-    required: false,
-    default: [],
-  })
-  options: Option[];
 
   createdAt: Date;
 

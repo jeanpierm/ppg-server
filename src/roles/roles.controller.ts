@@ -4,7 +4,6 @@ import { Response } from 'express';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { CreateRoleDto } from './dto/create-role.dto';
-import { Option } from './dto/option.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
 import { RolesMapper } from './roles.mapper';
 import { RolesService } from './roles.service';
@@ -62,17 +61,6 @@ export class RolesController {
     @Body() updateRoleDto: UpdateRoleDto,
   ) {
     const role = await this.rolesService.update(roleId, updateRoleDto);
-    return RolesMapper.toRoleResponse(role);
-  }
-
-  /**
-   * Añade una opción a un rol según el rolId.
-   */
-  @ApiOperation({ summary: 'actualizar rol' })
-  @Post(':roleId/options')
-  @Roles(Role.Admin)
-  async pushOption(@Param('roleId') roleId: string, @Body() option: Option) {
-    const role = await this.rolesService.pushOptionToRole(roleId, option);
     return RolesMapper.toRoleResponse(role);
   }
 

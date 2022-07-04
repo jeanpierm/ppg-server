@@ -1,6 +1,6 @@
-import { Option } from '../../roles/dto/option.dto';
+import { UserIntf } from '../../users/interfaces/user.interface';
 
-export class AccountResponse {
+export class AccountResponse implements UserIntf {
   readonly userId: string;
 
   readonly email: string;
@@ -23,7 +23,7 @@ export class AccountResponse {
 
   readonly photo?: string;
 
-  readonly options: Option[];
+  readonly roleName: string;
 
   constructor(partial: AccountResponse) {
     Object.assign(this, partial);

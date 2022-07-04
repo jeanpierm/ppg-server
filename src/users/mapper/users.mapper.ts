@@ -30,7 +30,7 @@ export class UsersMapper {
       photo,
       github,
       portfolio,
-      options: role.options,
+      roleName: role.name,
     });
   }
 

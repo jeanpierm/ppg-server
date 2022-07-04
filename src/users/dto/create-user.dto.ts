@@ -60,5 +60,5 @@ export class CreateUserDto {
   @IsEnum(Role, {
     message: generateValidationMessageByValues('role', Object.values(Role)),
   })
-  readonly role: Role;
+  readonly role?: Role;
 }

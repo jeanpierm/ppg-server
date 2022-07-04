@@ -5,14 +5,12 @@ export class RolesMapper {
   static toRoleResponse({
     roleId,
     name,
-    options,
     createdAt,
     updatedAt,
   }: RoleEntity): RoleResponseDto {
     return new RoleResponseDto({
       roleId,
       name,
-      options,
       createdAt,
       updatedAt,
     });
