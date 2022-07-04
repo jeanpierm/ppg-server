@@ -100,12 +100,17 @@ export class UsersService {
     if (wantUpdateEmail) {
       await this.isUnregisteredEmail.validate(updateUser.email);
     }
-
     const role: RoleDocument =
       updateUser.role && (await this.rolesService.findByName(updateUser.role));
+    const password: string =
+      updateUser.password && (await hash(updateUser.password, 10));
 
     return this.userModel
-      .findOneAndUpdate({ userId }, { ...updateUser, role }, { new: true })
+      .findOneAndUpdate(
+        { userId },
+        { ...updateUser, role, password },
+        { new: true },
+      )
       .populate('role')
       .lean();
   }
