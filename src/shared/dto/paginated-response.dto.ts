@@ -1,4 +1,4 @@
-export class PaginationDto<T> {
+export class PaginatedResponseDto<T> {
   totalItems: number;
   currentPage: number;
   pageSize: number;

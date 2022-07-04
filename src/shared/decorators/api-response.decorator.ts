@@ -6,7 +6,7 @@ import {
   getSchemaPath,
 } from '@nestjs/swagger';
 import { ApiResponse } from '../dto/api-response.dto';
-import { PaginationDto } from '../dto/pagination.dto';
+import { PaginatedResponseDto } from '../dto/paginated-response.dto';
 
 export const ApiPaginatedResponse = <TModel extends Type<any>>(
   model: TModel,
@@ -18,7 +18,7 @@ export const ApiPaginatedResponse = <TModel extends Type<any>>(
       schema: {
         title: `PaginatedResponseOf${model.name}`,
         allOf: [
-          { $ref: getSchemaPath(PaginationDto) },
+          { $ref: getSchemaPath(PaginatedResponseDto) },
           {
             properties: {
               data: {

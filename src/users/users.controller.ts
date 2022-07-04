@@ -20,7 +20,7 @@ import {
   ApiOkCustomResponse,
   ApiPaginatedResponse,
 } from '../shared/decorators/api-response.decorator';
-import { PaginationDto } from '../shared/dto/pagination.dto';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -43,14 +43,15 @@ export class UsersController {
   @Roles(Role.Admin)
   async findAll(
     @Query() paginationParams: PaginationParams,
-  ): Promise<PaginationDto<UserResponse>> {
+  ): Promise<PaginatedResponseDto<UserResponse>> {
     const usersPagination = await this.usersService.findAll(paginationParams);
-    const payload: PaginationDto<UserResponse> = {
+    const payload: PaginatedResponseDto<UserResponse> = {
       ...usersPagination,
       data: usersPagination.data.map((user) =>
         UsersMapper.toUserResponse(user),
       ),
     };
+
     return payload;
   }
 

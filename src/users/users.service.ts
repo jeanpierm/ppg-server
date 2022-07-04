@@ -6,7 +6,6 @@ import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
 import { Role } from '../auth/enums/role.enum';
 import { RolesService } from '../roles/roles.service';
 import { RoleDocument } from '../roles/schemas/role.schema';
-import { PaginationDto } from '../shared/dto/pagination.dto';
 import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -16,6 +15,7 @@ import {
   DownloadPreferencesDocument,
 } from '../download-preferences/schema/download-preferences.schema';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -27,7 +27,9 @@ export class UsersService {
     private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
   ) {}
 
-  async findAll(pagination: PaginationParams): Promise<PaginationDto<User>> {
+  async findAll(
+    pagination: PaginationParams,
+  ): Promise<PaginatedResponseDto<User>> {
     const { size, search, page } = pagination;
     const filterQuery: Record<string, any> = {};
     if (search) {
