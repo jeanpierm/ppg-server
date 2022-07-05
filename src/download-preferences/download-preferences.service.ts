@@ -1,8 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import {
+  ProfessionalProfile,
+  ProfessionalProfileDocument,
+} from 'src/professional-profiles/schemas/professional-profile.schema';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { UpdateDpDto } from './dto/update-dp.dto';
+import { resume } from './pdf/resume';
 import {
   DownloadPreferences,
   DownloadPreferencesDocument,
@@ -15,6 +20,8 @@ export class DownloadPreferencesService {
   constructor(
     @InjectModel(DownloadPreferences.name)
     private readonly downloadPreferencesModel: Model<DownloadPreferencesDocument>,
+    @InjectModel(ProfessionalProfile.name)
+    private readonly proProfileModel: Model<ProfessionalProfileDocument>,
   ) {}
 
   async getDownloadPreferences(
@@ -24,7 +31,14 @@ export class DownloadPreferencesService {
       .findOne({ user: user._id })
       .populate('user')
       .lean();
-    this.logger.log(`Professional profiles obtained by user ${user.userId}`);
+    if (!downloadPreferences) {
+      await this.downloadPreferencesModel.create({ user: user._id });
+
+      return await this.downloadPreferencesModel
+        .findOne({ user: user._id })
+        .populate('user')
+        .lean();
+    }
 
     return downloadPreferences;
   }
@@ -40,5 +54,17 @@ export class DownloadPreferencesService {
       })
       .populate('user')
       .lean();
+  }
+
+  async downloadResume(user: UserDocument, param: any) {
+    const profile = await this.proProfileModel
+      .findOne({ ppId: param.ppId, user: user._id })
+      .populate('owner')
+      .lean();
+    const downloadpreferences = await this.getDownloadPreferences(user);
+
+    if (profile) {
+      resume(profile, downloadpreferences);
+    }
   }
 }
