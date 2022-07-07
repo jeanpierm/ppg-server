@@ -54,6 +54,12 @@ import { Job, JobSchema } from './schemas/job.schema';
   ],
   controllers: [ProfessionalProfilesController],
   providers: [ProfessionalProfilesService, ProfessionalProfileGenerator],
+  exports: [
+    ProfessionalProfilesService,
+    MongooseModule.forFeature([
+      { name: ProfessionalProfile.name, schema: ProfessionalProfileSchema },
+    ]),
+  ],
 })
 export class ProfessionalProfilesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

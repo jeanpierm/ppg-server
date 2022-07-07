@@ -13,4 +13,10 @@ export class UpdateDpDto implements DownloadPreferencesIntf {
 
   @IsNotEmpty()
   linkedIn: boolean;
+
+  @IsNotEmpty()
+  github: boolean;
+
+  @IsNotEmpty()
+  portfolio: boolean;
 }
