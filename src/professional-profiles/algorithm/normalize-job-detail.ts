@@ -6,6 +6,5 @@ export function normalizeJobDetail(jobDetail: string): string {
   return jobDetail
     .toLowerCase()
     .replace(/[(),;:]/g, ' ')
-    .replace(/\//g, ' ')
     .replace(/\s+/g, ' ');
 }

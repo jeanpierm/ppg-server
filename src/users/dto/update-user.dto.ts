@@ -8,5 +8,5 @@ export class UpdateUserDto extends PartialType(
 ) {
   @IsEmail()
   @IsOptional()
-  email?: string;
+  readonly email?: string;
 }

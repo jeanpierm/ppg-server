@@ -28,6 +28,14 @@ export class CreateUserDto {
   @Length(5, 30)
   readonly password: string;
 
+  @IsNotEmpty()
+  @IsString()
+  readonly location: string;
+
+  @IsNotEmpty()
+  @IsString()
+  readonly jobTitle: string;
+
   @IsOptional()
   @IsString()
   readonly linkedIn?: string;
@@ -44,17 +52,13 @@ export class CreateUserDto {
   @IsString()
   readonly portfolio?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  readonly location: string;
-
-  @IsNotEmpty()
-  @IsString()
-  readonly jobTitle: string;
+  readonly photo?: string;
 
   @IsOptional()
   @IsEnum(Role, {
     message: generateValidationMessageByValues('role', Object.values(Role)),
   })
-  readonly role: Role;
+  readonly role?: Role;
 }

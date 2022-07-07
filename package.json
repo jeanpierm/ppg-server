@@ -32,7 +32,6 @@
     "@nestjs/platform-express": "^8.4.5",
     "@nestjs/swagger": "^5.2.1",
     "bcrypt": "^5.0.1",
-    "carbone": "^3.2.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "datauri": "^4.1.0",

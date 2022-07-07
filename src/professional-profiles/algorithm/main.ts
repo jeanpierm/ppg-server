@@ -74,6 +74,7 @@ export class ProfessionalProfileGenerator {
       const detailNormalized = normalizeJobDetail(detail);
       return `${title} ${detailNormalized}`;
     });
+    console.log('Job details normalized: ', jobDetails);
     for (const type of Object.values(TechType)) {
       const technologies: Technology[] =
         await this.technologiesService.findByType(type);
@@ -123,9 +124,11 @@ export class ProfessionalProfileGenerator {
     await login(page);
     await searchJobs(page, jobTitle, location);
     const jobLinks = await scrapJobLinks(page);
-    const jobs = await Promise.all(
-      jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
-    );
+    const jobs = (
+      await Promise.all(
+        jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
+      )
+    ).filter((job) => job !== undefined);
     await browser.close();
 
     return jobs;

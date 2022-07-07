@@ -19,8 +19,8 @@ import {
   ApiPaginatedResponse,
 } from '../shared/decorators/api-response.decorator';
 import { ApiResponse } from '../shared/dto/api-response.dto';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { PaginationDto } from '../shared/dto/pagination.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { FindTechnologiesParams } from './dto/find-technologies-params.dto';
 import { TechnologyResponse } from './dto/technology-response.dto';
@@ -44,12 +44,12 @@ export class TechnologiesController {
   async findAll(
     @Query() paginationParams: PaginationParams,
     @Query() { type }: FindTechnologiesParams,
-  ): Promise<PaginationDto<TechnologyResponse>> {
+  ): Promise<PaginatedResponseDto<TechnologyResponse>> {
     const technologiesPagination = await this.technologiesService.findAll(
       paginationParams,
       type,
     );
-    const payload: PaginationDto<TechnologyResponse> = {
+    const payload: PaginatedResponseDto<TechnologyResponse> = {
       ...technologiesPagination,
       data: technologiesPagination.data.map((technology) =>
         TechnologiesMapper.toTechnologyResponse(technology),

@@ -5,12 +5,12 @@ export class PaginationParams {
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  size = 15;
+  size?: number;
 
   @IsOptional()
   @IsNumber()
   @Type(() => Number)
-  page = 1;
+  page?: number;
 
   @IsOptional()
   @IsString()

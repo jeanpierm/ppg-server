@@ -25,6 +25,8 @@ import {
   ApiOkCustomResponse,
   ApiOkCustomResponseArray,
 } from '../shared/decorators/api-response.decorator';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import {
   CountQuery,
   countQueryValues,
@@ -77,20 +79,22 @@ export class ProfessionalProfilesController {
   @Roles(Role.User, Role.Admin)
   async get(
     @Query()
-    getQuery: GetProfessionalProfilesQuery,
+    getQuery: GetProfessionalProfilesQuery & PaginationParams,
     @CurrentUser() user: UserDocument,
-  ): Promise<ApiResponse<ProfessionalProfileResponse[]>> {
+  ): Promise<PaginatedResponseDto<ProfessionalProfileResponse>> {
+    console.log(getQuery);
     const profiles = await this.proProfilesService.findActiveProfilesOfUser(
       user,
       getQuery,
     );
-    const payload = profiles.map((profile) =>
-      ProfessionalProfilesMapper.toResponse(profile),
-    );
-    return new ApiResponse(
-      'Professional profiles obtained successfully',
-      payload,
-    );
+    const payload: PaginatedResponseDto<ProfessionalProfileResponse> = {
+      ...profiles,
+      data: profiles.data.map((profile) =>
+        ProfessionalProfilesMapper.toResponse(profile),
+      ),
+    };
+
+    return payload;
   }
 
   /**
@@ -122,9 +126,9 @@ export class ProfessionalProfilesController {
     );
     const payload =
       q === COUNT_ENGLISH_QUERY
-        ? await this.proProfilesService.getEnglishCount(profiles)
+        ? await this.proProfilesService.getEnglishCount(profiles.data)
         : await this.proProfilesService.getTechnologyCount(
-            profiles,
+            profiles.data,
             q as TechType,
           );
     return new ApiResponse(`${q} count obtained successfully`, payload);

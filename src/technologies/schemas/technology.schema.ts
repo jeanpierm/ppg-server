@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Expose } from 'class-transformer';
 import { randomUUID } from 'crypto';
 import { TechType } from '../../professional-profiles/enums/tech-type.enum';
 import { TechnologyIntf } from '../interfaces/technology.interface';
@@ -8,14 +7,12 @@ export type TechnologyDocument = Technology & Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Technology implements TechnologyIntf {
-  @Expose()
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),
   })
   technologyId: string;
 
-  @Expose()
   @Prop({
     type: String,
     enum: TechType,
@@ -24,19 +21,25 @@ export class Technology implements TechnologyIntf {
   })
   type: TechType;
 
-  @Expose()
   @Prop({
     required: true,
     index: true,
+    trim: true,
   })
   name: string;
 
-  @Expose()
   @Prop({
     required: true,
-    type: [String],
+    type: [{ type: String, lowercase: true, trim: true }],
   })
   identifiers: string[];
+
+  @Prop({
+    required: false,
+    type: [String],
+    default: [],
+  })
+  resourcesToLearn: string[];
 }
 
 export const TechnologySchema = SchemaFactory.createForClass(Technology);

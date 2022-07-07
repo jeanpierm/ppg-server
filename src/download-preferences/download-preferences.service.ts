@@ -33,11 +33,14 @@ export class DownloadPreferencesService {
       .populate('user')
       .lean();
     if (!downloadPreferences) {
-      return await (
-        await this.downloadPreferencesModel.create({ user: user._id })
-      ).populate('user');
+      await this.downloadPreferencesModel.create({ user: user._id });
+
+      return await this.downloadPreferencesModel
+        .findOne({ user: user._id })
+        .populate('user')
+        .lean();
     }
-    //this.logger.log(`Professional profiles obtained by user ${user.userId}`);
+
     return downloadPreferences;
   }
 

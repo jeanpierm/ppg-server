@@ -3,8 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { FilterQuery, Model } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { stringToDate } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
+import { UsersController } from '../users/users.controller';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
@@ -51,36 +54,46 @@ export class ProfessionalProfilesService {
 
   async findActiveProfilesOfUser(
     user: UserDocument,
-    getQuery?: GetProfessionalProfilesQuery,
-  ): Promise<ProfessionalProfile[]> {
-    const findQuery: FilterQuery<ProfessionalProfileDocument> = {
+    getQuery?: GetProfessionalProfilesQuery & PaginationParams,
+  ): Promise<PaginatedResponseDto<ProfessionalProfile>> {
+    const filterQuery: FilterQuery<ProfessionalProfileDocument> = {
       owner: user._id,
       status: EntityStatus.Active,
     };
-
-    if (getQuery) {
-      const { initDate, endDate, jobTitle, location } = getQuery;
-      if (initDate || endDate) findQuery.createdAt = {};
-      if (initDate) findQuery.createdAt['$gte'] = stringToDate(initDate);
-      if (endDate) findQuery.createdAt['$lt'] = stringToDate(endDate);
-      if (jobTitle)
-        findQuery.jobTitle = {
-          $regex: new RegExp(jobTitle.trim().replace('.', '')),
-          $options: 'i',
-        };
-      if (location)
-        findQuery.location = {
-          $regex: new RegExp(location.trim().replace('.', '')),
-          $options: 'i',
-        };
-    }
+    const { initDate, endDate, jobTitle, location, page, size } =
+      getQuery || {};
+    if (initDate || endDate) filterQuery.createdAt = {};
+    if (initDate) filterQuery.createdAt['$gte'] = stringToDate(initDate);
+    if (endDate) filterQuery.createdAt['$lt'] = stringToDate(endDate);
+    if (jobTitle)
+      filterQuery.jobTitle = {
+        $regex: new RegExp(jobTitle.trim().replace('.', '')),
+        $options: 'i',
+      };
+    if (location)
+      filterQuery.location = {
+        $regex: new RegExp(location.trim().replace('.', '')),
+        $options: 'i',
+      };
 
     const profiles = await this.proProfileModel
-      .find(findQuery)
+      .find(filterQuery)
       .sort({ createdAt: -1 })
+      .skip((page - 1) * size)
+      .limit(size)
       .lean();
+    const totalItems = await this.proProfileModel.count(filterQuery);
+    const totalPages = Math.ceil(totalItems / size);
+
     this.logger.log(`Professional profiles obtained by user ${user.userId}`);
-    return profiles;
+
+    return {
+      totalItems,
+      currentPage: page,
+      pageSize: size,
+      data: profiles,
+      totalPages,
+    };
   }
 
   async findActiveProfileOfUserById(

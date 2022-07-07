@@ -54,10 +54,13 @@ export class DownloadPreferencesController {
     return new ApiResponse('Preferencias de descarga modificadas', payload);
   }
 
-  @ApiOperation({ summary: 'descargar pdf' })
+  @ApiOperation({ summary: 'descargar resume segun el ppId' })
   @Get('pdf/:ppId')
   @Roles(Role.User, Role.Admin)
-  downloadPDF(@CurrentUser() user: UserDocument, @Param() params: any) {
-    this.downloadPreferencesService.pdf(user, params.ppId);
+  async getResume(
+    @CurrentUser() user: UserDocument,
+    @Param() param: any,
+  ): Promise<any> {
+    return this.downloadPreferencesService.pdf(user, param);
   }
 }

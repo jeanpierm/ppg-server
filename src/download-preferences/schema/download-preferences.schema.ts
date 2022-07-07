@@ -38,6 +38,18 @@ export class DownloadPreferences {
   email: boolean;
 
   @Prop({
+    required: false,
+    default: false,
+  })
+  github: boolean;
+
+  @Prop({
+    required: false,
+    default: false,
+  })
+  portfolio: boolean;
+
+  @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   })

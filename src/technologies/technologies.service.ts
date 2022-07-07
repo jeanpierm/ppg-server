@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as fs from 'fs';
 import { Model } from 'mongoose';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { PaginationDto } from '../shared/dto/pagination.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
@@ -57,7 +57,7 @@ export class TechnologiesService {
   async findAll(
     pagination: PaginationParams,
     type?: TechType,
-  ): Promise<PaginationDto<Technology>> {
+  ): Promise<PaginatedResponseDto<Technology>> {
     const { size, search, page } = pagination;
     const filterQuery: Record<string, any> = {};
 

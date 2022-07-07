@@ -3,4 +3,6 @@ export interface DownloadPreferencesIntf {
   biography: boolean;
   linkedIn: boolean;
   email: boolean;
+  github: boolean;
+  portfolio: boolean;
 }

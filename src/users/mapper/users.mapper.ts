@@ -11,7 +11,10 @@ export class UsersMapper {
     email,
     linkedIn,
     biography,
+    github,
+    portfolio,
     location,
+    photo,
     jobTitle,
     role,
   }: User): AccountResponse {
@@ -24,7 +27,10 @@ export class UsersMapper {
       biography,
       location,
       jobTitle,
-      options: role.options,
+      photo,
+      github,
+      portfolio,
+      roleName: role.name,
     });
   }
 
@@ -38,6 +44,7 @@ export class UsersMapper {
     location,
     jobTitle,
     role,
+    photo,
     status,
     createdAt,
     updatedAt,
@@ -49,6 +56,7 @@ export class UsersMapper {
       email,
       linkedIn,
       biography,
+      photo,
       location,
       jobTitle,
       role: RolesMapper.toRoleResponse(role),
