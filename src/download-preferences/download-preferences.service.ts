@@ -54,16 +54,4 @@ export class DownloadPreferencesService {
       .populate('user')
       .lean();
   }
-
-  async downloadResume(user: UserDocument, param: any) {
-    const profile = await this.proProfileModel
-      .findOne({ ppId: param.ppId, user: user._id })
-      .populate('owner')
-      .lean();
-    const downloadpreferences = await this.getDownloadPreferences(user);
-
-    if (profile) {
-      // resume(profile, downloadpreferences);
-    }
-  }
 }

@@ -53,14 +53,4 @@ export class DownloadPreferencesController {
     const payload = DownloadPreferencesMapper.toResponse(downloadPreferences);
     return new ApiResponse('Preferencias de descarga modificadas', payload);
   }
-
-  @ApiOperation({ summary: 'descargar resume segun el ppId' })
-  @Get('pdf/:ppId')
-  @Roles(Role.User, Role.Admin)
-  async getResume(
-    @CurrentUser() user: UserDocument,
-    @Param() param: any,
-  ): Promise<any> {
-    return await this.downloadPreferencesService.downloadResume(user, param);
-  }
 }
