@@ -7,7 +7,6 @@ import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { stringToDate } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
-import { UsersController } from '../users/users.controller';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
