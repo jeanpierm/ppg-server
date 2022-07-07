@@ -19,14 +19,12 @@ export class ProfessionalProfile {
   @Prop({
     required: true,
     index: true,
-    lowercase: true,
   })
   jobTitle: string;
 
   @Prop({
     required: true,
     index: true,
-    lowercase: true,
   })
   location: string;
 

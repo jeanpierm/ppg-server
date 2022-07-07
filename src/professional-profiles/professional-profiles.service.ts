@@ -1,11 +1,20 @@
 import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Response } from 'express';
+import * as fs from 'fs/promises';
+import * as pdf from 'html-pdf';
 import { FilterQuery, Model } from 'mongoose';
+import * as path from 'path';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { stringToDate } from '../shared/util';
+import {
+  arrayToHtmlArticleList,
+  stringToDate,
+  stringToHtmlAnchor,
+  titleCase,
+} from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
@@ -194,5 +203,73 @@ export class ProfessionalProfilesService {
     });
 
     return englishCount;
+  }
+
+  async download(res: Response, user: UserDocument, ppId: string) {
+    const templatePath = path.join(__dirname, '../../templates/resume.html');
+    let templateHtml = await fs.readFile(templatePath, 'utf8');
+    const profile = await this.proProfileModel
+      .findOne({ user: user._id, ppId })
+      .lean();
+    if (!profile)
+      return res.status(404).json({
+        statusCode: 404,
+        message: 'Requested profile not found',
+        error: 'Not found',
+      });
+
+    // user data
+    const name = titleCase(user.name);
+    const surname = titleCase(user.surname);
+    const biography = titleCase(user.biography);
+    const linkedIn = user.linkedIn
+      ? stringToHtmlAnchor(user.linkedIn, 'LinkedIn')
+      : '';
+    const github = user.github ? stringToHtmlAnchor(user.github, 'GitHub') : '';
+    const portfolio = user.portfolio
+      ? stringToHtmlAnchor(user.portfolio, 'Portafolio')
+      : '';
+
+    // profile data
+    const jobTitle = profile.jobTitle;
+    const languages = arrayToHtmlArticleList(profile.languages, 'Lenguajes');
+    const frameworks = arrayToHtmlArticleList(profile.frameworks, 'Frameworks');
+    const databases = arrayToHtmlArticleList(
+      profile.databases,
+      'Bases de Datos',
+    );
+    const libraries = arrayToHtmlArticleList(profile.libraries, 'Librerías');
+    const patterns = arrayToHtmlArticleList(profile.patterns, 'Patrones');
+    const tools = arrayToHtmlArticleList(profile.tools, 'Herramientas');
+
+    templateHtml = templateHtml
+      // user data
+      .replace('{{name}}', name)
+      .replace('{{surname}}', titleCase(surname))
+      .replace('{{biography}}', titleCase(biography))
+      .replace('{{tools}}', tools)
+      .replace('{{linkedIn}}', linkedIn)
+      .replace('{{github}}', github)
+      .replace('{{portfolio}}', portfolio)
+
+      // profile data
+      .replace('{{jobTitle}}', jobTitle)
+      .replace('{{languages}}', languages)
+      .replace('{{frameworks}}', frameworks)
+      .replace('{{databases}}', databases)
+      .replace('{{libraries}}', libraries)
+      .replace('{{patterns}}', patterns);
+
+    pdf.create(templateHtml).toStream((error, stream) => {
+      if (error) {
+        res.status(500).json({
+          statusCode: 500,
+          message: 'An error as ocurred while being generating a PDF',
+          error,
+        });
+      }
+      res.setHeader('Content-Type', 'application/pdf');
+      stream.pipe(res);
+    });
   }
 }

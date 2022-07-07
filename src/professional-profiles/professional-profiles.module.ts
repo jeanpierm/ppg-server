@@ -65,6 +65,10 @@ export class ProfessionalProfilesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(ValidateProfileIsActiveMiddleware).forRoutes(
       {
+        path: 'professional-profiles/download/:ppId',
+        method: RequestMethod.GET,
+      },
+      {
         path: 'professional-profiles/:ppId',
         method: RequestMethod.GET,
       },

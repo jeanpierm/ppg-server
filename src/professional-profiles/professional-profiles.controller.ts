@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Query,
+  Res,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -14,6 +15,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
+import { Response } from 'express';
 import { CurrentUser } from 'src/auth/current-user.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
@@ -45,30 +47,6 @@ export class ProfessionalProfilesController {
   constructor(
     private readonly proProfilesService: ProfessionalProfilesService,
   ) {}
-
-  /**
-   * Generar un perfil profesional. El perfil es generado a través de web scraping y procesamiento de los datos, para así conformar un perfil profesional con tecnologías altamente demandadas según el título de trabajo y localidad enviados.
-   */
-  @ApiOperation({ summary: 'generar perfil' })
-  @ApiCreatedCustomResponse(ProfessionalProfileResponse)
-  @Post()
-  @Roles(Role.User, Role.Admin)
-  async generate(
-    @CurrentUser() user: UserDocument,
-    @Body() generatePpgDto: GeneratePpgDto,
-  ): Promise<ApiResponse<ProfessionalProfileResponse>> {
-    const { jobTitle, location } = generatePpgDto;
-    const generatedProProfile = await this.proProfilesService.generateProfile(
-      user,
-      jobTitle,
-      location,
-    );
-    const payload = ProfessionalProfilesMapper.toResponse(generatedProProfile);
-    return new ApiResponse(
-      'Professional profile generated successfully',
-      payload,
-    );
-  }
 
   /**
    * Obtiene los perfiles profesionales activos generados por la cuenta autenticada.
@@ -134,6 +112,16 @@ export class ProfessionalProfilesController {
     return new ApiResponse(`${q} count obtained successfully`, payload);
   }
 
+  @Get('download/:ppId')
+  @Roles(Role.User, Role.Admin)
+  async report(
+    @Res() res: Response,
+    @CurrentUser() user: UserDocument,
+    @Param('ppId') ppId: string,
+  ) {
+    return this.proProfilesService.download(res, user, ppId);
+  }
+
   /**
    * Obtiene un perfil profesional según su ppId
    */
@@ -152,6 +140,30 @@ export class ProfessionalProfilesController {
     const payload = ProfessionalProfilesMapper.toResponse(profile);
     return new ApiResponse(
       'Professional profile obtained successfully',
+      payload,
+    );
+  }
+
+  /**
+   * Generar un perfil profesional. El perfil es generado a través de web scraping y procesamiento de los datos, para así conformar un perfil profesional con tecnologías altamente demandadas según el título de trabajo y localidad enviados.
+   */
+  @ApiOperation({ summary: 'generar perfil' })
+  @ApiCreatedCustomResponse(ProfessionalProfileResponse)
+  @Post()
+  @Roles(Role.User, Role.Admin)
+  async generate(
+    @CurrentUser() user: UserDocument,
+    @Body() generatePpgDto: GeneratePpgDto,
+  ): Promise<ApiResponse<ProfessionalProfileResponse>> {
+    const { jobTitle, location } = generatePpgDto;
+    const generatedProProfile = await this.proProfilesService.generateProfile(
+      user,
+      jobTitle,
+      location,
+    );
+    const payload = ProfessionalProfilesMapper.toResponse(generatedProProfile);
+    return new ApiResponse(
+      'Professional profile generated successfully',
       payload,
     );
   }
