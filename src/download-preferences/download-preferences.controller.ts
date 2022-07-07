@@ -53,4 +53,11 @@ export class DownloadPreferencesController {
     const payload = DownloadPreferencesMapper.toResponse(downloadPreferences);
     return new ApiResponse('Preferencias de descarga modificadas', payload);
   }
+
+  @ApiOperation({ summary: 'descargar pdf' })
+  @Get('pdf/:ppId')
+  @Roles(Role.User, Role.Admin)
+  downloadPDF(@CurrentUser() user: UserDocument, @Param() params: any) {
+    this.downloadPreferencesService.pdf(user, params.ppId);
+  }
 }

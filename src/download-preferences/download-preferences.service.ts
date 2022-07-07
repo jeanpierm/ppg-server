@@ -1,8 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import {
+  ProfessionalProfile,
+  ProfessionalProfileDocument,
+} from 'src/professional-profiles/schemas/professional-profile.schema';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { UpdateDpDto } from './dto/update-dp.dto';
+import { PdfResumeMaker } from './pdf/resume';
 import {
   DownloadPreferences,
   DownloadPreferencesDocument,
@@ -15,6 +20,9 @@ export class DownloadPreferencesService {
   constructor(
     @InjectModel(DownloadPreferences.name)
     private readonly downloadPreferencesModel: Model<DownloadPreferencesDocument>,
+    @InjectModel(ProfessionalProfile.name)
+    private readonly proProfileModel: Model<ProfessionalProfileDocument>,
+    private readonly pdfResumeMaker: PdfResumeMaker,
   ) {}
 
   async getDownloadPreferences(
@@ -24,8 +32,12 @@ export class DownloadPreferencesService {
       .findOne({ user: user._id })
       .populate('user')
       .lean();
-    this.logger.log(`Professional profiles obtained by user ${user.userId}`);
-
+    if (!downloadPreferences) {
+      return await (
+        await this.downloadPreferencesModel.create({ user: user._id })
+      ).populate('user');
+    }
+    //this.logger.log(`Professional profiles obtained by user ${user.userId}`);
     return downloadPreferences;
   }
 
@@ -40,5 +52,20 @@ export class DownloadPreferencesService {
       })
       .populate('user')
       .lean();
+  }
+
+  async pdf(user: UserDocument, ppId: string) {
+    const profile = await this.proProfileModel
+      .findOne({ owner: user._id, ppId: ppId })
+      .populate('owner')
+      .lean();
+    const preferences = await this.getDownloadPreferences(user);
+
+    if (!profile) {
+      throw new ForbiddenException('This profile not found');
+    }
+
+    this.pdfResumeMaker.pdfmake(profile, preferences);
+    //pdfmake(profile, preferences);
   }
 }
