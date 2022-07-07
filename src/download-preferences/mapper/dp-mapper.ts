@@ -9,6 +9,8 @@ export class DownloadPreferencesMapper {
       biography: downloadPreferences.biography,
       linkedIn: downloadPreferences.linkedIn,
       email: downloadPreferences.email,
+      github: downloadPreferences.github,
+      portfolio: downloadPreferences.portfolio,
       userEmail: downloadPreferences.user.email,
     });
   }
