@@ -28,7 +28,7 @@
       height: 128px;
     }
 
-    .img-container {
+    #img-container {
       margin: 12px;
     }
   </style>
@@ -36,16 +36,104 @@
 
 <body>
   <header>
-    <div class="img-container">
+    <div id="img-container">
       {{#if user.photo}}
       <img src="{{user.photo}}">
       {{/if}}
     </div>
-    <div class="names-container">
+    <div>
       <h1>{{user.name}} {{user.surname}}</h1>
       <h2>{{profile.jobTitle}}</h2>
     </div>
   </header>
+
+  {{#if user.biography}}
+  <p>{{biography}}</p>
+  {{/if}}
+
+  <section>
+    {{#if user.linkedIn}}
+    <a href="{{user.linkedIn}}">LinkedIn</a>
+    {{/if}}
+
+    {{#if user.github}}
+    <a href="{{user.github}}">LinkedIn</a>
+    {{/if}}
+
+    {{#if user.portfolio}}
+    <a href="{{user.portfolio}}">Portfolio</a>
+    {{/if}}
+  </section>
+
+  <section>
+    <h3>Technical (IT) Skills</h3>
+
+    {{#if profile.languages}}
+    <article>
+      <h4>Languages</h4>
+      <ul>
+        {{#each profile.languages }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+
+    {{#if profile.frameworks}}
+    <article>
+      <h4>Frameworks</h4>
+      <ul>
+        {{#each profile.frameworks }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+
+    {{#if profile.databases}}
+    <article>
+      <h4>Bases de datos</h4>
+      <ul>
+        {{#each profile.databases }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+
+    {{#if profile.libraries}}
+    <article>
+      <h4>Librerías</h4>
+      <ul>
+        {{#each profile.libraries }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+
+    {{#if profile.patterns}}
+    <article>
+      <h4>Patrones</h4>
+      <ul>
+        {{#each profile.patterns }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+
+    {{#if profile.tools}}
+    <article>
+      <h4>Herramientas</h4>
+      <ul>
+        {{#each profile.tools }}
+        <li>{{this}}</li>
+        {{/each}}
+      </ul>
+    </article>
+    {{/if}}
+  </section>
 </body>
 
 </html>

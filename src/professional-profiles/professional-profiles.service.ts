@@ -1,30 +1,28 @@
-import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Response } from 'express';
 import * as fs from 'fs/promises';
-import * as pdf from 'html-pdf';
 import * as hbs from 'handlebars';
 import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
+import * as puppeteer from 'puppeteer';
 import { EntityStatus } from 'src/shared/enums/status.enum';
-import { User, UserDocument } from 'src/users/schemas/user.schema';
+import { UserDocument } from 'src/users/schemas/user.schema';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { stringToDate, titleCase } from '../shared/util';
+import { stringToDate } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
 import {
-  arrayToHtmlArticleList,
-  stringToHtmlAnchor,
-  stringToHtmlImg,
-} from './professional-profile.util';
-import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
 } from './schemas/professional-profile.schema';
-import * as puppeteer from 'puppeteer';
 
 @Injectable()
 export class ProfessionalProfilesService {
@@ -207,22 +205,17 @@ export class ProfessionalProfilesService {
     return englishCount;
   }
 
-  async resume(res: Response, user: UserDocument, ppId: string) {
+  async resume(user: UserDocument, ppId: string) {
     const profile = await this.proProfileModel
       .findOne({ user: user._id, ppId })
       .lean();
-    if (!profile)
-      return res.status(404).json({
-        statusCode: 404,
-        message: 'Requested profile not found',
-        error: 'Not found',
-      });
+    if (!profile) throw new BadRequestException();
 
     const html = await compile('resume', { user, profile });
 
-    //helper para guardarlo en html y comparar
+    //helper para guardarlo en html, por si se desea revisar como se ve el html
     await fs.writeFile(
-      path.join(__dirname, '../../templates/resume-test.html'),
+      path.join(process.cwd(), 'templates', `resume-test.html`),
       html,
     );
 
@@ -231,7 +224,7 @@ export class ProfessionalProfilesService {
     });
     const page = await browser.newPage();
     await page.setContent(html, {
-      waitUntil: 'networkidle2',
+      waitUntil: ['domcontentloaded', 'networkidle0'],
     });
     const pdfBuffer = await page.pdf({
       format: 'A4',
@@ -239,68 +232,12 @@ export class ProfessionalProfilesService {
     });
     await browser.close();
 
-    res.contentType('application/pdf');
-    res.set({ 'Content-Length': pdfBuffer.length });
-    res.send(pdfBuffer);
-  }
-
-  private async getResumeHtml(
-    user: User,
-    profile: ProfessionalProfile,
-  ): Promise<string> {
-    const templatePath = path.join(__dirname, '../../templates/resume.html');
-    const templateHtml = await fs.readFile(templatePath, 'utf8');
-    // user data
-    const name = titleCase(user.name);
-    const surname = titleCase(user.surname);
-    const photo = stringToHtmlImg(user.photo);
-    const biography = titleCase(user.biography);
-    const linkedIn = user.linkedIn
-      ? stringToHtmlAnchor(user.linkedIn, 'LinkedIn')
-      : '';
-    const github = user.github ? stringToHtmlAnchor(user.github, 'GitHub') : '';
-    const portfolio = user.portfolio
-      ? stringToHtmlAnchor(user.portfolio, 'Portafolio')
-      : '';
-
-    // profile data
-    const jobTitle = profile.jobTitle;
-    const languages = arrayToHtmlArticleList(profile.languages, 'Lenguajes');
-    const frameworks = arrayToHtmlArticleList(profile.frameworks, 'Frameworks');
-    const databases = arrayToHtmlArticleList(
-      profile.databases,
-      'Bases de Datos',
-    );
-    const libraries = arrayToHtmlArticleList(profile.libraries, 'Librerías');
-    const patterns = arrayToHtmlArticleList(profile.patterns, 'Patrones');
-    const tools = arrayToHtmlArticleList(profile.tools, 'Herramientas');
-
-    return (
-      templateHtml
-        // user data
-        .replace('{{name}}', name)
-        .replace('{{surname}}', surname)
-        .replace('{{photo}}', photo)
-        .replace('{{biography}}', biography)
-        .replace('{{tools}}', tools)
-        .replace('{{linkedIn}}', linkedIn)
-        .replace('{{github}}', github)
-        .replace('{{portfolio}}', portfolio)
-
-        // profile data
-        .replace('{{jobTitle}}', jobTitle)
-        .replace('{{languages}}', languages)
-        .replace('{{frameworks}}', frameworks)
-        .replace('{{databases}}', databases)
-        .replace('{{libraries}}', libraries)
-        .replace('{{patterns}}', patterns)
-    );
+    return pdfBuffer;
   }
 }
 
 async function compile(templateName: string, data: Record<string, any>) {
   const filePath = path.join(process.cwd(), 'templates', `${templateName}.hbs`);
   const html = await fs.readFile(filePath, 'utf8');
-  console.log(html);
   return hbs.compile(html)(data);
 }

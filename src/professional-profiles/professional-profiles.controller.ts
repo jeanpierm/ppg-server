@@ -119,7 +119,10 @@ export class ProfessionalProfilesController {
     @CurrentUser() user: UserDocument,
     @Param('ppId') ppId: string,
   ) {
-    return this.proProfilesService.resume(res, user, ppId);
+    const pdfBuffer = await this.proProfilesService.resume(user, ppId);
+    res.contentType('application/pdf');
+    res.set({ 'Content-Length': pdfBuffer.length });
+    res.send(pdfBuffer);
   }
 
   /**
