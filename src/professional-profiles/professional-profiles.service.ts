@@ -3,26 +3,28 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Response } from 'express';
 import * as fs from 'fs/promises';
 import * as pdf from 'html-pdf';
+import * as hbs from 'handlebars';
 import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import { EntityStatus } from 'src/shared/enums/status.enum';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { User, UserDocument } from 'src/users/schemas/user.schema';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import {
-  arrayToHtmlArticleList,
-  stringToDate,
-  stringToHtmlAnchor,
-  titleCase,
-} from '../shared/util';
+import { stringToDate, titleCase } from '../shared/util';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
 import { TechType } from './enums/tech-type.enum';
 import {
+  arrayToHtmlArticleList,
+  stringToHtmlAnchor,
+  stringToHtmlImg,
+} from './professional-profile.util';
+import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
 } from './schemas/professional-profile.schema';
+import * as puppeteer from 'puppeteer';
 
 @Injectable()
 export class ProfessionalProfilesService {
@@ -205,9 +207,7 @@ export class ProfessionalProfilesService {
     return englishCount;
   }
 
-  async download(res: Response, user: UserDocument, ppId: string) {
-    const templatePath = path.join(__dirname, '../../templates/resume.html');
-    let templateHtml = await fs.readFile(templatePath, 'utf8');
+  async resume(res: Response, user: UserDocument, ppId: string) {
     const profile = await this.proProfileModel
       .findOne({ user: user._id, ppId })
       .lean();
@@ -218,9 +218,42 @@ export class ProfessionalProfilesService {
         error: 'Not found',
       });
 
+    const html = await compile('resume', { user, profile });
+
+    //helper para guardarlo en html y comparar
+    await fs.writeFile(
+      path.join(__dirname, '../../templates/resume-test.html'),
+      html,
+    );
+
+    const browser = await puppeteer.launch({
+      headless: true,
+    });
+    const page = await browser.newPage();
+    await page.setContent(html, {
+      waitUntil: 'networkidle2',
+    });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+    });
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.set({ 'Content-Length': pdfBuffer.length });
+    res.send(pdfBuffer);
+  }
+
+  private async getResumeHtml(
+    user: User,
+    profile: ProfessionalProfile,
+  ): Promise<string> {
+    const templatePath = path.join(__dirname, '../../templates/resume.html');
+    const templateHtml = await fs.readFile(templatePath, 'utf8');
     // user data
     const name = titleCase(user.name);
     const surname = titleCase(user.surname);
+    const photo = stringToHtmlImg(user.photo);
     const biography = titleCase(user.biography);
     const linkedIn = user.linkedIn
       ? stringToHtmlAnchor(user.linkedIn, 'LinkedIn')
@@ -242,34 +275,32 @@ export class ProfessionalProfilesService {
     const patterns = arrayToHtmlArticleList(profile.patterns, 'Patrones');
     const tools = arrayToHtmlArticleList(profile.tools, 'Herramientas');
 
-    templateHtml = templateHtml
-      // user data
-      .replace('{{name}}', name)
-      .replace('{{surname}}', titleCase(surname))
-      .replace('{{biography}}', titleCase(biography))
-      .replace('{{tools}}', tools)
-      .replace('{{linkedIn}}', linkedIn)
-      .replace('{{github}}', github)
-      .replace('{{portfolio}}', portfolio)
+    return (
+      templateHtml
+        // user data
+        .replace('{{name}}', name)
+        .replace('{{surname}}', surname)
+        .replace('{{photo}}', photo)
+        .replace('{{biography}}', biography)
+        .replace('{{tools}}', tools)
+        .replace('{{linkedIn}}', linkedIn)
+        .replace('{{github}}', github)
+        .replace('{{portfolio}}', portfolio)
 
-      // profile data
-      .replace('{{jobTitle}}', jobTitle)
-      .replace('{{languages}}', languages)
-      .replace('{{frameworks}}', frameworks)
-      .replace('{{databases}}', databases)
-      .replace('{{libraries}}', libraries)
-      .replace('{{patterns}}', patterns);
-
-    pdf.create(templateHtml).toStream((error, stream) => {
-      if (error) {
-        res.status(500).json({
-          statusCode: 500,
-          message: 'An error as ocurred while being generating a PDF',
-          error,
-        });
-      }
-      res.setHeader('Content-Type', 'application/pdf');
-      stream.pipe(res);
-    });
+        // profile data
+        .replace('{{jobTitle}}', jobTitle)
+        .replace('{{languages}}', languages)
+        .replace('{{frameworks}}', frameworks)
+        .replace('{{databases}}', databases)
+        .replace('{{libraries}}', libraries)
+        .replace('{{patterns}}', patterns)
+    );
   }
+}
+
+async function compile(templateName: string, data: Record<string, any>) {
+  const filePath = path.join(process.cwd(), 'templates', `${templateName}.hbs`);
+  const html = await fs.readFile(filePath, 'utf8');
+  console.log(html);
+  return hbs.compile(html)(data);
 }

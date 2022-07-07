@@ -114,12 +114,12 @@ export class ProfessionalProfilesController {
 
   @Get('download/:ppId')
   @Roles(Role.User, Role.Admin)
-  async report(
+  async resume(
     @Res() res: Response,
     @CurrentUser() user: UserDocument,
     @Param('ppId') ppId: string,
   ) {
-    return this.proProfilesService.download(res, user, ppId);
+    return this.proProfilesService.resume(res, user, ppId);
   }
 
   /**

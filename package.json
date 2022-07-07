@@ -34,6 +34,7 @@
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "handlebars": "^4.7.7",
     "html-pdf": "^3.0.1",
     "luxon": "^2.4.0",
     "mongoose": "^6.3.4",

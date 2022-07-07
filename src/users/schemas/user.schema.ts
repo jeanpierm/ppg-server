@@ -18,14 +18,12 @@ export class User implements UserIntf {
   @Prop({
     required: true,
     trim: true,
-    lowercase: true,
   })
   name: string;
 
   @Prop({
     required: true,
     trim: true,
-    lowercase: true,
   })
   surname: string;
 
