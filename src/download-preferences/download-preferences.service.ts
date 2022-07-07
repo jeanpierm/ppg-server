@@ -7,7 +7,6 @@ import {
 } from 'src/professional-profiles/schemas/professional-profile.schema';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { UpdateDpDto } from './dto/update-dp.dto';
-import { resume } from './pdf/resume';
 import {
   DownloadPreferences,
   DownloadPreferencesDocument,
@@ -64,7 +63,7 @@ export class DownloadPreferencesService {
     const downloadpreferences = await this.getDownloadPreferences(user);
 
     if (profile) {
-      resume(profile, downloadpreferences);
+      // resume(profile, downloadpreferences);
     }
   }
 }
