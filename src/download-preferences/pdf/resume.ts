@@ -3,10 +3,11 @@ import { DownloadPreferences } from '../schema/download-preferences.schema';
 import PdfPrinter = require('pdfmake');
 import fs = require('fs');
 import { PageSize } from 'pdfmake/interfaces';
-import { Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { TechTypeProfile } from 'src/professional-profiles/enums/tech-type-profile.enum';
 import { PreferencesType } from '../enum/preferences-type.enum';
-import datauri = require('datauri');
+import axios = require('axios');
+const axiosD = axios.default;
 
 const fonts = {
   Roboto: {
@@ -21,14 +22,20 @@ const fonts = {
 export class PdfResumeMaker {
   private readonly logger = new Logger(PdfResumeMaker.name);
 
-  pdfmake(profile: ProfessionalProfile, preferences: DownloadPreferences) {
+  async pdfmake(
+    profile: ProfessionalProfile,
+    preferences: DownloadPreferences,
+  ) {
     const printer = new PdfPrinter(fonts);
     const pagesize: PageSize = 'LETTER';
+    const result = await this.imageHope(profile.owner.photo);
 
-    //const datauri = datauri(profile.owner.);
     const docDefinition = {
       pageSize: pagesize,
       content: [
+        {
+          image: `data:image/jpeg;base64,${result}`,
+        },
         {
           text: `${profile.owner.name} ${profile.owner.surname}`,
           style: 'header',
@@ -59,7 +66,7 @@ export class PdfResumeMaker {
     this.addColumnBiography(profile, preferences, docDefinition);
     this.addSkill(profile, docDefinition);
     this.addPersonalInfo(profile, preferences, docDefinition);
-    console.log(docDefinition);
+    //console.log(docDefinition);
     const pdfDoc = printer.createPdfKitDocument(docDefinition);
     pdfDoc.pipe(fs.createWriteStream('basics.pdf'));
     pdfDoc.end();
@@ -168,5 +175,16 @@ export class PdfResumeMaker {
 
       docDefinition.content.push(table);
     }
+  }
+
+  async imageHope(image: string) {
+    return axiosD
+      .get(image, { responseType: 'arraybuffer' })
+      .then(function (response) {
+        return Buffer.from(response.data, 'base64').toString('base64');
+      })
+      .catch(function (error) {
+        throw new ForbiddenException(error);
+      });
   }
 }

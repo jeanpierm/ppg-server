@@ -61,6 +61,6 @@ export class DownloadPreferencesController {
     @CurrentUser() user: UserDocument,
     @Param() param: any,
   ): Promise<any> {
-    return this.downloadPreferencesService.pdf(user, param);
+    return this.downloadPreferencesService.pdf(user, param.ppId);
   }
 }
