@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -31,12 +31,9 @@ export class DownloadPreferencesService {
       .populate('user')
       .lean();
     if (!downloadPreferences) {
-      await this.downloadPreferencesModel.create({ user: user._id });
-
-      return await this.downloadPreferencesModel
-        .findOne({ user: user._id })
-        .populate('user')
-        .lean();
+      return (
+        await this.downloadPreferencesModel.create({ user: user._id })
+      ).populate('user');
     }
 
     return downloadPreferences;
@@ -44,13 +41,13 @@ export class DownloadPreferencesService {
 
   async updateDownloadPreferences(
     user: UserDocument,
-    dpId: string,
     updateDp: UpdateDpDto,
   ): Promise<DownloadPreferences> {
-    return await this.downloadPreferencesModel
-      .findOneAndUpdate({ user: user._id, dpId: dpId }, updateDp, {
+    return this.downloadPreferencesModel
+      .findOneAndUpdate({ user: user._id }, updateDp, {
         new: true,
       })
+      .orFail(() => new NotFoundException())
       .populate('user')
       .lean();
   }
