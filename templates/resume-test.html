@@ -1,118 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Perfil</title>
-  <style>
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
+  <head>
+    <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+    <title>Perfil</title>
+    <style>
+      body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
+      img { width: 100%; border-radius: 50%; width: 128px; height: 128px;
+      margin-bottom: 20px;} #img-container { text-align : center;} #info{float:
+      left;width: 30%;background: #595757; padding: 30px; color: white;}
+      #content{float: left; padding: 20px; width: 70%; background-color: white;}
+      #container {display: flex; flex-direction: row; height: 100%;}
+      .no-margin{margin-bottom: 0;margin-top: 0;} .header{ margin: 50px 30px;}
+      .subtitle{font-size: medium; font-weight: bold; margin: 0;} hr { height:
+      1px; background-color: white;} .grid-container { display: grid;
+      grid-template-columns: auto auto auto; padding: 10px; }
+    </style>
+  </head>
+  <body>
 
-    header {
-      padding: 20px 10px;
-      background-color: #1f53b4;
-      color: white;
-      display: flex;
-      flex-direction: row;
-    }
+    <section id='container'>
+      <div id='info'>
+        <div id='img-container'>
+        </div>
 
-    img {
-      width: 100%;
-      border-radius: 50%;
-      width: 128px;
-      height: 128px;
-    }
+        <div>
+          <p class='subtitle'>PERSONAL INFO</p>
+          <hr />
+          <div>
 
-    #img-container {
-      margin: 12px;
-    }
-  </style>
-</head>
+              <h4 class='no-margin'>LinkedIn</h4>
+              <p>https://www.linkedin.com/in/jeanpier-mendoza-navarro-810b05200/</p>
 
-<body>
-  <header>
-    <div id="img-container">
-      <img src="https://res.cloudinary.com/jean-cloudinary/image/upload/v1657051705/ppg/sjsjxjug2t44zpaoyv8j.jpg">
-    </div>
-    <div>
-      <h1>Jeanpier Mendoza</h1>
-      <h2>Frontend Developer</h2>
-    </div>
-  </header>
+              <h4 class='no-margin'>Github</h4>
+              <p>https://github.com/jeanpierm</p>
 
-  <p></p>
+              <h4 class='no-margin'>Portfolio</h4>
+              <p>www.jeanpier.com</p>
 
-  <section>
-    <a href="https://www.linkedin.com/in/jeanpier-mendoza-navarro-810b05200/">LinkedIn</a>
+              <h4 class='no-margin'>Email</h4>
+              <p>jeanpi3rm@gmail.com</p>
 
-    <a href="https://github.com/jeanpierm">LinkedIn</a>
+          </div>
+        </div>
 
-    <a href="www.jeanpier.com">Portfolio</a>
-  </section>
+      </div>
+      <div id='content'>
+        <div class='header'>
+          <h1 class='no-margin'>Jeanpier
+            Mendoza</h1>
+          <h3 class='no-margin'>software engineer</h3>
+        </div>
+        <div>
+            <p>Me gusta hacer peso muerto</p>
+        </div>
 
-  <section>
-    <h3>Technical (IT) Skills</h3>
+        <div>
+          <p class='subtitle'>TECHNICAL (IT) SKILLS</p>
+          <hr />
+          <div>
+              <div class='grid-container'>
+                <h4 class='no-margin'>Languages</h4>
+                <p class='no-margin'>SQL,Python,JavaScript</p>
+              </div>
 
-    <article>
-      <h4>Languages</h4>
-      <ul>
-        <li>CSS</li>
-        <li>HTML</li>
-        <li>JavaScript</li>
-      </ul>
-    </article>
+              <div class='grid-container'>
+                <h4 class='no-margin'>Frameworks</h4>
+                <p class='no-margin'>ReactJS,React Native,VueJS</p>
+              </div>
 
-    <article>
-      <h4>Frameworks</h4>
-      <ul>
-        <li>ReactJS</li>
-        <li>VueJS</li>
-        <li>Angular</li>
-      </ul>
-    </article>
+              <div class='grid-container'>
+                <h4 class='no-margin'>Databases</h4>
+                <p class='no-margin'>PostgreSQL,Microsoft SQL Server</p>
+              </div>
 
-    <article>
-      <h4>Bases de datos</h4>
-      <ul>
-        <li>Microsoft SQL Server</li>
-        <li>MySQL</li>
-      </ul>
-    </article>
+              <div class='grid-container'>
+                <h4 class='no-margin'>Libraries</h4>
+                <p class='no-margin'>jQuery</p>
+              </div>
 
-    <article>
-      <h4>Librerías</h4>
-      <ul>
-        <li>jQuery</li>
-        <li>Bootstrap</li>
-      </ul>
-    </article>
 
-    <article>
-      <h4>Patrones</h4>
-      <ul>
-        <li>Redux</li>
-        <li>Flux</li>
-        <li>REST</li>
-        <li>AJAX</li>
-        <li>MVC</li>
-        <li>SOAP</li>
-      </ul>
-    </article>
+              <div class='grid-container'>
+                <h4 class='no-margin'>Tools</h4>
+                <p class='no-margin'>Git,Microsoft Azure,Google Cloud</p>
+              </div>
+          </div>
+        </div>
 
-    <article>
-      <h4>Herramientas</h4>
-      <ul>
-        <li>Webpack</li>
-        <li>Amazon Web Services (AWS)</li>
-        <li>Git</li>
-      </ul>
-    </article>
-  </section>
-</body>
+      </div>
+    </section>
+  </body>
 
 </html>

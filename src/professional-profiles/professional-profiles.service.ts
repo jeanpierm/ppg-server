@@ -10,6 +10,7 @@ import * as hbs from 'handlebars';
 import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
+import { DownloadPreferencesService } from 'src/download-preferences/download-preferences.service';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
@@ -33,6 +34,7 @@ export class ProfessionalProfilesService {
     private readonly proProfileModel: Model<ProfessionalProfileDocument>,
     private readonly generateProfessionalProfile: ProfessionalProfileGenerator,
     private readonly technologiesService: TechnologiesService,
+    private readonly downloadPreferencesService: DownloadPreferencesService,
   ) {}
 
   /**
@@ -208,10 +210,13 @@ export class ProfessionalProfilesService {
   async resume(user: UserDocument, ppId: string) {
     const profile = await this.proProfileModel
       .findOne({ user: user._id, ppId })
+      .populate('owner')
       .lean();
+    const preferences =
+      await this.downloadPreferencesService.getDownloadPreferences(user);
     if (!profile) throw new BadRequestException();
 
-    const html = await compile('resume', { user, profile });
+    const html = await compile('resume', { preferences, profile });
 
     //helper para guardarlo en html, por si se desea revisar como se ve el html
     await fs.writeFile(
@@ -241,3 +246,7 @@ async function compile(templateName: string, data: Record<string, any>) {
   const html = await fs.readFile(filePath, 'utf8');
   return hbs.compile(html)(data);
 }
+
+hbs.registerHelper('join', function (array: Array<string>) {
+  return array.join();
+});

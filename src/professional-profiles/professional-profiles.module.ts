@@ -26,6 +26,7 @@ import {
   TechnologyMetadataSchema,
 } from './schemas/technology-metadata.schema';
 import { Job, JobSchema } from './schemas/job.schema';
+import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { Job, JobSchema } from './schemas/job.schema';
       },
     ]),
     TechnologiesModule,
+    DownloadPreferencesModule,
   ],
   controllers: [ProfessionalProfilesController],
   providers: [ProfessionalProfilesService, ProfessionalProfileGenerator],
