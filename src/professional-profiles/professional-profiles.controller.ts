@@ -112,8 +112,8 @@ export class ProfessionalProfilesController {
     return new ApiResponse(`${q} count obtained successfully`, payload);
   }
 
-  @Get('download/:ppId')
   @Roles(Role.User, Role.Admin)
+  @Get('download/:ppId')
   async resume(
     @Res() res: Response,
     @CurrentUser() user: UserDocument,
