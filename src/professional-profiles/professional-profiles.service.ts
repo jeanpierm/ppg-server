@@ -248,5 +248,5 @@ async function compile(templateName: string, data: Record<string, any>) {
 }
 
 hbs.registerHelper('join', function (array: Array<string>) {
-  return array.join();
+  return array.join(', ');
 });
