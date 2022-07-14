@@ -19,8 +19,9 @@ export class ValidateTechnologyExistsMiddleware implements NestMiddleware {
   ) {}
 
   async use(req: Request, res: Response, next: NextFunction) {
+    const excludedValues = ['search'];
     const { technologyId } = req.params;
-    if (technologyId) {
+    if (technologyId && !excludedValues.includes(technologyId)) {
       this.logger.debug(
         `Validando que exista tecnología con uuid ${technologyId}...`,
       );

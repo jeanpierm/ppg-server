@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { CoursesScraper } from './coursesScraper/main';
+import { CoursesResponse } from './dto/courses-response.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
@@ -15,6 +17,7 @@ export class TechnologiesService {
   constructor(
     @InjectModel(Technology.name)
     private readonly technologyModel: Model<TechnologyDocument>,
+    private readonly coursesScraper: CoursesScraper,
   ) {
     this.init();
   }
@@ -95,6 +98,10 @@ export class TechnologiesService {
 
   async findByType(type: TechType): Promise<TechnologyDocument[]> {
     return this.technologyModel.find({ type }).lean();
+  }
+
+  async findCourses(course: string): Promise<CoursesResponse[]> {
+    return await this.coursesScraper.executeScraper(course);
   }
 
   async create(

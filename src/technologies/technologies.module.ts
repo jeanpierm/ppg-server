@@ -5,6 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CoursesScraper } from './coursesScraper/main';
 import { ValidateTechnologyExistsMiddleware } from './middlewares/validate-technology-exists.middleware';
 import {
   Technology,
@@ -25,7 +26,7 @@ import { TechnologiesService } from './technologies.service';
     ]),
   ],
   controllers: [TechnologiesController],
-  providers: [TechnologiesService],
+  providers: [TechnologiesService, CoursesScraper],
   exports: [TechnologiesService],
 })
 export class TechnologiesModule implements NestModule {
