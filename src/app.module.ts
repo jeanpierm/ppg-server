@@ -14,6 +14,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TechnologiesModule } from './technologies/technologies.module';
 import { RolesModule } from './roles/roles.module';
 import { DownloadPreferencesModule } from './download-preferences/download-preferences.module';
+import { TechTypesModule } from './tech-types/tech-types.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { DownloadPreferencesModule } from './download-preferences/download-prefe
     TechnologiesModule,
     RolesModule,
     DownloadPreferencesModule,
+    TechTypesModule,
   ],
   controllers: [],
   providers: [
