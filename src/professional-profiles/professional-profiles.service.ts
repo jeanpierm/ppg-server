@@ -223,7 +223,7 @@ export class ProfessionalProfilesService {
 
     const preferences =
       await this.downloadPreferencesService.getDownloadPreferences(user);
-    const { technologies } = profile;
+    const { technologies, jobTitle } = profile;
     const languages = this.getTechnologyNames(technologies, 'language');
     const databases = this.getTechnologyNames(technologies, 'database');
     const tools = this.getTechnologyNames(technologies, 'tool');
@@ -235,7 +235,7 @@ export class ProfessionalProfilesService {
     const html = await compile('resume', {
       preferences,
       user,
-      jobTitle: profile.jobTitle,
+      jobTitle,
       languages,
       databases,
       tools,

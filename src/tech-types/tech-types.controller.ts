@@ -8,6 +8,7 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  Query,
 } from '@nestjs/common';
 import { TechTypesService } from './tech-types.service';
 import { CreateTechTypeDto } from './dto/create-tech-type.dto';
@@ -17,6 +18,10 @@ import { Role } from '../auth/enums/role.enum';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { TechType } from './schemas/tech-type.schema';
 import { ParseObjectIdPipe } from '../core/pipes/parse-objectid.pipe';
+import { TechTypeResponseDto } from './dto/tech-type-response.dto';
+import { TechTypesMapper } from './tech-types.mapper';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
 
 @ApiTags('technology-types')
 @Controller('tech-types')
@@ -30,8 +35,17 @@ export class TechTypesController {
   @ApiOperation({ summary: 'obtener tipos de tecnologías' })
   @Roles(Role.Admin)
   @Get()
-  async findAll(): Promise<TechType[]> {
-    return this.techTypesService.findAll();
+  async findAll(
+    @Query() paginationParams: PaginationParams,
+  ): Promise<PaginatedResponseDto<TechTypeResponseDto>> {
+    const techTypesPaginated = await this.techTypesService.findAll(
+      paginationParams,
+    );
+    const data = techTypesPaginated.data.map((type) =>
+      TechTypesMapper.toResponse(type),
+    );
+
+    return { ...techTypesPaginated, data };
   }
 
   /**

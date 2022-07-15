@@ -44,7 +44,6 @@ export class TechnologiesController {
     @Query() paginationParams: PaginationParams,
     @Query('type') type: string,
   ): Promise<PaginatedResponseDto<TechnologyResponse>> {
-    console.log('findAll');
     const technologiesPagination = await this.technologiesService.findAll(
       paginationParams,
       type,

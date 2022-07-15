@@ -1,144 +1,148 @@
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Perfil</title>
-    <style>
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
+<html lang='en'>
 
-      img {
-        width: 100%;
-        border-radius: 50%;
-        width: 128px;
-        height: 128px;
-        margin-bottom: 20px;
-      }
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Perfil</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-      #img-container {
-        text-align: center;
-      }
+    img {
+      width: 100%;
+      border-radius: 50%;
+      width: 128px;
+      height: 128px;
+      margin-bottom: 20px;
+    }
 
-      #info {
-        float: left;
-        width: 30%;
-        background: #595757;
-        padding: 30px;
-        color: white;
-      }
+    #img-container {
+      text-align: center;
+    }
 
-      #content {
-        float: left;
-        padding: 20px;
-        width: 70%;
-        background-color: white;
-      }
+    #info {
+      float:
+        left;
+      width: 30%;
+      background: #595757;
+      padding: 30px;
+      color: white;
+    }
 
-      #container {
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-      }
+    #content {
+      float: left;
+      padding: 20px;
+      width: 70%;
+      background-color: white;
+    }
 
-      .no-margin {
-        margin-bottom: 0;
-        margin-top: 0;
-      }
+    #container {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
 
-      .header {
-        margin: 50px 30px;
-      }
+    .no-margin {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
 
-      .subtitle {
-        font-size: medium;
-        font-weight: bold;
-        margin: 0;
-      }
+    .header {
+      margin: 50px 30px;
+    }
 
-      hr {
-        height: 1px;
-        background-color: white;
-      }
+    .subtitle {
+      font-size: medium;
+      font-weight: bold;
+      margin: 0;
+    }
 
-      .grid-container {
-        display: grid;
-        grid-template-columns: auto auto auto;
-        padding: 10px;
-      }
-    </style>
-  </head>
+    hr {
+      height:
+        1px;
+      background-color: white;
+    }
 
-  <body>
-    <section id="container">
-      <div id="info">
-        <div id="img-container">
-          <img
-            src="https://res.cloudinary.com/jean-cloudinary/image/upload/v1624146571/kispbnhi9a8tt4dle5fe.jpg"
-          />
-        </div>
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      padding: 10px;
+    }
+  </style>
+</head>
 
+<body>
+
+  <section id='container'>
+    <div id='info'>
+      <div id='img-container'>
+      </div>
+
+      <div>
+        <p class='subtitle'>PERSONAL INFO</p>
+        <hr />
         <div>
-          <p class="subtitle">PERSONAL INFO</p>
-          <hr />
-          <div>
-            <h4 class="no-margin">LinkedIn</h4>
-            <p>http://linkedin.com/jeanpiermendoza</p>
 
-            <h4 class="no-margin">Github</h4>
-            <p>http://github.com/jeanpierm</p>
+          <h4 class='no-margin'>LinkedIn</h4>
+          <p>https://www.linkedin.com/in/jeanpier-mendoza-navarro-810b05200/</p>
 
-            <h4 class="no-margin">Portfolio</h4>
-            <p>http://jeanpiermendoza.com</p>
+          <h4 class='no-margin'>Github</h4>
+          <p>https://github.com/jeanpierm</p>
 
-            <h4 class="no-margin">Email</h4>
-            <p>jeanpi3rm@gmail.com</p>
+          <h4 class='no-margin'>Portfolio</h4>
+          <p>www.jeanpier.com</p>
+
+          <h4 class='no-margin'>Email</h4>
+          <p>jeanpi3rm@gmail.com</p>
+
+        </div>
+      </div>
+
+    </div>
+    <div id='content'>
+      <div class='header'>
+        <h1 class='no-margin'>Jeanpier
+          Mendoza</h1>
+        <h3 class='no-margin'>Software Engineer</h3>
+      </div>
+      <div>
+        <p>Me gusta hacer peso muerto</p>
+      </div>
+
+      <div>
+        <p class='subtitle'>TECHNICAL (IT) SKILLS</p>
+        <hr />
+        <div>
+          <div class='grid-container'>
+            <h4 class='no-margin'>Languages</h4>
+            <p class='no-margin'>Kotlin, Java, Python, TypeScript</p>
+          </div>
+
+          <div class='grid-container'>
+            <h4 class='no-margin'>Frameworks</h4>
+            <p class='no-margin'>ReactJS, VueJS, Ruby on Rails, EmberJS</p>
+          </div>
+
+
+
+          <div class='grid-container'>
+            <h4 class='no-margin'>Patterns</h4>
+            <p class='no-margin'>SOLID, MVVM</p>
+          </div>
+
+          <div class='grid-container'>
+            <h4 class='no-margin'>Tools</h4>
+            <p class='no-margin'>Git, CI/CD, Firebase, Jenkins</p>
           </div>
         </div>
       </div>
-      <div id="content">
-        <div class="header">
-          <h1 class="no-margin">Jeanpier Mendoza</h1>
-          <h3 class="no-margin">react developer</h3>
-        </div>
-        <div>
-          <p>squat every day</p>
-        </div>
 
-        <div>
-          <p class="subtitle">TECHNICAL (IT) SKILLS</p>
-          <hr />
-          <div>
-            <div class="grid-container">
-              <h4 class="no-margin">Languages</h4>
-              <p class="no-margin">NodeJS, JavaScript, TypeScript, CSS</p>
-            </div>
+    </div>
+  </section>
+</body>
 
-            <div class="grid-container">
-              <h4 class="no-margin">Frameworks</h4>
-              <p class="no-margin">ReactJS, Angular, Microsoft .NET, Laravel</p>
-            </div>
-
-            <div class="grid-container">
-              <h4 class="no-margin">Libraries</h4>
-              <p class="no-margin">Bootstrap</p>
-            </div>
-
-            <div class="grid-container">
-              <h4 class="no-margin">Patterns</h4>
-              <p class="no-margin">Flux, SOLID, MVC, REST</p>
-            </div>
-
-            <div class="grid-container">
-              <h4 class="no-margin">Tools</h4>
-              <p class="no-margin">Webpack, Git, CI/CD, Heroku</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </body>
 </html>

@@ -17,6 +17,9 @@ export class TechType {
   // _id: Types.ObjectId;
   @Prop({ required: true, index: { unique: true } })
   name: string;
+
+  @Prop({ required: true })
+  label: string;
 }
 
 export const TechTypeSchema = SchemaFactory.createForClass(TechType);

@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import {
   Technology,
   TechnologyDocument,
@@ -26,9 +28,36 @@ export class TechTypesService {
     private readonly technologyModel: Model<TechnologyDocument>,
   ) {}
 
-  async findAll() {
-    const techTypes = await this.techTypeModel.find({});
-    return techTypes;
+  async findAll(
+    pagination?: PaginationParams,
+  ): Promise<PaginatedResponseDto<TechType>> {
+    const { size, search, page } = pagination || {};
+    const filterQuery: Record<string, any> = {};
+
+    if (search) {
+      filterQuery['$or'] = [
+        { name: new RegExp(search, 'i') },
+        { label: new RegExp(search, 'i') },
+      ];
+    }
+
+    const techTypes = await this.techTypeModel
+      .find(filterQuery)
+      .sort({ _id: 1 })
+      .skip((page - 1) * size)
+      .limit(size)
+      .lean();
+
+    const totalItems = await this.techTypeModel.count(filterQuery);
+    const totalPages = Math.ceil(totalItems / size);
+
+    return {
+      totalItems,
+      currentPage: page,
+      pageSize: size,
+      data: techTypes,
+      totalPages,
+    };
   }
 
   /**

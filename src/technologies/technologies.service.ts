@@ -77,11 +77,6 @@ export class TechnologiesService {
 
   private async insertBaseTechnologies(): Promise<void> {
     try {
-      this.logger.debug(
-        'Iniciando carga de tecnologías a MongoDB desde JSON...',
-      );
-
-      // technologies
       const technologiesJson: string = (
         await fs.readFile(this.technologiesJsonPath, 'utf-8')
       ).toString();

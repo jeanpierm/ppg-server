@@ -1,23 +1,30 @@
 [
   {
-    "name": "database"
+    "name": "database",
+    "label": "Bases de datos"
   },
   {
-    "name": "framework"
+    "name": "framework",
+    "label": "Frameworks"
   },
   {
-    "name": "library"
+    "name": "library",
+    "label": "Librerías"
   },
   {
-    "name": "paradigm"
+    "name": "paradigm",
+    "label": "Paradigmas"
   },
   {
-    "name": "pattern"
+    "name": "pattern",
+    "label": "Patrones"
   },
   {
-    "name": "language"
+    "name": "language",
+    "label": "Lenguajes"
   },
   {
-    "name": "tool"
+    "name": "tool",
+    "label": "Herramientas"
   }
 ]

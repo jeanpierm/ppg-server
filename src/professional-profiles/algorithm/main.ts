@@ -76,7 +76,7 @@ export class ProfessionalProfileGenerator {
     });
     console.log('Job details normalized: ', jobDetails);
 
-    const technologyTypes = await this.techTypesService.findAll();
+    const technologyTypes = (await this.techTypesService.findAll()).data;
     const technologiesMostDemanded: TechnologyDocument[] = [];
 
     for (const type of technologyTypes) {
@@ -112,11 +112,9 @@ export class ProfessionalProfileGenerator {
     const professionalProfile: CreateProfessionalProfile = {
       jobTitle,
       location,
-      ownerId: user._id.toString(),
-      jobsAnalyzedIds: jobsAnalyzed.map((job) => job._id.toString()),
-      technologiesIds: technologiesMostDemanded.map((tech) =>
-        tech._id.toString(),
-      ),
+      ownerId: user._id,
+      jobsAnalyzedIds: jobsAnalyzed.map((job) => job._id),
+      technologiesIds: technologiesMostDemanded.map((tech) => tech._id),
       requireEnglish,
     };
 
