@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import puppeteer = require('puppeteer');
 import {
-  extractCourseraDetails,
   extractCourseraLinks,
-  testPUEBA,
+  extractCourseraDetails,
 } from './extract-coursera-courses';
 import {
   extractDkCourseDetails,
@@ -42,11 +41,12 @@ export class CoursesScraper {
 
     const linksC = await extractCourseraLinks(courseraPage);
     const courseraCourses = (
-      await Promise.all(linksC.map((link) => testPUEBA(link, browser)))
+      await Promise.all(
+        linksC.map((link) => extractCourseraDetails(link, browser)),
+      )
     ).filter((course) => course != undefined);
     result = result.concat(courseraCourses);
 
-    //result = result.concat(await extractCourseraDetails(linksC, browser));
     courseraPage.close();
 
     browser.close();

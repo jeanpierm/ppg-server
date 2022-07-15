@@ -30,38 +30,6 @@ export async function extractCourseraLinks(
 }
 
 export async function extractCourseraDetails(
-  courseDetails: Array<CourseInterface>,
-  browser: puppeteer.Browser,
-) {
-  const courses = [];
-  while (courseDetails.length > 0) {
-    const currentCourse: CourseInterface =
-      courseDetails[courseDetails.length - 1];
-    console.log('current URL:', currentCourse.link);
-
-    const newPage = await browser.newPage();
-    await newPage.goto(currentCourse.link);
-    courseDetails.pop();
-
-    try {
-      currentCourse.price = null;
-      currentCourse.description = await newPage.$eval(
-        '.Skills',
-        (el: HTMLAnchorElement) => el.innerText,
-      );
-    } catch (err) {
-      console.error(
-        `Ha ocurrido un error en la extraccion de los detalles en el enlace: ${currentCourse.link} error: ${err}`,
-      );
-    }
-
-    courses.push(currentCourse);
-    newPage.close();
-  }
-  return courses;
-}
-
-export async function testPUEBA(
   course: CourseInterface,
   browser: puppeteer.Browser,
 ) {
