@@ -3,6 +3,7 @@ import puppeteer = require('puppeteer');
 import {
   extractCourseraDetails,
   extractCourseraLinks,
+  testPUEBA,
 } from './extract-coursera-courses';
 import {
   extractDkCourseDetails,
@@ -25,7 +26,13 @@ export class CoursesScraper {
     await domestikaPage.goto(url.toString(), waitLoad);
 
     const links = await extractDomestikaLinks(domestikaPage);
-    result = result.concat(await extractDkCourseDetails(links, browser));
+    const domestikaCourses = (
+      await Promise.all(
+        links.map((link) => extractDkCourseDetails(link, browser)),
+      )
+    ).filter((course) => course != undefined);
+
+    result = result.concat(domestikaCourses);
     domestikaPage.close();
 
     const courseraPage = await browser.newPage();
@@ -34,7 +41,12 @@ export class CoursesScraper {
     await courseraPage.goto(urlCoursera.toString(), waitLoad);
 
     const linksC = await extractCourseraLinks(courseraPage);
-    result = result.concat(await extractCourseraDetails(linksC, browser));
+    const courseraCourses = (
+      await Promise.all(linksC.map((link) => testPUEBA(link, browser)))
+    ).filter((course) => course != undefined);
+    result = result.concat(courseraCourses);
+
+    //result = result.concat(await extractCourseraDetails(linksC, browser));
     courseraPage.close();
 
     browser.close();

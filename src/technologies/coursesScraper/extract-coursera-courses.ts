@@ -1,4 +1,5 @@
 import puppeteer = require('puppeteer');
+import { waitLoad } from 'src/professional-profiles/algorithm/util';
 import { CourseInterface } from '../interfaces/course.interface';
 
 export async function extractCourseraLinks(
@@ -58,4 +59,34 @@ export async function extractCourseraDetails(
     newPage.close();
   }
   return courses;
+}
+
+export async function testPUEBA(
+  course: CourseInterface,
+  browser: puppeteer.Browser,
+) {
+  console.log('current URL:', course.link);
+  const newPage = await browser.newPage();
+  await newPage.goto(course.link, waitLoad);
+  newPage.setDefaultTimeout(10000);
+
+  try {
+    const description = await newPage.$eval(
+      '.Skills',
+      (el: HTMLAnchorElement) => el.innerText,
+    );
+
+    const courseDetails: CourseInterface = {
+      link: course.link,
+      imagen: course.imagen,
+      description: description,
+      title: course.title,
+      price: null,
+    };
+    return courseDetails;
+  } catch (err) {
+    console.error(
+      `Ha ocurrido un error en la extraccion de los detalles en el enlace: ${course.link} error: ${err}`,
+    );
+  }
 }

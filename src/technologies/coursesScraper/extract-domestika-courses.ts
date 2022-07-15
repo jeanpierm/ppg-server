@@ -1,4 +1,5 @@
 import puppeteer = require('puppeteer');
+import { waitLoad } from 'src/professional-profiles/algorithm/util';
 import { CourseInterface } from '../interfaces/course.interface';
 
 export async function extractDomestikaLinks(
@@ -26,36 +27,35 @@ export async function extractDomestikaLinks(
 }
 
 export async function extractDkCourseDetails(
-  courseDetails: Array<CourseInterface>,
+  course: CourseInterface,
   browser: puppeteer.Browser,
 ) {
-  const domestikaCourses = [];
-  while (courseDetails.length > 0) {
-    const currentCourse: CourseInterface =
-      courseDetails[courseDetails.length - 1];
-    console.log('current URL:', currentCourse.link);
+  console.log('current URL:', course.link);
+  const newPage = await browser.newPage();
+  await newPage.goto(course.link, waitLoad);
+  newPage.setDefaultTimeout(10000);
 
-    const newPage = await browser.newPage();
-    await newPage.goto(currentCourse.link);
-    courseDetails.pop();
+  try {
+    const price = await newPage.$eval(
+      '.m-price.m-price--code',
+      (el: HTMLSpanElement) => el.innerText,
+    );
+    const description = await newPage.$eval(
+      '.text-body-bigger-new',
+      (el: HTMLAnchorElement) => el.innerText,
+    );
 
-    try {
-      currentCourse.price = await newPage.$eval(
-        '.m-price.m-price--code',
-        (el: HTMLSpanElement) => el.innerText,
-      );
-      currentCourse.description = await newPage.$eval(
-        '.text-body-bigger-new',
-        (el: HTMLAnchorElement) => el.innerText,
-      );
-    } catch (err) {
-      console.error(
-        `Ha ocurrido un error en la extraccion de los detalles en el enlace: ${currentCourse.link} error: ${err}`,
-      );
-    }
-
-    domestikaCourses.push(currentCourse);
-    newPage.close();
+    const courseDetails: CourseInterface = {
+      title: course.title,
+      link: course.link,
+      imagen: course.imagen,
+      price: price,
+      description: description,
+    };
+    return courseDetails;
+  } catch (err) {
+    console.error(
+      `Ha ocurrido un error en la extraccion de los detalles en el enlace: ${course.link} error: ${err}`,
+    );
   }
-  return domestikaCourses;
 }
