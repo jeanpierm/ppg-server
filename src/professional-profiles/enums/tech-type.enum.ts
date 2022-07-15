@@ -1,4 +1,4 @@
-export enum TechType {
+export enum TechTypeEnum {
   Database = 'database',
   Framework = 'framework',
   Library = 'library',

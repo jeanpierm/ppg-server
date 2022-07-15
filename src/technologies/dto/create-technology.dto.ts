@@ -1,20 +1,9 @@
-import {
-  ArrayMinSize,
-  IsArray,
-  IsEnum,
-  IsNotEmpty,
-  IsString,
-} from 'class-validator';
-import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
-import { generateValidationMessageByValues } from '../../shared/util';
-import { TechnologyIntf } from '../interfaces/technology.interface';
+import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateTechnologyDto implements TechnologyIntf {
-  @IsEnum(TechType, {
-    message: generateValidationMessageByValues('type', Object.values(TechType)),
-  })
+export class CreateTechnologyDto {
+  @IsString()
   @IsNotEmpty()
-  type: TechType;
+  type: string;
 
   @IsString()
   @IsNotEmpty()

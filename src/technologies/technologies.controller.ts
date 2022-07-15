@@ -22,7 +22,6 @@ import { ApiResponse } from '../shared/dto/api-response.dto';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
-import { FindTechnologiesParams } from './dto/find-technologies-params.dto';
 import { TechnologyResponse } from './dto/technology-response.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { TechnologiesMapper } from './mappers/technologies.mapper';
@@ -43,7 +42,7 @@ export class TechnologiesController {
   @Roles(Role.Admin)
   async findAll(
     @Query() paginationParams: PaginationParams,
-    @Query() { type }: FindTechnologiesParams,
+    @Query('type') type: string,
   ): Promise<PaginatedResponseDto<TechnologyResponse>> {
     const technologiesPagination = await this.technologiesService.findAll(
       paginationParams,
@@ -59,14 +58,14 @@ export class TechnologiesController {
   }
 
   /**
-   * Encuentra una tecnología por su technologyId.
+   * Encuentra una tecnología por su nombre (case sensitive).
    */
   @ApiOperation({ summary: 'buscar tecnología' })
   @ApiOkCustomResponse(TechnologyResponse)
-  @Get(':technologyId')
+  @Get(':name')
   @Roles(Role.Admin)
-  async findOne(@Param('technologyId') technologyId: string) {
-    const technology = await this.technologiesService.findById(technologyId);
+  async findOne(@Param('name') name: string) {
+    const technology = await this.technologiesService.findByName(name);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
     return new ApiResponse('Technology obtained successfully', payload);
   }

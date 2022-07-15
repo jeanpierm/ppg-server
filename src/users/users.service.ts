@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
@@ -98,7 +98,9 @@ export class UsersService {
   }
 
   async updateById(userId: string, updateUser: UpdateUserDto): Promise<User> {
-    const userToUpdate = await this.userModel.findOne({ userId });
+    const userToUpdate = await this.userModel
+      .findOne({ userId })
+      .orFail(new NotFoundException(`User with ID ${userId} not found.`));
     const wantUpdateEmail =
       updateUser.email && userToUpdate.email !== updateUser.email;
     if (wantUpdateEmail) {

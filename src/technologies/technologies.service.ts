@@ -1,45 +1,96 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import * as fs from 'fs';
+import * as fs from 'fs/promises';
 import { Model } from 'mongoose';
-import { TechType } from 'src/professional-profiles/enums/tech-type.enum';
+import * as path from 'path';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { CreateTechTypeDto } from '../tech-types/dto/create-tech-type.dto';
+import { TechTypesService } from '../tech-types/tech-types.service';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
 import { Technology, TechnologyDocument } from './schemas/technology.schema';
 @Injectable()
 export class TechnologiesService {
   private readonly logger = new Logger(TechnologiesService.name);
+  private readonly technologiesJsonPath = path.join(
+    process.cwd(),
+    'collections',
+    'technologies.json',
+  );
+  private readonly techTypesJsonPath = path.join(
+    process.cwd(),
+    'collections',
+    'technologies-types.json',
+  );
 
   constructor(
     @InjectModel(Technology.name)
     private readonly technologyModel: Model<TechnologyDocument>,
+    private readonly typesService: TechTypesService,
   ) {
-    this.init();
+    this.technologyModel
+      .find()
+      .limit(1)
+      .lean()
+      .then((technologies) => {
+        const hasTechnologies = technologies.length > 0;
+        if (hasTechnologies) {
+          this.logger.debug(
+            'Carga de tecnologías a MongoDB omitida debido a que ya existen tecnologías registradas.',
+          );
+          return;
+        }
+        this.insertBaseTechTypes().then(() => {
+          this.insertBaseTechnologies();
+        });
+      });
   }
 
-  async init() {
-    const jsonPath = __dirname + '/../../collections/technologies.json';
-    const hasTechnologies = !!(
-      await this.technologyModel.find().limit(1).lean()
-    ).length;
-    this.logger.debug(`Existen tecnologías guardadas: ${hasTechnologies}`);
-    const hasJsonCollection = fs.existsSync(jsonPath);
-    this.logger.debug(
-      `Existe archivo "technologies.json": ${hasJsonCollection}`,
-    );
-    if (hasTechnologies || !hasJsonCollection) {
-      this.logger.debug('Carga de JSON a MongoDB omitida');
-      return;
+  private async insertBaseTechTypes(): Promise<void> {
+    try {
+      const techTypesJson: string = (
+        await fs.readFile(this.techTypesJsonPath, 'utf-8')
+      ).toString();
+      const techTypes = JSON.parse(techTypesJson) as CreateTechTypeDto[];
+      await this.typesService.insertMany(techTypes);
+      this.logger.debug(
+        'Tipos de tecnologías cargadas a MongoDB desde JSON exitosamente',
+      );
+    } catch (err) {
+      if (err instanceof Error) {
+        this.logger.warn(
+          `Ocurrió un error y no se pudo cargar los tipos de tecnologías desde JSON: ${err.message}`,
+        );
+        console.error(err);
+      }
     }
+  }
+
+  private async insertBaseTechnologies(): Promise<void> {
     try {
       this.logger.debug(
         'Iniciando carga de tecnologías a MongoDB desde JSON...',
       );
-      const technologiesJson = fs.readFileSync(jsonPath, 'utf-8');
-      this.logger.debug('Tecnologías obtenidas de JSON exitosamente');
-      const technologies = JSON.parse(technologiesJson);
+
+      // technologies
+      const technologiesJson: string = (
+        await fs.readFile(this.technologiesJsonPath, 'utf-8')
+      ).toString();
+      const createTechnologies = JSON.parse(
+        technologiesJson,
+      ) as CreateTechnologyDto[];
+      const technologies = await Promise.all(
+        createTechnologies.map(async (technology) => ({
+          ...technology,
+          type: await this.typesService.findByName(technology.type),
+        })),
+      );
       await this.technologyModel.insertMany(technologies);
       this.logger.debug(
         'Tecnologías cargadas a MongoDB desde JSON exitosamente',
@@ -55,10 +106,10 @@ export class TechnologiesService {
   }
 
   async findAll(
-    pagination: PaginationParams,
-    type?: TechType,
+    pagination?: PaginationParams,
+    typeName?: string,
   ): Promise<PaginatedResponseDto<Technology>> {
-    const { size, search, page } = pagination;
+    const { size, search, page } = pagination || {};
     const filterQuery: Record<string, any> = {};
 
     if (search) {
@@ -68,10 +119,14 @@ export class TechnologiesService {
       ];
     }
 
-    if (type) filterQuery.type = type;
+    if (typeName) {
+      const type = await this.typesService.findByName(typeName);
+      filterQuery.type = type;
+    }
 
     const technologies = await this.technologyModel
       .find(filterQuery)
+      .populate('type')
       .sort({ _id: 1 })
       .skip((page - 1) * size)
       .limit(size)
@@ -89,18 +144,41 @@ export class TechnologiesService {
     };
   }
 
-  async findById(id: string): Promise<TechnologyDocument> {
-    return this.technologyModel.findOne({ technologyId: id }).lean();
+  async findByName(name: string): Promise<TechnologyDocument> {
+    const technologies = await this.technologyModel
+      .findOne({ name })
+      .populate('type')
+      .orFail(
+        new NotFoundException(`Technology with name ${name} doesn't exist.`),
+      );
+    return technologies;
   }
 
-  async findByType(type: TechType): Promise<TechnologyDocument[]> {
-    return this.technologyModel.find({ type }).lean();
+  async findByType(typeName: string): Promise<TechnologyDocument[]> {
+    const type = await this.typesService.findByName(typeName);
+
+    return this.technologyModel.find({ type }).populate('type').lean();
   }
 
   async create(
     createTechnologyDto: CreateTechnologyDto,
   ): Promise<TechnologyDocument> {
-    return this.technologyModel.create(createTechnologyDto);
+    const isNameRegistered = await this.technologyModel.exists({
+      name: createTechnologyDto.name,
+    });
+    if (isNameRegistered) {
+      throw new ConflictException(
+        `Technology with name ${createTechnologyDto.name} already exists.`,
+      );
+    }
+
+    const type = await this.typesService.findByName(createTechnologyDto.type);
+
+    return (
+      await this.technologyModel.create({ ...createTechnologyDto, type })
+    ).populate({
+      path: 'type',
+    });
   }
 
   async update(

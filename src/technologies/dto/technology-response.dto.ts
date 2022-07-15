@@ -1,9 +1,6 @@
-import { TechType } from '../../professional-profiles/enums/tech-type.enum';
-import { TechnologyIntf } from '../interfaces/technology.interface';
-
-export class TechnologyResponse implements TechnologyIntf {
+export class TechnologyResponse {
   readonly technologyId: string;
-  readonly type: TechType;
+  readonly type: string;
   readonly name: string;
   readonly identifiers: string[];
 

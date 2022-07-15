@@ -5,7 +5,7 @@ export class TechnologiesMapper {
   static toTechnologyResponse(technology: Technology): TechnologyResponse {
     return new TechnologyResponse({
       technologyId: technology.technologyId,
-      type: technology.type,
+      type: technology.type.name,
       name: technology.name,
       identifiers: technology.identifiers,
     });

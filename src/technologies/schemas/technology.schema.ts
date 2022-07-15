@@ -1,9 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
-import { TechType } from '../../professional-profiles/enums/tech-type.enum';
+import mongoose from 'mongoose';
+import { TechType } from '../../tech-types/schemas/tech-type.schema';
 import { TechnologyIntf } from '../interfaces/technology.interface';
 
-export type TechnologyDocument = Technology & Document;
+export type TechnologyDocument = Technology & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class Technology implements TechnologyIntf {
@@ -14,16 +15,14 @@ export class Technology implements TechnologyIntf {
   technologyId: string;
 
   @Prop({
-    type: String,
-    enum: TechType,
-    required: true,
-    index: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: TechType.name,
   })
   type: TechType;
 
   @Prop({
     required: true,
-    index: true,
+    index: { unique: true },
     trim: true,
   })
   name: string;

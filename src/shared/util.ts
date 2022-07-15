@@ -46,3 +46,10 @@ export function stringToDate(dateString: string): Date {
 export function titleCase(value: string): string {
   return value[0].toLocaleUpperCase() + value.slice(1);
 }
+
+export function groupBy(array: unknown[], key: string) {
+  return array.reduce(function (rv, x) {
+    (rv[x[key]] = rv[x[key]] || []).push(x);
+    return rv;
+  }, {});
+}

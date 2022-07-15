@@ -4,6 +4,7 @@ import * as mongoose from 'mongoose';
 import { Document } from 'mongoose';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { User } from 'src/users/schemas/user.schema';
+import { Technology } from '../../technologies/schemas/technology.schema';
 import { Job } from './job.schema';
 
 export type ProfessionalProfileDocument = ProfessionalProfile & Document;
@@ -29,46 +30,10 @@ export class ProfessionalProfile {
   location: string;
 
   @Prop({
-    required: true,
-    type: [String],
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: Technology.name,
   })
-  languages: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  frameworks: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  databases: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  patterns: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  libraries: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  tools: string[];
-
-  @Prop({
-    required: true,
-    type: [String],
-  })
-  paradigms: string[];
+  technologies: Technology[];
 
   @Prop({
     required: true,
@@ -98,6 +63,10 @@ export class ProfessionalProfile {
   isActive: () => boolean;
 
   isInactive: () => boolean;
+
+  createdAt: Date;
+
+  updatedAt: Date;
 }
 
 export const ProfessionalProfileSchema =

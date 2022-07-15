@@ -1,126 +1,183 @@
 <html lang='en'>
 
-  <head>
-    <meta charset='UTF-8' />
-    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
-    <meta name='viewport' content='width=device-width, initial-scale=1.0' />
-    <title>Perfil</title>
-    <style>
-      body { font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; }
-      img { width: 100%; border-radius: 50%; width: 128px; height: 128px;
-      margin-bottom: 20px;} #img-container { text-align : center;} #info{float:
-      left;width: 30%;background: #595757; padding: 30px; color: white;}
-      #content{float: left; padding: 20px; width: 70%; background-color: white;}
-      #container {display: flex; flex-direction: row; height: 100%;}
-      .no-margin{margin-bottom: 0;margin-top: 0;} .header{ margin: 50px 30px;}
-      .subtitle{font-size: medium; font-weight: bold; margin: 0;} hr { height:
-      1px; background-color: white;} .grid-container { display: grid;
-      grid-template-columns: auto auto auto; padding: 10px; }
-    </style>
-  </head>
-  <body>
+<head>
+  <meta charset='UTF-8' />
+  <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+  <title>Perfil</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-    <section id='container'>
-      <div id='info'>
-        <div id='img-container'>
-          {{#if preferences.photo}}
-            {{#if profile.owner.photo}}
-              <img src='{{profile.owner.photo}}' />
-            {{/if}}
+    img {
+      width: 100%;
+      border-radius: 50%;
+      width: 128px;
+      height: 128px;
+      margin-bottom: 20px;
+    }
+
+    #img-container {
+      text-align: center;
+    }
+
+    #info {
+      float:
+        left;
+      width: 30%;
+      background: #595757;
+      padding: 30px;
+      color: white;
+    }
+
+    #content {
+      float: left;
+      padding: 20px;
+      width: 70%;
+      background-color: white;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+    }
+
+    .no-margin {
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+
+    .header {
+      margin: 50px 30px;
+    }
+
+    .subtitle {
+      font-size: medium;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    hr {
+      height:
+        1px;
+      background-color: white;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: auto auto auto;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id='container'>
+    <div id='info'>
+      <div id='img-container'>
+        {{#if preferences.photo}}
+        {{#if user.photo}}
+        <img src='{{user.photo}}' />
+        {{/if}}
+        {{/if}}
+      </div>
+
+      <div>
+        <p class='subtitle'>PERSONAL INFO</p>
+        <hr />
+        <div>
+
+          {{#if preferences.linkedIn}}
+          <h4 class='no-margin'>LinkedIn</h4>
+          <p>{{user.linkedIn}}</p>
+          {{/if}}
+
+          {{#if preferences.github}}
+          <h4 class='no-margin'>Github</h4>
+          <p>{{user.github}}</p>
+          {{/if}}
+
+          {{#if preferences.portfolio}}
+          <h4 class='no-margin'>Portfolio</h4>
+          <p>{{user.portfolio}}</p>
+          {{/if}}
+
+          {{#if preferences.email}}
+          <h4 class='no-margin'>Email</h4>
+          <p>{{user.email}}</p>
+          {{/if}}
+
+        </div>
+      </div>
+
+    </div>
+    <div id='content'>
+      <div class='header'>
+        <h1 class='no-margin'>{{user.name}}
+          {{user.surname}}</h1>
+        <h3 class='no-margin'>{{jobTitle}}</h3>
+      </div>
+      <div>
+        {{#if preferences.biography}}
+        <p>{{user.biography}}</p>
+        {{/if}}
+      </div>
+
+      <div>
+        <p class='subtitle'>TECHNICAL (IT) SKILLS</p>
+        <hr />
+        <div>
+          {{#if languages}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Languages</h4>
+            <p class='no-margin'>{{join languages}}</p>
+          </div>
+          {{/if}}
+
+          {{#if frameworks}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Frameworks</h4>
+            <p class='no-margin'>{{join frameworks}}</p>
+          </div>
+          {{/if}}
+
+          {{#if databases}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Databases</h4>
+            <p class='no-margin'>{{join databases}}</p>
+          </div>
+          {{/if}}
+
+          {{#if libraries}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Libraries</h4>
+            <p class='no-margin'>{{join libraries}}</p>
+          </div>
+          {{/if}}
+
+          {{#if patterns}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Patterns</h4>
+            <p class='no-margin'>{{join patterns}}</p>
+          </div>
+          {{/if}}
+
+          {{#if tools}}
+          <div class='grid-container'>
+            <h4 class='no-margin'>Tools</h4>
+            <p class='no-margin'>{{join tools}}</p>
+          </div>
           {{/if}}
         </div>
-
-        <div>
-          <p class='subtitle'>PERSONAL INFO</p>
-          <hr />
-          <div>
-
-            {{#if preferences.linkedIn}}
-              <h4 class='no-margin'>LinkedIn</h4>
-              <p>{{profile.owner.linkedIn}}</p>
-            {{/if}}
-
-            {{#if preferences.github}}
-              <h4 class='no-margin'>Github</h4>
-              <p>{{profile.owner.github}}</p>
-            {{/if}}
-
-            {{#if preferences.portfolio}}
-              <h4 class='no-margin'>Portfolio</h4>
-              <p>{{profile.owner.portfolio}}</p>
-            {{/if}}
-
-            {{#if preferences.email}}
-              <h4 class='no-margin'>Email</h4>
-              <p>{{profile.owner.email}}</p>
-            {{/if}}
-
-          </div>
-        </div>
-
       </div>
-      <div id='content'>
-        <div class='header'>
-          <h1 class='no-margin'>{{profile.owner.name}}
-            {{profile.owner.surname}}</h1>
-          <h3 class='no-margin'>{{profile.jobTitle}}</h3>
-        </div>
-        <div>
-          {{#if preferences.biography}}
-            <p>{{profile.owner.biography}}</p>
-          {{/if}}
-        </div>
 
-        <div>
-          <p class='subtitle'>TECHNICAL (IT) SKILLS</p>
-          <hr />
-          <div>
-            {{#if profile.languages}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Languages</h4>
-                <p class='no-margin'>{{join profile.languages}}</p>
-              </div>
-            {{/if}}
-
-            {{#if profile.frameworks}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Frameworks</h4>
-                <p class='no-margin'>{{join profile.frameworks}}</p>
-              </div>
-            {{/if}}
-
-            {{#if profile.databases}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Databases</h4>
-                <p class='no-margin'>{{join profile.databases}}</p>
-              </div>
-            {{/if}}
-
-            {{#if profile.libraries}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Libraries</h4>
-                <p class='no-margin'>{{join profile.libraries}}</p>
-              </div>
-            {{/if}}
-
-            {{#if profile.patterns}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Patterns</h4>
-                <p class='no-margin'>{{join profile.patterns}}</p>
-              </div>
-            {{/if}}
-
-            {{#if profile.tools}}
-              <div class='grid-container'>
-                <h4 class='no-margin'>Tools</h4>
-                <p class='no-margin'>{{join profile.tools}}</p>
-              </div>
-            {{/if}}
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </body>
+    </div>
+  </section>
+</body>
 
 </html>

@@ -26,7 +26,7 @@ async function bootstrap() {
 
   app.enableCors();
   app.setGlobalPrefix(appConfig.globalPrefix);
-  // allow validate body requests (DTOs) with validation decorators
+  // allow to validate body requests (DTOs) with validation decorators
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

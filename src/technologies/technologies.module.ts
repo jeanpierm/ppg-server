@@ -1,11 +1,6 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ValidateTechnologyExistsMiddleware } from './middlewares/validate-technology-exists.middleware';
+import { TechTypesModule } from '../tech-types/tech-types.module';
 import {
   Technology,
   TechnologyName,
@@ -23,16 +18,10 @@ import { TechnologiesService } from './technologies.service';
         collection: TechnologyName,
       },
     ]),
+    TechTypesModule,
   ],
   controllers: [TechnologiesController],
   providers: [TechnologiesService],
   exports: [TechnologiesService],
 })
-export class TechnologiesModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ValidateTechnologyExistsMiddleware).forRoutes({
-      path: 'technologies/:technologyId',
-      method: RequestMethod.ALL,
-    });
-  }
-}
+export class TechnologiesModule {}

@@ -27,6 +27,7 @@ import {
 } from './schemas/technology-metadata.schema';
 import { Job, JobSchema } from './schemas/job.schema';
 import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
+import { TechTypesModule } from '../tech-types/tech-types.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { DownloadPreferencesModule } from 'src/download-preferences/download-pre
     ]),
     TechnologiesModule,
     DownloadPreferencesModule,
+    TechTypesModule,
   ],
   controllers: [ProfessionalProfilesController],
   providers: [ProfessionalProfilesService, ProfessionalProfileGenerator],
@@ -77,6 +79,10 @@ export class ProfessionalProfilesModule implements NestModule {
       {
         path: 'professional-profiles/:ppId',
         method: RequestMethod.PATCH,
+      },
+      {
+        path: 'professional-profiles/:ppId',
+        method: RequestMethod.DELETE,
       },
     );
   }

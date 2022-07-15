@@ -12,7 +12,6 @@ import {
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
-  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -29,14 +28,9 @@ import {
 } from '../shared/decorators/api-response.decorator';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import {
-  CountQuery,
-  countQueryValues,
-  COUNT_ENGLISH_QUERY,
-} from './dto/count-query.dto';
+import { CountQuery } from './dto/count-query.dto';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
-import { TechType } from './enums/tech-type.enum';
 import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
 import { ProfessionalProfilesService } from './professional-profiles.service';
 
@@ -60,7 +54,6 @@ export class ProfessionalProfilesController {
     getQuery: GetProfessionalProfilesQuery & PaginationParams,
     @CurrentUser() user: UserDocument,
   ): Promise<PaginatedResponseDto<ProfessionalProfileResponse>> {
-    console.log(getQuery);
     const profiles = await this.proProfilesService.findActiveProfilesOfUser(
       user,
       getQuery,
@@ -95,7 +88,6 @@ export class ProfessionalProfilesController {
    * Obtiene un diccionario con el conteo de tecnologías encontradas en los perfiles de la cuenta autenticada.
    */
   @ApiOperation({ summary: 'contar tecnologías de los perfiles generados' })
-  @ApiQuery({ name: 'q', enum: countQueryValues })
   @Roles(Role.User, Role.Admin)
   @Get('count')
   async count(@CurrentUser() user: UserDocument, @Query() { q }: CountQuery) {
@@ -103,12 +95,9 @@ export class ProfessionalProfilesController {
       user,
     );
     const payload =
-      q === COUNT_ENGLISH_QUERY
+      q === 'english'
         ? await this.proProfilesService.getEnglishCount(profiles.data)
-        : await this.proProfilesService.getTechnologyCount(
-            profiles.data,
-            q as TechType,
-          );
+        : await this.proProfilesService.getTechnologyCount(profiles.data, q);
     return new ApiResponse(`${q} count obtained successfully`, payload);
   }
 

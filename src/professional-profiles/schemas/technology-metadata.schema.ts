@@ -1,17 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { TechType } from '../enums/tech-type.enum';
 
 export type TechnologyMetadataDocument = TechnologyMetadata & Document;
 @Schema({ timestamps: true, versionKey: false })
 export class TechnologyMetadata {
   @Prop({
     required: true,
-    type: String,
-    enum: TechType,
     index: true,
   })
-  type: TechType;
+  type: string;
 
   @Prop({ required: true, trim: true, lowercase: true })
   jobTitle: string;

@@ -1,4 +1,4 @@
-import { TechType } from '../../professional-profiles/enums/tech-type.enum';
+import { TechType } from '../../tech-types/schemas/tech-type.schema';
 
 export interface TechnologyIntf {
   type: TechType;

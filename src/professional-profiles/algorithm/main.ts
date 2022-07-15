@@ -1,16 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Technology } from 'src/technologies/schemas/technology.schema';
+import { TechnologyDocument } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
 import { UserDocument } from 'src/users/schemas/user.schema';
-import { TechType } from '../enums/tech-type.enum';
-import { ProfessionalProfileIntf } from '../interfaces/professional-profile.interface';
-import { ProfessionalProfileBuilder } from '../professional-profile.builder';
+import { TechTypesService } from '../../tech-types/tech-types.service';
+import { CreateProfessionalProfile } from '../dto/create-professional-profile.dto';
+import { JobIntf } from '../interfaces/job.interface';
+import { MIN_PERCENTAGE_TO_REQUIERE_ENGLISH } from '../professional-profile.constant';
 import {
   EnglishMetadata,
   EnglishMetadataDocument,
 } from '../schemas/english-metadata.schema';
+import { Job, JobDocument } from '../schemas/job.schema';
 import {
   TechnologyMetadata,
   TechnologyMetadataDocument,
@@ -19,14 +21,15 @@ import { countRequireEnglish } from './count-requiere-english';
 import { countTechnology as countTechnologies } from './count-technology';
 import { extractJobMetadata } from './extract-job';
 import { login } from './login.algorithm';
+import { normalizeJobDetail } from './normalize-job-detail';
 import { scrapJobLinks } from './scrap-job-links';
 import { searchJobs } from './search-jobs';
 import puppeteer = require('puppeteer');
-import { JobIntf } from '../interfaces/job.interface';
-import { Job, JobDocument } from '../schemas/job.schema';
-import { normalizeJobDetail } from './normalize-job-detail';
+import { getKeysSortedByHigherValue } from './util';
 
 const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
+
+const NUMBER_OF_TECHNOLOGIES_BY_TYPE = 4;
 
 @Injectable()
 export class ProfessionalProfileGenerator {
@@ -40,6 +43,7 @@ export class ProfessionalProfileGenerator {
     @InjectModel(Job.name)
     private readonly jobModel: Model<JobDocument>,
     private readonly technologiesService: TechnologiesService,
+    private readonly techTypesService: TechTypesService,
   ) {}
 
   /**
@@ -60,56 +64,88 @@ export class ProfessionalProfileGenerator {
     user: UserDocument,
     jobTitle: string,
     location: string,
-  ): Promise<ProfessionalProfileIntf> {
+  ): Promise<CreateProfessionalProfile> {
     console.time(PPG_ALGORITHM_LABEL);
-    const technologiesCountMap = new Map<TechType, Record<string, number>>();
 
-    /* JOBS SCRAPING */
     const jobs = await this.scrapeWebJobOffers(jobTitle, location);
     const jobsAnalyzed = await this.saveJobs(jobs);
-
-    /* PROFESSIONAL PROFILE GENERATION */
     const jobsCount = jobs.length;
     const jobDetails = jobs.map(({ detail, title }) => {
       const detailNormalized = normalizeJobDetail(detail);
       return `${title} ${detailNormalized}`;
     });
     console.log('Job details normalized: ', jobDetails);
-    for (const type of Object.values(TechType)) {
-      const technologies: Technology[] =
-        await this.technologiesService.findByType(type);
-      const countDictionary: Record<string, number> = countTechnologies(
-        technologies,
+
+    const technologyTypes = await this.techTypesService.findAll();
+    const technologiesMostDemanded: TechnologyDocument[] = [];
+
+    for (const type of technologyTypes) {
+      const technologiesByType: TechnologyDocument[] =
+        await this.technologiesService.findByType(type.name);
+      const countResultByType: Record<string, number> = countTechnologies(
+        technologiesByType,
         jobDetails,
       );
-      technologiesCountMap.set(type, countDictionary);
       console.log(
-        `Mapa resultante de ${type}:`,
-        technologiesCountMap.get(type),
+        `Mapa resultante de tecnologías de tipo ${type}:`,
+        technologiesByType,
       );
+      const technologiesMostDemandedByType =
+        await this.getTechnologiesMostDemanded(countResultByType);
+      technologiesMostDemanded.push(...technologiesMostDemandedByType);
+
+      // persist technologies metadata in db
+      this.saveTechnologiesMetadata({
+        type: type.name,
+        jobTitle,
+        location,
+        jobsCount,
+        countResult: countResultByType,
+      });
     }
-    const englishCount = countRequireEnglish(jobDetails);
-    const professionalProfile = new ProfessionalProfileBuilder()
-      .jobTitle(jobTitle)
-      .location(location)
-      .owner(user._id)
-      .jobsAnalyzed(jobsAnalyzed.map((job) => job._id))
-      .requireEnglish(englishCount, jobsCount)
-      .technologiesCountMap(technologiesCountMap)
-      .build();
+
+    const requireEnglishCount = countRequireEnglish(jobDetails);
+    const requireEnglish = calculateRequireEnglish(
+      requireEnglishCount,
+      jobsCount,
+    );
+    const professionalProfile: CreateProfessionalProfile = {
+      jobTitle,
+      location,
+      ownerId: user._id.toString(),
+      jobsAnalyzedIds: jobsAnalyzed.map((job) => job._id.toString()),
+      technologiesIds: technologiesMostDemanded.map((tech) =>
+        tech._id.toString(),
+      ),
+      requireEnglish,
+    };
 
     console.timeEnd(PPG_ALGORITHM_LABEL);
 
-    /* PERSIST METADATA IN DATABASE */
-    this.saveTechnologiesMetadata(
-      technologiesCountMap,
+    // persist english metadata in db
+    this.saveEnglishMetadata({
       jobTitle,
       location,
       jobsCount,
-    );
-    this.saveEnglishMetadata(englishCount, jobsCount, jobTitle, location);
+      requireCount: requireEnglishCount,
+    });
 
     return professionalProfile;
+  }
+
+  private async getTechnologiesMostDemanded(
+    countResult: Record<string, number>,
+  ): Promise<TechnologyDocument[]> {
+    const techNamesMostDemandedByType: string[] = getKeysSortedByHigherValue(
+      countResult,
+    ).slice(0, NUMBER_OF_TECHNOLOGIES_BY_TYPE);
+    const technologiesMostDemandedByType: TechnologyDocument[] =
+      await Promise.all(
+        techNamesMostDemandedByType.map((name) =>
+          this.technologiesService.findByName(name),
+        ),
+      );
+    return technologiesMostDemandedByType;
   }
 
   private async scrapeWebJobOffers(
@@ -138,59 +174,12 @@ export class ProfessionalProfileGenerator {
     return this.jobModel.create(jobs);
   }
 
-  private saveEnglishMetadata(
-    englishCount: number,
-    jobsCount: number,
-    jobTitle: string,
-    location: string,
-  ) {
-    this.englishMetadataModel.create({
-      requireCount: englishCount,
-      jobsCount,
-      jobTitle,
-      location,
-    });
+  private saveEnglishMetadata(englishMetadata: EnglishMetadata) {
+    this.englishMetadataModel.create(englishMetadata);
   }
 
-  private saveTechnologiesMetadata(
-    technologiesCountMap: Map<TechType, Record<string, number>>,
-    jobTitle: string,
-    location: string,
-    jobsCount: number,
-  ) {
-    // EJEMPLO...
-    // const ex = {
-    //   professionalProfile: 'objectId',
-    //   technologies: {
-    //     languages: [
-    //       {
-    //         name: 'java',
-    //         count: 1,
-    //       },
-    //     ],
-    //     frameworks: [
-    //       {
-    //         name: 'react.js',
-    //         count: 1,
-    //       }
-    //     ],
-    //   },
-    //   english: {
-    //     requiere: 1,
-    //     noRequire: 1,
-    //   }
-    // };
-
-    const metadataArray: TechnologyMetadata[] = Object.values(TechType).map(
-      (type): TechnologyMetadata => ({
-        jobTitle,
-        jobsCount,
-        location,
-        type: type,
-        countResult: technologiesCountMap.get(type),
-      }),
-    );
-    this.technologyMetadataModel.create(metadataArray);
+  private saveTechnologiesMetadata(technologyMetadata: TechnologyMetadata) {
+    this.technologyMetadataModel.create(technologyMetadata);
   }
 }
 
@@ -198,4 +187,22 @@ async function setLanguageInEnglish(page: puppeteer.Page) {
   await page.setExtraHTTPHeaders({
     'Accept-Language': 'en',
   });
+}
+
+/**
+ * @param englishCount
+ * @param jobsCount
+ * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
+ */
+function calculateRequireEnglish(
+  englishCount: number,
+  jobsCount: number,
+): boolean {
+  const require: boolean =
+    englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
+  console.log(
+    `[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`,
+    require,
+  );
+  return require;
 }
