@@ -44,6 +44,7 @@ export class TechnologiesController {
     @Query() paginationParams: PaginationParams,
     @Query('type') type: string,
   ): Promise<PaginatedResponseDto<TechnologyResponse>> {
+    console.log('findAll');
     const technologiesPagination = await this.technologiesService.findAll(
       paginationParams,
       type,
@@ -55,6 +56,13 @@ export class TechnologiesController {
       ),
     };
     return payload;
+  }
+
+  @Get('search')
+  @Roles(Role.Admin, Role.User)
+  async courseScraping(@Query('course') course: string) {
+    const courses = await this.technologiesService.findCourses(course);
+    return new ApiResponse('Courses obtained successfully', courses);
   }
 
   /**

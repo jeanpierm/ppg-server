@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TechTypesModule } from '../tech-types/tech-types.module';
+import { CoursesScraper } from './coursesScraper/main';
 import {
   Technology,
   TechnologyName,
@@ -21,7 +22,7 @@ import { TechnologiesService } from './technologies.service';
     TechTypesModule,
   ],
   controllers: [TechnologiesController],
-  providers: [TechnologiesService],
+  providers: [TechnologiesService, CoursesScraper],
   exports: [TechnologiesService],
 })
 export class TechnologiesModule {}
