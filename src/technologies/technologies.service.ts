@@ -80,9 +80,7 @@ export class TechnologiesService {
       const technologiesJson: string = (
         await fs.readFile(this.technologiesJsonPath, 'utf-8')
       ).toString();
-      const createTechnologies = JSON.parse(
-        technologiesJson,
-      ) as CreateTechnologyDto[];
+      const createTechnologies = JSON.parse(technologiesJson);
       const technologies = await Promise.all(
         createTechnologies.map(async (technology) => ({
           ...technology,
@@ -174,7 +172,7 @@ export class TechnologiesService {
       );
     }
 
-    const type = await this.typesService.findByName(createTechnologyDto.type);
+    const type = await this.typesService.findById(createTechnologyDto.typeId);
 
     return (
       await this.technologyModel.create({ ...createTechnologyDto, type })
@@ -187,8 +185,14 @@ export class TechnologiesService {
     id: string,
     updateTechnologyDto: UpdateTechnologyDto,
   ): Promise<void> {
+    const type = await this.typesService.findById(updateTechnologyDto.typeId);
+
     await this.technologyModel
-      .updateOne({ technologyId: id }, updateTechnologyDto, { new: true })
+      .updateOne(
+        { technologyId: id },
+        { ...updateTechnologyDto, type },
+        { new: true },
+      )
       .lean();
   }
 

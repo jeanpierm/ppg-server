@@ -3,7 +3,7 @@ import { ArrayMinSize, IsArray, IsNotEmpty, IsString } from 'class-validator';
 export class CreateTechnologyDto {
   @IsString()
   @IsNotEmpty()
-  type: string;
+  typeId: string;
 
   @IsString()
   @IsNotEmpty()
