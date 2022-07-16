@@ -61,6 +61,7 @@ export class TechnologiesService {
         await fs.readFile(this.techTypesJsonPath, 'utf-8')
       ).toString();
       const techTypes = JSON.parse(techTypesJson) as CreateTechTypeDto[];
+      await this.typesService.removeAll();
       await this.typesService.insertMany(techTypes);
       this.logger.debug(
         'Tipos de tecnologías cargadas a MongoDB desde JSON exitosamente',

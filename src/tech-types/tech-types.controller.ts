@@ -53,7 +53,7 @@ export class TechTypesController {
    */
   @ApiOperation({ summary: 'obtener tipo de tecnología' })
   @Roles(Role.Admin)
-  @Get(':name')
+  @Get(':id')
   async findOne(@Param('id', ParseObjectIdPipe) id: string): Promise<TechType> {
     return this.techTypesService.findById(id);
   }

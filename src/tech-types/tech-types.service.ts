@@ -119,7 +119,7 @@ export class TechTypesService {
         );
     }
     await this.techTypeModel
-      .updateOne({ id }, updateTechTypeDto)
+      .updateOne({ _id: id }, updateTechTypeDto)
       .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
   }
 
@@ -128,11 +128,16 @@ export class TechTypesService {
    */
   async remove(id: string) {
     // TODO: hacerlo por hook?
-    await this.technologyModel.remove({ type: id });
+    // elimina las tecnologías que tienen referido el techType (como cascada), para evitar errores de referencia
+    await this.technologyModel.deleteMany({ type: id });
 
     const res = await this.techTypeModel
-      .deleteOne({ id })
+      .deleteOne({ _id: id })
       .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
     this.logger.warn(`Technology Type with ID "${id}" removed`, res);
+  }
+
+  async removeAll() {
+    await this.technologyModel.deleteMany({});
   }
 }
