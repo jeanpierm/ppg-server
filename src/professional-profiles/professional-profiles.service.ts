@@ -15,11 +15,13 @@ import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { stringToDate } from '../shared/util';
+import { removeDuplicateObjects, stringToDate } from '../shared/util';
+import { TechType } from '../tech-types/schemas/tech-type.schema';
 import { Technology } from '../technologies/schemas/technology.schema';
 import { TechnologiesService } from '../technologies/technologies.service';
 import { ProfessionalProfileGenerator } from './algorithm/main';
 import { GetProfessionalProfilesQuery } from './dto/get-professional-profiles-query.dto';
+import { TechnologyItem } from './interfaces/technology-item.interface';
 import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
@@ -224,25 +226,26 @@ export class ProfessionalProfilesService {
     const preferences =
       await this.downloadPreferencesService.getDownloadPreferences(user);
     const { technologies, jobTitle } = profile;
-    const languages = this.getTechnologyNames(technologies, 'language');
-    const databases = this.getTechnologyNames(technologies, 'database');
-    const tools = this.getTechnologyNames(technologies, 'tool');
-    const frameworks = this.getTechnologyNames(technologies, 'framework');
-    const libraries = this.getTechnologyNames(technologies, 'library');
-    const patterns = this.getTechnologyNames(technologies, 'pattern');
-    const paradigms = this.getTechnologyNames(technologies, 'paradigm');
+
+    const technologyItems: TechnologyItem[] = [];
+    const rawTechTypes = technologies.map((technology) => technology.type);
+    const techTypes = removeDuplicateObjects(rawTechTypes) as TechType[];
+
+    techTypes.forEach((type) => {
+      const technologyNames = this.getTechnologyNamesByType(
+        technologies,
+        type.name,
+      );
+      if (technologyNames.length) {
+        technologyItems.push({ label: type.label, technologyNames });
+      }
+    });
 
     const html = await compile('resume', {
       preferences,
       user,
       jobTitle,
-      languages,
-      databases,
-      tools,
-      frameworks,
-      libraries,
-      patterns,
-      paradigms,
+      technologyItems,
     });
 
     //helper para guardarlo en html, por si se desea revisar como se ve el html
@@ -267,13 +270,13 @@ export class ProfessionalProfilesService {
     return pdfBuffer;
   }
 
-  private getTechnologyNames(
+  private getTechnologyNamesByType(
     technologies: Technology[],
-    type: string,
+    typeName: string,
   ): string[] {
     return technologies
-      .filter((technology) => technology.type.name === type)
-      .map((technology) => technology.name);
+      .filter(({ type }) => type.name === typeName)
+      .map(({ name }) => name);
   }
 }
 

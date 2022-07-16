@@ -132,47 +132,12 @@
         <p class='subtitle'>TECHNICAL (IT) SKILLS</p>
         <hr />
         <div>
-          {{#if languages}}
+          {{#each technologyItems}}
           <div class='grid-container'>
-            <h4 class='no-margin'>Languages</h4>
-            <p class='no-margin'>{{join languages}}</p>
+            <h4 class='no-margin'>{{this.label}}</h4>
+            <p class='no-margin'>{{join this.technologyNames}}</p>
           </div>
-          {{/if}}
-
-          {{#if frameworks}}
-          <div class='grid-container'>
-            <h4 class='no-margin'>Frameworks</h4>
-            <p class='no-margin'>{{join frameworks}}</p>
-          </div>
-          {{/if}}
-
-          {{#if databases}}
-          <div class='grid-container'>
-            <h4 class='no-margin'>Databases</h4>
-            <p class='no-margin'>{{join databases}}</p>
-          </div>
-          {{/if}}
-
-          {{#if libraries}}
-          <div class='grid-container'>
-            <h4 class='no-margin'>Libraries</h4>
-            <p class='no-margin'>{{join libraries}}</p>
-          </div>
-          {{/if}}
-
-          {{#if patterns}}
-          <div class='grid-container'>
-            <h4 class='no-margin'>Patterns</h4>
-            <p class='no-margin'>{{join patterns}}</p>
-          </div>
-          {{/if}}
-
-          {{#if tools}}
-          <div class='grid-container'>
-            <h4 class='no-margin'>Tools</h4>
-            <p class='no-margin'>{{join tools}}</p>
-          </div>
-          {{/if}}
+          {{/each}}
         </div>
       </div>
 
