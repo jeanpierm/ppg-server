@@ -1,0 +1,33 @@
+[{
+  "_id": {
+    "$oid": "62d0b71e88eac5400d7f5129"
+  },
+  "name": "admin",
+  "roleId": "359d327f-0cd1-4988-8874-3aeb70213eeb",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1657845534158"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1657845534158"
+    }
+  }
+},{
+  "_id": {
+    "$oid": "62d0b71e88eac5400d7f512a"
+  },
+  "name": "user",
+  "roleId": "e9ea3613-7626-46b8-bbd5-851105064376",
+  "createdAt": {
+    "$date": {
+      "$numberLong": "1657845534159"
+    }
+  },
+  "updatedAt": {
+    "$date": {
+      "$numberLong": "1657845534159"
+    }
+  }
+}]
