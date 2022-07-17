@@ -8,6 +8,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { EntityStatus } from '../shared/enums/status.enum';
 import {
   Technology,
   TechnologyDocument,
@@ -28,10 +29,10 @@ export class TechTypesService {
     private readonly technologyModel: Model<TechnologyDocument>,
   ) {}
 
-  async findAll(
-    pagination?: PaginationParams,
+  async findPaginated(
+    paginationParams?: PaginationParams,
   ): Promise<PaginatedResponseDto<TechType>> {
-    const { size, search, page } = pagination || {};
+    const { size, search, page } = paginationParams || {};
     const filterQuery: Record<string, any> = {};
 
     if (search) {
@@ -60,13 +61,17 @@ export class TechTypesService {
     };
   }
 
+  async findActives(): Promise<TechTypeDocument[]> {
+    return this.techTypeModel.find({ status: EntityStatus.Active });
+  }
+
   /**
    * @throws {NotFoundException} if no document found
    */
   async findById(id: string) {
     const techType = await this.techTypeModel
       .findById(id)
-      .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
+      .orFail(new NotFoundException(TechTypeErrors.notFoundById(id)));
     return techType;
   }
 
@@ -76,7 +81,7 @@ export class TechTypesService {
   async findByName(name: string) {
     const techType = await this.techTypeModel
       .findOne({ name })
-      .orFail(new NotFoundException(TechTypeErrors.notFound(name)));
+      .orFail(new NotFoundException(TechTypeErrors.notFoundByName(name)));
     return techType;
   }
 
@@ -107,8 +112,7 @@ export class TechTypesService {
   async update(id: string, updateTechTypeDto: UpdateTechTypeDto) {
     const techType = await this.techTypeModel
       .findById(id)
-      .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
-    console.log(techType);
+      .orFail(new NotFoundException(TechTypeErrors.notFoundById(id)));
     if (techType.name !== updateTechTypeDto.name) {
       const nameAlreadyExists = await this.techTypeModel.exists({
         name: updateTechTypeDto.name,
@@ -120,20 +124,16 @@ export class TechTypesService {
     }
     await this.techTypeModel
       .updateOne({ _id: id }, updateTechTypeDto)
-      .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
+      .orFail(new NotFoundException(TechTypeErrors.notFoundById(id)));
   }
 
   /**
    * @throws {NotFoundException} if no document found
    */
-  async remove(id: string) {
-    // TODO: hacerlo por hook?
-    // elimina las tecnologías que tienen referido el techType (como cascada), para evitar errores de referencia
-    await this.technologyModel.deleteMany({ type: id });
-
+  async removeById(id: string) {
     const res = await this.techTypeModel
-      .deleteOne({ _id: id })
-      .orFail(new NotFoundException(TechTypeErrors.notFound(id)));
+      .updateOne({ _id: id }, { status: EntityStatus.Inactive })
+      .orFail(new NotFoundException(TechTypeErrors.notFoundById(id)));
     this.logger.warn(`Technology Type with ID "${id}" removed`, res);
   }
 

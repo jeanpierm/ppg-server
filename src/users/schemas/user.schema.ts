@@ -9,6 +9,8 @@ export type UserDocument = User & mongoose.Document;
 
 @Schema({ timestamps: true, versionKey: false })
 export class User implements UserIntf {
+  _id: mongoose.Types.ObjectId;
+
   @Prop({
     index: { unique: true },
     default: () => randomUUID(),

@@ -76,7 +76,7 @@ export class ProfessionalProfileGenerator {
     });
     console.log('Job details normalized: ', jobDetails);
 
-    const technologyTypes = (await this.techTypesService.findAll()).data;
+    const technologyTypes = await this.techTypesService.findActives();
     const technologiesMostDemanded: TechnologyDocument[] = [];
 
     for (const type of technologyTypes) {
@@ -150,22 +150,26 @@ export class ProfessionalProfileGenerator {
     jobTitle: string,
     location: string,
   ): Promise<JobIntf[]> {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
-    await setLanguageInEnglish(page);
-    await page.setViewport({ width: 1920, height: 2400 });
-
-    await login(page);
-    await searchJobs(page, jobTitle, location);
-    const jobLinks = await scrapJobLinks(page);
-    const jobs = (
-      await Promise.all(
-        jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
-      )
-    ).filter((job) => job !== undefined);
-    await browser.close();
-
-    return jobs;
+    try {
+      const browser = await puppeteer.launch({ headless: false });
+      const page = await browser.newPage();
+      await setLanguageInEnglish(page);
+      await page.setViewport({ width: 1920, height: 2400 });
+      await login(page);
+      await searchJobs(page, jobTitle, location);
+      const jobLinks = await scrapJobLinks(page);
+      const jobs = (
+        await Promise.all(
+          jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
+        )
+      ).filter((job) => job !== undefined);
+      await browser.close();
+      return jobs;
+    } catch (err) {
+      console.error(
+        `Ha ocurrido un error en el algoritmo de web scrapping a ofertas de trabajo. Error: ${err}`,
+      );
+    }
   }
 
   private saveJobs(jobs: JobIntf[]) {

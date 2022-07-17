@@ -118,7 +118,7 @@ export class TechnologiesService {
 
     if (typeName) {
       const type = await this.typesService.findByName(typeName);
-      filterQuery.type = type;
+      filterQuery.type = type._id;
     }
 
     const technologies = await this.technologyModel

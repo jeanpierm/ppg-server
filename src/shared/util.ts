@@ -17,7 +17,7 @@ export function generateValidationMessageByValues(
   propertyName: string,
   values: unknown[],
 ) {
-  const isPlural = propertyName.at(-1) === 's';
+  const isPlural = propertyName.at(-1) === 's' && propertyName !== 'status';
   if (isPlural) {
     return `each value in ${propertyName} must be ${formatter.format(values)}`;
   }

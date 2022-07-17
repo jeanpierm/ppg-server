@@ -1,27 +1,26 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
   Query,
 } from '@nestjs/common';
-import { TechTypesService } from './tech-types.service';
-import { CreateTechTypeDto } from './dto/create-tech-type.dto';
-import { UpdateTechTypeDto } from './dto/update-tech-type.dto';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { TechType } from './schemas/tech-type.schema';
 import { ParseObjectIdPipe } from '../core/pipes/parse-objectid.pipe';
-import { TechTypeResponseDto } from './dto/tech-type-response.dto';
-import { TechTypesMapper } from './tech-types.mapper';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { CreateTechTypeDto } from './dto/create-tech-type.dto';
+import { TechTypeResponseDto } from './dto/tech-type-response.dto';
+import { UpdateTechTypeDto } from './dto/update-tech-type.dto';
+import { TechTypesMapper } from './tech-types.mapper';
+import { TechTypesService } from './tech-types.service';
 
 @ApiTags('technology-types')
 @Controller('tech-types')
@@ -38,7 +37,7 @@ export class TechTypesController {
   async findAll(
     @Query() paginationParams: PaginationParams,
   ): Promise<PaginatedResponseDto<TechTypeResponseDto>> {
-    const techTypesPaginated = await this.techTypesService.findAll(
+    const techTypesPaginated = await this.techTypesService.findPaginated(
       paginationParams,
     );
     const data = techTypesPaginated.data.map((type) =>
@@ -54,8 +53,11 @@ export class TechTypesController {
   @ApiOperation({ summary: 'obtener tipo de tecnología' })
   @Roles(Role.Admin)
   @Get(':id')
-  async findOne(@Param('id', ParseObjectIdPipe) id: string): Promise<TechType> {
-    return this.techTypesService.findById(id);
+  async findOne(
+    @Param('id', ParseObjectIdPipe) id: string,
+  ): Promise<TechTypeResponseDto> {
+    const type = await this.techTypesService.findById(id);
+    return TechTypesMapper.toResponse(type);
   }
 
   /**
@@ -66,8 +68,9 @@ export class TechTypesController {
   @Post()
   async create(
     @Body() createTechTypeDto: CreateTechTypeDto,
-  ): Promise<TechType> {
-    return this.techTypesService.create(createTechTypeDto);
+  ): Promise<TechTypeResponseDto> {
+    const createdType = await this.techTypesService.create(createTechTypeDto);
+    return TechTypesMapper.toResponse(createdType);
   }
 
   /**
@@ -92,6 +95,6 @@ export class TechTypesController {
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete(':id')
   async remove(@Param('id', ParseObjectIdPipe) id: string): Promise<void> {
-    await this.techTypesService.remove(id);
+    await this.techTypesService.removeById(id);
   }
 }
