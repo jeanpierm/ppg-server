@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as fs from 'fs/promises';
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateTechTypeDto } from '../tech-types/dto/create-tech-type.dto';
 import { TechTypesService } from '../tech-types/tech-types.service';
 import { CoursesScraper } from './coursesScraper/main';
@@ -107,7 +108,7 @@ export class TechnologiesService {
     typeName?: string,
   ): Promise<PaginatedResponseDto<Technology>> {
     const { size, search, page } = pagination || {};
-    const filterQuery: Record<string, any> = {};
+    const filterQuery: FilterQuery<TechnologyDocument> = { type: {} };
 
     if (search) {
       filterQuery['$or'] = [
@@ -118,8 +119,14 @@ export class TechnologiesService {
 
     if (typeName) {
       const type = await this.typesService.findByName(typeName);
-      filterQuery.type = type._id;
+      filterQuery.type['$eq'] = type._id;
     }
+
+    // solo se obtienen tecnologías que tengan activo su tipo
+    const activeTechTypeIds = (await this.typesService.findActives()).map(
+      ({ _id }) => _id,
+    );
+    filterQuery.type['$in'] = activeTechTypeIds;
 
     const technologies = await this.technologyModel
       .find(filterQuery)

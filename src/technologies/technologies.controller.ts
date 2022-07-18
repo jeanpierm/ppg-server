@@ -35,6 +35,7 @@ export class TechnologiesController {
 
   /**
    * Busca las tecnologías configuradas para el algoritmo que genera los perfiles profesionales.
+   *
    */
   @ApiOperation({ summary: 'buscar tecnologías' })
   @ApiPaginatedResponse(TechnologyResponse)
