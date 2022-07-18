@@ -17,6 +17,7 @@ import { ParseObjectIdPipe } from '../core/pipes/parse-objectid.pipe';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { CreateTechTypeDto } from './dto/create-tech-type.dto';
+import { GetTechTypeQuery } from './dto/get-tech-type-query';
 import { TechTypeResponseDto } from './dto/tech-type-response.dto';
 import { UpdateTechTypeDto } from './dto/update-tech-type.dto';
 import { TechTypesMapper } from './tech-types.mapper';
@@ -35,7 +36,7 @@ export class TechTypesController {
   @Roles(Role.Admin)
   @Get()
   async findAll(
-    @Query() paginationParams: PaginationParams,
+    @Query() paginationParams: PaginationParams & GetTechTypeQuery,
   ): Promise<PaginatedResponseDto<TechTypeResponseDto>> {
     const techTypesPaginated = await this.techTypesService.findPaginated(
       paginationParams,

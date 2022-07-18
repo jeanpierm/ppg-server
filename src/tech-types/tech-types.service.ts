@@ -14,6 +14,7 @@ import {
   TechnologyDocument,
 } from '../technologies/schemas/technology.schema';
 import { CreateTechTypeDto } from './dto/create-tech-type.dto';
+import { GetTechTypeQuery } from './dto/get-tech-type-query';
 import { UpdateTechTypeDto } from './dto/update-tech-type.dto';
 import { TechType, TechTypeDocument } from './schemas/tech-type.schema';
 import { TechTypeErrors } from './tech-types.errors';
@@ -30,9 +31,9 @@ export class TechTypesService {
   ) {}
 
   async findPaginated(
-    paginationParams?: PaginationParams,
+    paginationParams?: PaginationParams & GetTechTypeQuery,
   ): Promise<PaginatedResponseDto<TechType>> {
-    const { size, search, page } = paginationParams || {};
+    const { size, search, page, status } = paginationParams || {};
     const filterQuery: Record<string, any> = {};
 
     if (search) {
@@ -40,6 +41,13 @@ export class TechTypesService {
         { name: new RegExp(search, 'i') },
         { label: new RegExp(search, 'i') },
       ];
+    }
+
+    if (status) {
+      filterQuery.status = {
+        $regex: new RegExp(status.trim().replace('.', '')),
+        $options: 'i',
+      };
     }
 
     const techTypes = await this.techTypeModel
@@ -91,6 +99,7 @@ export class TechTypesService {
   async create(createTechTypeDto: CreateTechTypeDto) {
     const isNameRegistered = await this.techTypeModel.exists({
       name: createTechTypeDto.name,
+      status: 'A',
     });
     if (isNameRegistered) {
       throw new ConflictException(
