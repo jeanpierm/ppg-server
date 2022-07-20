@@ -97,9 +97,9 @@ export class AccountController {
   }
 
   /**
-   * Envía al usuario un correo electrónico para recuperar su contraseña
+   * Se establece una nueva contraseña a través del token obtenido del enlace para recuperar contraseña
    */
-  @ApiOperation({ summary: 'set new password with recovery token' })
+  @ApiOperation({ summary: 'set new password by recovery process' })
   @ApiAcceptedResponse({ type: ApiResponse })
   @Post('reset-password')
   @Public()

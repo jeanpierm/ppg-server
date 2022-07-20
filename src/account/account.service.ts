@@ -67,12 +67,15 @@ export class AccountService {
     const salt = await bcrypt.genSalt();
     const hash = await bcrypt.hash(resetToken, salt);
     await this.tokensModel.create({ user: user._id, token: hash });
+    await this.sendRecoverPasswordMail(user, resetToken);
+  }
 
+  private async sendRecoverPasswordMail(user: User, resetToken) {
     const resetLink = this.getResetLink(resetToken, user._id.toHexString());
-    const html = await this.getRecoverPasswordMail(user, resetLink);
+    const html = await this.getRecoverPasswordHtml(user, resetLink);
     const subject = 'Recupera tu contraseña';
     const mailOptions: nodemailer.SendMailOptions = {
-      to: email,
+      to: user.email,
       subject,
       html,
     };
@@ -88,7 +91,7 @@ export class AccountService {
     return resetUrl.toString();
   }
 
-  private async getRecoverPasswordMail(user: User, resetLink: string) {
+  private async getRecoverPasswordHtml(user: User, resetLink: string) {
     return this.templatesService.compile('recover-password', {
       user,
       resetLink,
@@ -109,23 +112,23 @@ export class AccountService {
     if (!isValid)
       throw new BadRequestException('Invalid or expired password reset token');
     this.logger.log('Valid token. Setting new password...');
-    const user = await this.usersService.findAndUpdatePasswordById(
-      userId,
-      newPassword,
-    );
+    await this.usersService.findAndUpdatePasswordById(userId, newPassword);
     this.logger.log(`Password set successfully for user with ID "${userId}"`);
-    // const html = await this.getPasswordResetMail(user);
-    // const subject = 'Contraseña restablecida';
-    // const mailOptions: nodemailer.SendMailOptions = {
-    //   to: user.email,
-    //   subject,
-    //   html,
-    // };
-    // this.emailService.sendMail(mailOptions);
     await resetToken.deleteOne();
   }
 
-  private async getPasswordResetMail(user: User) {
+  private async sendPasswordResetMail(user: User) {
+    const html = await this.getPasswordResetHtml(user);
+    const subject = 'Contraseña restablecida';
+    const mailOptions: nodemailer.SendMailOptions = {
+      to: user.email,
+      subject,
+      html,
+    };
+    this.emailService.sendMail(mailOptions);
+  }
+
+  private async getPasswordResetHtml(user: User) {
     return this.templatesService.compile('reset-password', {
       user,
     });
