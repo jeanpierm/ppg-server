@@ -8,14 +8,16 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { User } from 'src/users/schemas/user.schema';
+import { CurrentUser } from '../core/decorators/current-user.decorator';
 import { AuthService } from './auth.service';
-import { CurrentUser } from './current-user.decorator';
 import { Public } from './decorators/public.decorator';
+import { Roles } from './decorators/roles.decorator';
 import { LoginRequest } from './dto/login-request.dto';
 import { LoginResponse } from './dto/login-response.dto';
 import { RefreshResponse } from './dto/refresh-response.dto';
 import { RegisterRequest } from './dto/register-request.dto';
 import { RegisterResponse } from './dto/register-response.dto';
+import { Role } from './enums/role.enum';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 
 @ApiTags('auth')
@@ -56,6 +58,7 @@ export class AuthController {
   @ApiOperation({ summary: 'renovar token' })
   @HttpCode(HttpStatus.OK)
   @Post('refresh')
+  @Roles(Role.Admin, Role.User)
   async refresh(@CurrentUser() user: User): Promise<RefreshResponse> {
     return this.authService.refresh(user);
   }

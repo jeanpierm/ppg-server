@@ -6,6 +6,7 @@ import { AuthConfig } from 'src/config/auth.config';
 import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { AccountResponse } from '../account/dto/account-response.dto';
+import { EmailService } from '../core/services/email.service';
 import { UsersMapper } from '../users/mapper/users.mapper';
 import { JwtPayload } from './dto/jwt-payload.dto';
 import { LoginResponse } from './dto/login-response.dto';
@@ -16,15 +17,14 @@ import { RegisterResponse } from './dto/register-response.dto';
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
-  private readonly config: AuthConfig;
+  private readonly config: AuthConfig =
+    this.configService.get<AuthConfig>('auth');
 
   constructor(
     private readonly configService: ConfigService,
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {
-    this.config = configService.get<AuthConfig>('auth');
-  }
+  ) {}
 
   /**
    * Permite verificar las credenciales del usuario al momento de hacer login. Se invoca en la estrategia 'local'.

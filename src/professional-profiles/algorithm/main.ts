@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { TechnologyDocument } from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
-import { UserDocument } from 'src/users/schemas/user.schema';
+import { User } from 'src/users/schemas/user.schema';
 import { TechTypesService } from '../../tech-types/tech-types.service';
 import { CreateProfessionalProfile } from '../dto/create-professional-profile.dto';
 import { JobIntf } from '../interfaces/job.interface';
@@ -24,8 +24,8 @@ import { login } from './login.algorithm';
 import { normalizeJobDetail } from './normalize-job-detail';
 import { scrapJobLinks } from './scrap-job-links';
 import { searchJobs } from './search-jobs';
-import puppeteer = require('puppeteer');
 import { getKeysSortedByHigherValue } from './util';
+import puppeteer = require('puppeteer');
 
 const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
 
@@ -61,7 +61,7 @@ export class ProfessionalProfileGenerator {
    * @returns a professional software development profile highly in demand according to the jobs on LinkedIn and the established parameters.
    */
   async generate(
-    user: UserDocument,
+    user: User,
     jobTitle: string,
     location: string,
   ): Promise<CreateProfessionalProfile> {

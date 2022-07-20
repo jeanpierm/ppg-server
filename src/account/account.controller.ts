@@ -1,11 +1,21 @@
-import { Body, Controller, Get, Logger, Patch } from '@nestjs/common';
 import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Logger,
+  Patch,
+  Post,
+} from '@nestjs/common';
+import {
+  ApiAcceptedResponse,
   ApiBearerAuth,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { CurrentUser } from 'src/auth/current-user.decorator';
+import { CurrentUser } from 'src/core/decorators/current-user.decorator';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
@@ -15,6 +25,9 @@ import { AccountService } from './account.service';
 import { AccountResponse } from './dto/account-response.dto';
 import { UpdateAccountDto } from './dto/update-account.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { Public } from '../auth/decorators/public.decorator';
+import { RecoverPassDto } from './dto/recover-pass-dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @ApiTags('account')
 @ApiBearerAuth()
@@ -68,5 +81,30 @@ export class AccountController {
       newPassword,
     );
     return new ApiResponse('Password updated successfully');
+  }
+
+  /**
+   * Envía al usuario un correo electrónico para recuperar su contraseña
+   */
+  @ApiOperation({ summary: 'send recover password email' })
+  @ApiAcceptedResponse({ type: ApiResponse })
+  @Post('recover-password')
+  @HttpCode(HttpStatus.ACCEPTED)
+  @Public()
+  async recoverPassword(@Body() { email }: RecoverPassDto) {
+    await this.accountService.recoverPassword(email);
+    return new ApiResponse('Password reset link sent to email successfully');
+  }
+
+  /**
+   * Envía al usuario un correo electrónico para recuperar su contraseña
+   */
+  @ApiOperation({ summary: 'set new password with recovery token' })
+  @ApiAcceptedResponse({ type: ApiResponse })
+  @Post('reset-password')
+  @Public()
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    await this.accountService.resetPassword(resetPasswordDto);
+    return new ApiResponse('Password set successfully');
   }
 }

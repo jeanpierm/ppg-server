@@ -28,6 +28,7 @@ import {
 import { Job, JobSchema } from './schemas/job.schema';
 import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
 import { TechTypesModule } from '../tech-types/tech-types.module';
+import { TemplatesService } from '../core/services/templates.service';
 
 @Module({
   imports: [
@@ -57,7 +58,11 @@ import { TechTypesModule } from '../tech-types/tech-types.module';
     TechTypesModule,
   ],
   controllers: [ProfessionalProfilesController],
-  providers: [ProfessionalProfilesService, ProfessionalProfileGenerator],
+  providers: [
+    ProfessionalProfilesService,
+    ProfessionalProfileGenerator,
+    TemplatesService,
+  ],
   exports: [
     ProfessionalProfilesService,
     MongooseModule.forFeature([

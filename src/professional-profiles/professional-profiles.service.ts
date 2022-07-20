@@ -6,13 +6,14 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import * as fs from 'fs/promises';
-import * as hbs from 'handlebars';
+
 import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 import { DownloadPreferencesService } from 'src/download-preferences/download-preferences.service';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
+import { TemplatesService } from '../core/services/templates.service';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { removeDuplicateObjects, stringToDate } from '../shared/util';
@@ -37,6 +38,7 @@ export class ProfessionalProfilesService {
     private readonly generateProfessionalProfile: ProfessionalProfileGenerator,
     private readonly technologiesService: TechnologiesService,
     private readonly downloadPreferencesService: DownloadPreferencesService,
+    private readonly templatesService: TemplatesService,
   ) {}
 
   /**
@@ -241,7 +243,7 @@ export class ProfessionalProfilesService {
       }
     });
 
-    const html = await compile('resume', {
+    const html = await this.templatesService.compile('resume', {
       preferences,
       user,
       jobTitle,
@@ -279,13 +281,3 @@ export class ProfessionalProfilesService {
       .map(({ name }) => name);
   }
 }
-
-async function compile(templateName: string, data: Record<string, any>) {
-  const filePath = path.join(process.cwd(), 'templates', `${templateName}.hbs`);
-  const html = await fs.readFile(filePath, 'utf8');
-  return hbs.compile(html)(data);
-}
-
-hbs.registerHelper('join', function (array: Array<string>) {
-  return array.join(', ');
-});

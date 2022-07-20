@@ -72,6 +72,7 @@ export class UsersService {
   async findByEmail(email: string): Promise<User> {
     const user = await this.userModel
       .findOne({ email })
+      .orFail(new NotFoundException(`User with email "${email}" not found`))
       .populate('role')
       .lean();
 
@@ -131,7 +132,7 @@ export class UsersService {
   }
 
   async activeById(userId: string): Promise<void> {
-    await this.userModel.findOneAndUpdate(
+    await this.userModel.updateOne(
       { userId },
       {
         status: EntityStatus.Active,
@@ -142,9 +143,15 @@ export class UsersService {
   async updatePasswordByEmail(email: string, password: string): Promise<void> {
     const passwordSalt = await genSalt();
     const passwordHash = await hash(password, passwordSalt);
-    await this.userModel.findOneAndUpdate(
-      { email },
-      { password: passwordHash },
-    );
+    await this.userModel.updateOne({ email }, { password: passwordHash });
+  }
+
+  async findAndUpdatePasswordById(id: string, password: string) {
+    const passwordSalt = await genSalt();
+    const passwordHash = await hash(password, passwordSalt);
+    return this.userModel
+      .findByIdAndUpdate(id, { password: passwordHash }, { new: true })
+      .orFail(new NotFoundException(`User with ID "${id}" not found`))
+      .lean();
   }
 }

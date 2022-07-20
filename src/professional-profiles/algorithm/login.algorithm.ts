@@ -2,6 +2,7 @@ import puppeteer = require('puppeteer');
 import { waitLoad } from './util';
 
 const loginUrl = 'https://www.linkedin.com/login';
+// TODO: PONERLO COMO VARIABLES DE ENTORNO
 const username = 'tesis.tecnologias.ug@gmail.com';
 const password = 'Uhm)=UyK4+BD"*=';
 

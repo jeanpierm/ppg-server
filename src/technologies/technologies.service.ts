@@ -10,7 +10,6 @@ import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
-import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateTechTypeDto } from '../tech-types/dto/create-tech-type.dto';
 import { TechTypesService } from '../tech-types/tech-types.service';
 import { CoursesScraper } from './coursesScraper/main';
