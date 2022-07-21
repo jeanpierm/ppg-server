@@ -1,5 +1,5 @@
 import puppeteer = require('puppeteer');
-import { waitLoad } from 'src/professional-profiles/algorithm/util';
+import { waitLoad } from 'src/professional-profiles/utils';
 import { CourseInterface } from '../interfaces/course.interface';
 
 export async function extractDomestikaLinks(

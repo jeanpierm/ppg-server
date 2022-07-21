@@ -32,7 +32,7 @@ import { CountQuery } from './dto/count-query.dto';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
 import { ProfessionalProfilesMapper } from './mapper/professional-profiles.mapper';
-import { ProfessionalProfilesService } from './professional-profiles.service';
+import { ProfessionalProfilesService } from './services/professional-profiles.service';
 
 @ApiTags('professional-profiles')
 @Controller('professional-profiles')

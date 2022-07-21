@@ -7,9 +7,9 @@ import {
 import { MongooseModule } from '@nestjs/mongoose';
 import { TechnologiesModule } from 'src/technologies/technologies.module';
 import { ValidateProfileIsActiveMiddleware } from './middlewares/validate-profile-is-active.middleware';
-import { ProfessionalProfileGenerator } from './algorithm/main';
+import { ProfessionalProfileGeneratorService } from './services/professional-profile-generator.service';
 import { ProfessionalProfilesController } from './professional-profiles.controller';
-import { ProfessionalProfilesService } from './professional-profiles.service';
+import { ProfessionalProfilesService } from './services/professional-profiles.service';
 import {
   EnglishMetadata,
   EnglishMetadataSchema,
@@ -29,6 +29,7 @@ import { Job, JobSchema } from './schemas/job.schema';
 import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
 import { TechTypesModule } from '../tech-types/tech-types.module';
 import { TemplatesService } from '../core/services/templates.service';
+import { LinkedInScrapperService } from '../core/services/linkedin-scrapper.service';
 
 @Module({
   imports: [
@@ -60,8 +61,9 @@ import { TemplatesService } from '../core/services/templates.service';
   controllers: [ProfessionalProfilesController],
   providers: [
     ProfessionalProfilesService,
-    ProfessionalProfileGenerator,
+    ProfessionalProfileGeneratorService,
     TemplatesService,
+    LinkedInScrapperService,
   ],
   exports: [
     ProfessionalProfilesService,

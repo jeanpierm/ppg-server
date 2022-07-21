@@ -1,9 +1,15 @@
 import { Injectable, Logger } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { TechnologyDocument } from 'src/technologies/schemas/technology.schema';
+import {
+  Technology,
+  TechnologyDocument,
+} from 'src/technologies/schemas/technology.schema';
 import { TechnologiesService } from 'src/technologies/technologies.service';
 import { User } from 'src/users/schemas/user.schema';
+import { ProfessionalProfileConfig } from '../../config/professional-profile.config';
+import { LinkedInScrapperService } from '../../core/services/linkedin-scrapper.service';
 import { TechTypesService } from '../../tech-types/tech-types.service';
 import { CreateProfessionalProfile } from '../dto/create-professional-profile.dto';
 import { JobIntf } from '../interfaces/job.interface';
@@ -17,23 +23,18 @@ import {
   TechnologyMetadata,
   TechnologyMetadataDocument,
 } from '../schemas/technology-metadata.schema';
-import { countRequireEnglish } from './count-requiere-english';
-import { countTechnology as countTechnologies } from './count-technology';
-import { extractJobMetadata } from './extract-job';
-import { login } from './login.algorithm';
-import { normalizeJobDetail } from './normalize-job-detail';
-import { scrapJobLinks } from './scrap-job-links';
-import { searchJobs } from './search-jobs';
-import { getKeysSortedByHigherValue } from './util';
-import puppeteer = require('puppeteer');
+import { getKeysSortedByHigherValue } from '../utils';
 
 const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
 
-const NUMBER_OF_TECHNOLOGIES_BY_TYPE = 4;
-
 @Injectable()
-export class ProfessionalProfileGenerator {
-  private readonly logger = new Logger(ProfessionalProfileGenerator.name);
+export class ProfessionalProfileGeneratorService {
+  private readonly logger = new Logger(
+    ProfessionalProfileGeneratorService.name,
+  );
+  private readonly config = this.configService.get<ProfessionalProfileConfig>(
+    'professional-profile',
+  );
 
   constructor(
     @InjectModel(TechnologyMetadata.name)
@@ -44,6 +45,8 @@ export class ProfessionalProfileGenerator {
     private readonly jobModel: Model<JobDocument>,
     private readonly technologiesService: TechnologiesService,
     private readonly techTypesService: TechTypesService,
+    private readonly configService: ConfigService,
+    private readonly linkedInScrapper: LinkedInScrapperService,
   ) {}
 
   /**
@@ -67,11 +70,11 @@ export class ProfessionalProfileGenerator {
   ): Promise<CreateProfessionalProfile> {
     console.time(PPG_ALGORITHM_LABEL);
 
-    const jobs = await this.scrapeWebJobOffers(jobTitle, location);
+    const jobs = await this.linkedInScrapper.getJobs(jobTitle, location);
     const jobsAnalyzed = await this.saveJobs(jobs);
     const jobsCount = jobs.length;
     const jobDetails = jobs.map(({ detail, title }) => {
-      const detailNormalized = normalizeJobDetail(detail);
+      const detailNormalized = this.normalizeJobDetail(detail);
       return `${title} ${detailNormalized}`;
     });
     console.log('Job details normalized: ', jobDetails);
@@ -82,7 +85,7 @@ export class ProfessionalProfileGenerator {
     for (const type of technologyTypes) {
       const technologiesByType: TechnologyDocument[] =
         await this.technologiesService.findByType(type.name);
-      const countResultByType: Record<string, number> = countTechnologies(
+      const countResultByType: Record<string, number> = this.countTechnologies(
         technologiesByType,
         jobDetails,
       );
@@ -104,8 +107,8 @@ export class ProfessionalProfileGenerator {
       });
     }
 
-    const requireEnglishCount = countRequireEnglish(jobDetails);
-    const requireEnglish = calculateRequireEnglish(
+    const requireEnglishCount = this.countRequireEnglish(jobDetails);
+    const requireEnglish = this.calculateRequireEnglish(
       requireEnglishCount,
       jobsCount,
     );
@@ -136,7 +139,7 @@ export class ProfessionalProfileGenerator {
   ): Promise<TechnologyDocument[]> {
     const techNamesMostDemandedByType: string[] = getKeysSortedByHigherValue(
       countResult,
-    ).slice(0, NUMBER_OF_TECHNOLOGIES_BY_TYPE);
+    ).slice(0, this.config.numberOfTechnologiesByType);
     const technologiesMostDemandedByType: TechnologyDocument[] =
       await Promise.all(
         techNamesMostDemandedByType.map((name) =>
@@ -146,30 +149,22 @@ export class ProfessionalProfileGenerator {
     return technologiesMostDemandedByType;
   }
 
-  private async scrapeWebJobOffers(
-    jobTitle: string,
-    location: string,
-  ): Promise<JobIntf[]> {
-    try {
-      const browser = await puppeteer.launch({ headless: false });
-      const page = await browser.newPage();
-      await setLanguageInEnglish(page);
-      await page.setViewport({ width: 1920, height: 2400 });
-      await login(page);
-      await searchJobs(page, jobTitle, location);
-      const jobLinks = await scrapJobLinks(page);
-      const jobs = (
-        await Promise.all(
-          jobLinks.map((link, i) => extractJobMetadata(browser, link, i)),
-        )
-      ).filter((job) => job !== undefined);
-      await browser.close();
-      return jobs;
-    } catch (err) {
-      console.error(
-        `Ha ocurrido un error en el algoritmo de web scrapping a ofertas de trabajo. Error: ${err}`,
-      );
-    }
+  /**
+   * @param englishCount
+   * @param jobsCount
+   * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
+   */
+  private calculateRequireEnglish(
+    englishCount: number,
+    jobsCount: number,
+  ): boolean {
+    const require: boolean =
+      englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
+    console.log(
+      `[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`,
+      require,
+    );
+    return require;
   }
 
   private saveJobs(jobs: JobIntf[]) {
@@ -183,28 +178,80 @@ export class ProfessionalProfileGenerator {
   private saveTechnologiesMetadata(technologyMetadata: TechnologyMetadata) {
     this.technologyMetadataModel.create(technologyMetadata);
   }
-}
 
-async function setLanguageInEnglish(page: puppeteer.Page) {
-  await page.setExtraHTTPHeaders({
-    'Accept-Language': 'en',
-  });
-}
+  /**
+   * Añade 1 al contador si se encuentra a una tecnología de desarrollo de software en la descripción de la oferta trabajo.
+   *
+   * Solo añade 1 por oferta de trabajo (sin importar las veces que se repita en la misma descripción).
+   */
+  private countTechnologies(
+    technologies: Technology[],
+    jobDetails: string[],
+  ): Record<string, number> {
+    const countDictionary: Record<string, number> = {};
+    for (const [jobIndex, jobDetail] of jobDetails.entries()) {
+      for (const { type, name, identifiers } of technologies) {
+        if (countDictionary[name] === undefined) {
+          countDictionary[name] = 0;
+        }
+        for (const identifier of identifiers) {
+          const possibleCases = [
+            ` ${identifier} `,
+            ` ${identifier}.`,
+            `.${identifier} `,
+            ` ${identifier}/`,
+            `/${identifier} `,
+          ];
+          const jobIncludesTechnology = possibleCases.some((possibleCase) =>
+            jobDetail.includes(possibleCase),
+          );
+          if (jobIncludesTechnology) {
+            ++countDictionary[name];
+            console.log(
+              `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${
+                countDictionary[name]
+              })`,
+            );
+            break;
+          }
+        }
+      }
+      console.debug(`[Job ${jobIndex + 1}] finished scraping`);
+    }
+    return countDictionary;
+  }
 
-/**
- * @param englishCount
- * @param jobsCount
- * @returns un booleano que indica si se quiere o no inglés, según la mayoría de las ofertas laborales.
- */
-function calculateRequireEnglish(
-  englishCount: number,
-  jobsCount: number,
-): boolean {
-  const require: boolean =
-    englishCount > jobsCount * MIN_PERCENTAGE_TO_REQUIERE_ENGLISH;
-  console.log(
-    `[RequiereEnglish] ${englishCount}/${jobsCount} jobs require english`,
-    require,
-  );
-  return require;
+  private countRequireEnglish(jobDetails: string[]): number {
+    let requiereCounter = 0;
+    const requireEnglish = [
+      'advanced english',
+      'advanced fluent english',
+      'english language proficiency',
+      'fluent english',
+      'inglés avanzado',
+      'require english',
+      'requirements english',
+    ];
+    for (const [jobIndex, jobDetail] of jobDetails.entries()) {
+      for (const englishName of requireEnglish) {
+        if (jobDetail.includes(englishName)) {
+          ++requiereCounter;
+          console.log(`[Job ${jobIndex + 1}] require english`);
+          break;
+        }
+      }
+    }
+    return requiereCounter;
+  }
+
+  /**
+   * @param jobDetail
+   * @returns elimina caracteres y espacios innecesarios o que puedan perjudicar la integridad del web scrapping.
+   */
+  private normalizeJobDetail(jobDetail: string): string {
+    return jobDetail
+      .toLowerCase()
+      .replace(/[(),;:]/g, ' ')
+      .replace(/\s+/g, ' ');
+  }
 }
