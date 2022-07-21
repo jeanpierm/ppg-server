@@ -54,7 +54,7 @@ export async function extractCourseraDetails(
     return courseDetails;
   } catch (err) {
     console.error(
-      `Ha ocurrido un error en la extraccion de los detalles en el enlace: ${course.link} error: ${err}`,
+      `Ha ocurrido un error en la extracción de los detalles en el enlace: ${course.link} error: ${err}`,
     );
   }
 }

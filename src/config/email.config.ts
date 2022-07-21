@@ -17,9 +17,8 @@ interface SMTP {
   port: number;
 }
 
-export default registerAs(
-  'email',
-  (): EmailConfig => ({
+export default registerAs('email', (): EmailConfig => {
+  return {
     account: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASSWORD,
@@ -30,5 +29,5 @@ export default registerAs(
       secure: process.env.EMAIL_SECURE === 'true',
       port: +process.env.EMAIL_PORT || 587,
     },
-  }),
-);
+  };
+});

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
+import * as Joi from 'joi';
 import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
@@ -18,7 +19,16 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ load: Configs, isGlobal: true }),
+    ConfigModule.forRoot({
+      load: Configs,
+      isGlobal: true,
+      validationSchema: Joi.object({
+        EMAIL_USER: Joi.required(),
+        EMAIL_PASSWORD: Joi.required(),
+        LINKEDIN_USER: Joi.required(),
+        LINKEDIN_PASSWORD: Joi.required(),
+      }),
+    }),
     MongooseModule.forRootAsync({
       imports: [DatabaseModule],
       inject: [DatabaseService],
