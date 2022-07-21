@@ -27,6 +27,7 @@ import { UsersModule } from './users/users.module';
         EMAIL_PASSWORD: Joi.required(),
         LINKEDIN_USER: Joi.required(),
         LINKEDIN_PASSWORD: Joi.required(),
+        JWT_SECRET_KEY: Joi.required(),
       }),
     }),
     MongooseModule.forRootAsync({
