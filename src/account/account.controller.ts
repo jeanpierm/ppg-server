@@ -28,6 +28,7 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { RecoverPassDto } from './dto/recover-pass-dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ValidateResetPasswordToken } from './dto/validate-reset-pass-token.dto';
 
 @ApiTags('account')
 @ApiBearerAuth()
@@ -106,5 +107,18 @@ export class AccountController {
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     await this.accountService.resetPassword(resetPasswordDto);
     return new ApiResponse('Password set successfully');
+  }
+
+  /**
+   * Validate que el token para restablecer sea correcto según el ID del usuario asociado
+   */
+  @ApiOperation({ summary: 'validate reset password token' })
+  @Post('reset-password/validate')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @Public()
+  async validateResetPasswordToken(
+    @Body() { token, userId }: ValidateResetPasswordToken,
+  ) {
+    await this.accountService.validateResetPassToken(token, userId);
   }
 }

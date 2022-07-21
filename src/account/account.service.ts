@@ -103,18 +103,11 @@ export class AccountService {
     token,
     newPassword,
   }: ResetPasswordDto): Promise<void> {
-    const resetToken = await this.tokensModel
-      .findOne({ userId })
-      .orFail(
-        new BadRequestException('Invalid or expired password reset token'),
-      );
-    const isValid = await bcrypt.compare(token, resetToken.token);
-    if (!isValid)
-      throw new BadRequestException('Invalid or expired password reset token');
+    const tokenEntity = await this.validateResetPassToken(token, userId);
     this.logger.log('Valid token. Setting new password...');
     await this.usersService.findAndUpdatePasswordById(userId, newPassword);
     this.logger.log(`Password set successfully for user with ID "${userId}"`);
-    await resetToken.deleteOne();
+    await tokenEntity.deleteOne();
   }
 
   private async sendPasswordResetMail(user: User) {
@@ -132,5 +125,18 @@ export class AccountService {
     return this.templatesService.compile('reset-password', {
       user,
     });
+  }
+
+  async validateResetPassToken(token: string, userId: string) {
+    const tokenEntity = await this.tokensModel
+      .findOne({ userId })
+      .orFail(
+        new BadRequestException('Invalid or expired password reset token'),
+      );
+    const isValid = await bcrypt.compare(token, tokenEntity.token);
+    if (!isValid)
+      throw new BadRequestException('Invalid or expired password reset token');
+
+    return tokenEntity;
   }
 }
