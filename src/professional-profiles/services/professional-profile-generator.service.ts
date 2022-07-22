@@ -9,7 +9,7 @@ import {
 import { TechnologiesService } from 'src/technologies/technologies.service';
 import { User } from 'src/users/schemas/user.schema';
 import { ProfessionalProfileConfig } from '../../config/professional-profile.config';
-import { LinkedInScrapperService } from '../../core/services/linkedin-scrapper.service';
+import { LinkedInScraperService } from '../../core/services/linkedin-scraper.service';
 import { TechTypesService } from '../../tech-types/tech-types.service';
 import { CreateProfessionalProfile } from '../dto/create-professional-profile.dto';
 import { JobIntf } from '../interfaces/job.interface';
@@ -46,7 +46,7 @@ export class ProfessionalProfileGeneratorService {
     private readonly technologiesService: TechnologiesService,
     private readonly techTypesService: TechTypesService,
     private readonly configService: ConfigService,
-    private readonly linkedInScrapper: LinkedInScrapperService,
+    private readonly linkedInScrapper: LinkedInScraperService,
   ) {}
 
   /**

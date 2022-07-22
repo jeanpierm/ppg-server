@@ -11,7 +11,7 @@ import { JobIntf } from '../../professional-profiles/interfaces/job.interface';
 import { WorkPlace } from '../../professional-profiles/types/workplace.type';
 
 @Injectable()
-export class LinkedInScrapperService {
+export class LinkedInScraperService {
   private readonly config = this.configService.get<LinkedInConfig>('linkedin');
   private readonly urls = this.config.urls;
   private readonly account = this.config.account;

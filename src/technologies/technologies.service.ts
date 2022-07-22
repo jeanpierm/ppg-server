@@ -12,7 +12,7 @@ import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../shared/dto/pagination-params.dto';
 import { CreateTechTypeDto } from '../tech-types/dto/create-tech-type.dto';
 import { TechTypesService } from '../tech-types/tech-types.service';
-import { CoursesScraper } from './coursesScraper/main';
+import { CoursesScraperService } from '../core/services/courses-scraper.service';
 import { CoursesResponse } from './dto/courses-response.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
@@ -35,7 +35,7 @@ export class TechnologiesService {
     @InjectModel(Technology.name)
     private readonly technologyModel: Model<TechnologyDocument>,
     private readonly typesService: TechTypesService,
-    private readonly coursesScraper: CoursesScraper,
+    private readonly coursesScraper: CoursesScraperService,
   ) {
     this.technologyModel
       .find()
@@ -164,7 +164,7 @@ export class TechnologiesService {
   }
 
   async findCourses(course: string): Promise<CoursesResponse[]> {
-    return await this.coursesScraper.executeScraper(course);
+    return await this.coursesScraper.getCourses(course);
   }
 
   async create(

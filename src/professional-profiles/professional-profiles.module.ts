@@ -29,7 +29,7 @@ import { Job, JobSchema } from './schemas/job.schema';
 import { DownloadPreferencesModule } from 'src/download-preferences/download-preferences.module';
 import { TechTypesModule } from '../tech-types/tech-types.module';
 import { TemplatesService } from '../core/services/templates.service';
-import { LinkedInScrapperService } from '../core/services/linkedin-scrapper.service';
+import { LinkedInScraperService } from '../core/services/linkedin-scraper.service';
 
 @Module({
   imports: [
@@ -63,7 +63,7 @@ import { LinkedInScrapperService } from '../core/services/linkedin-scrapper.serv
     ProfessionalProfilesService,
     ProfessionalProfileGeneratorService,
     TemplatesService,
-    LinkedInScrapperService,
+    LinkedInScraperService,
   ],
   exports: [
     ProfessionalProfilesService,
