@@ -31,7 +31,6 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { ValidateResetPasswordToken } from './dto/validate-reset-pass-token.dto';
 
 @ApiTags('account')
-@ApiBearerAuth()
 @Controller('account')
 export class AccountController {
   private readonly logger = new Logger(AccountController.name);
@@ -41,10 +40,11 @@ export class AccountController {
   /**
    * Obtiene los datos de la cuenta de usuario perteneciente al token (JWT).
    */
-  @Get()
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'obtener datos de la cuenta' })
   @ApiOkCustomResponse(AccountResponse)
   @Roles(Role.User, Role.Admin)
+  @Get()
   async get(@CurrentUser() user: User): Promise<ApiResponse<AccountResponse>> {
     const account = await this.accountService.get(user);
     return new ApiResponse('Account data obtained successfully', account);
@@ -53,10 +53,11 @@ export class AccountController {
   /**
    * Actualiza los datos de la cuenta del usuario.
    */
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'actualizar datos de la cuenta' })
   @ApiOkResponse({ type: ApiResponse })
-  @Patch()
   @Roles(Role.User, Role.Admin)
+  @Patch()
   async update(
     @CurrentUser() user: User,
     @Body() updateAccount: UpdateAccountDto,
@@ -68,6 +69,7 @@ export class AccountController {
   /**
    * Actualiza la contraseña con la contraseña actual.
    */
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'actualizar contraseña' })
   @ApiOkResponse({ type: ApiResponse })
   @Patch('password')
@@ -89,7 +91,7 @@ export class AccountController {
    */
   @ApiOperation({ summary: 'send recover password email' })
   @ApiAcceptedResponse({ type: ApiResponse })
-  @Post('recover-password')
+  @Post('password/recover')
   @HttpCode(HttpStatus.ACCEPTED)
   @Public()
   async recoverPassword(@Body() { email }: RecoverPassDto) {
@@ -102,7 +104,7 @@ export class AccountController {
    */
   @ApiOperation({ summary: 'set new password by recovery process' })
   @ApiAcceptedResponse({ type: ApiResponse })
-  @Post('reset-password')
+  @Post('password/reset')
   @Public()
   async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
     await this.accountService.resetPassword(resetPasswordDto);
@@ -113,7 +115,7 @@ export class AccountController {
    * Validate que el token para restablecer sea correcto según el ID del usuario asociado
    */
   @ApiOperation({ summary: 'validate reset password token' })
-  @Post('reset-password/validate')
+  @Post('password/reset/validate')
   @HttpCode(HttpStatus.NO_CONTENT)
   @Public()
   async validateResetPasswordToken(

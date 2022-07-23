@@ -63,6 +63,7 @@ COPY --from=builder --chown=node:node /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=node:node /usr/src/app/dist ./dist
 COPY --from=builder --chown=node:node /usr/src/app/templates ./templates
 COPY --from=builder --chown=node:node /usr/src/app/collections ./collections
+COPY --from=builder --chown=node:node /usr/src/app/client ./client
 COPY --from=builder --chown=node:node /usr/src/app/.env ./.env
 
 # avoid permission erors

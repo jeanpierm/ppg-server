@@ -2,7 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ServeStaticModule } from '@nestjs/serve-static';
 import * as Joi from 'joi';
+import { join } from 'path';
 import { AccountModule } from './account/account.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
@@ -29,6 +31,9 @@ import { UsersModule } from './users/users.module';
         LINKEDIN_PASSWORD: Joi.required(),
         JWT_SECRET_KEY: Joi.required(),
       }),
+    }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'client'),
     }),
     MongooseModule.forRootAsync({
       imports: [DatabaseModule],
