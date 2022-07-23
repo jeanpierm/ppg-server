@@ -1,8 +1,13 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import puppeteer = require('puppeteer');
 import { CourseraConfig } from '../../config/coursera.config';
 import { DomestikaConfig } from '../../config/domestika.config';
+import { PuppeteerConfig } from '../../config/puppeteer.config';
 import { CourseInterface } from '../../technologies/interfaces/course.interface';
 
 const waitLoad: puppeteer.WaitForOptions = { waitUntil: 'networkidle2' };
@@ -10,6 +15,8 @@ const waitLoad: puppeteer.WaitForOptions = { waitUntil: 'networkidle2' };
 @Injectable()
 export class CoursesScraperService {
   private readonly logger = new Logger(CoursesScraperService.name);
+  private readonly puppeteerConfig =
+    this.configService.get<PuppeteerConfig>('puppeteer');
   private readonly courConfig =
     this.configService.get<CourseraConfig>('coursera');
   private readonly courSelectors = this.courConfig.selectors;
@@ -26,9 +33,8 @@ export class CoursesScraperService {
   async getCourses(searchCriteria: string): Promise<CourseInterface[]> {
     try {
       this.logger.log('Iniciando obtención de cursos por web scraping...');
+      const browser = await puppeteer.launch(this.puppeteerConfig.options);
       let result: CourseInterface[] = [];
-      const browser = await puppeteer.launch({ headless: false });
-
       const domestikaCourses = await this.extractDomestikaCourses(
         browser,
         searchCriteria,
@@ -36,18 +42,17 @@ export class CoursesScraperService {
       this.logger.log(
         `Cursos de DOMESTIKA obtenidos (${domestikaCourses.length})`,
       );
-      result = result.concat(domestikaCourses);
       const courseraCourses = await this.extractCourseraCourses(
         browser,
         searchCriteria,
       );
-      result = result.concat(courseraCourses);
       this.logger.log(
         `Cursos de COURSERA obtenidos (${courseraCourses.length})`,
       );
 
       await browser.close();
 
+      result = result.concat(domestikaCourses, courseraCourses);
       this.logger.log(
         `Total de cursos obtenidos para "${searchCriteria}": ${result.length}`,
       );
@@ -57,6 +62,10 @@ export class CoursesScraperService {
       console.error(
         `Ha ocurrido un error en el algoritmo de web scrapping para cursos.`,
         err,
+      );
+      throw new InternalServerErrorException(
+        `Ha ocurrido un error en el algoritmo de web scrapping para cursos.`,
+        err.message,
       );
     }
   }
@@ -100,7 +109,7 @@ export class CoursesScraperService {
           ) as HTMLImageElement;
           const title: HTMLHeadingElement = item.querySelector(
             titleSelector as string,
-          );
+          ) as HTMLHeadingElement;
 
           const details: CourseInterface = {
             link: item.href,
@@ -178,7 +187,6 @@ export class CoursesScraperService {
 
     const imgSelector = this.courSelectors.course.image;
     const titleSelector = this.courSelectors.course.title;
-    console.log(imgSelector, titleSelector);
     const results = await page.$$eval(
       this.courSelectors.results,
       (options, imgSelector, titleSelector) =>

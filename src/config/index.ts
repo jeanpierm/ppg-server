@@ -8,6 +8,7 @@ import emailConfig from './email.config';
 import linkedinConfig from './linkedin.config';
 import openApiConfig from './open-api.config';
 import professionalProfileConfig from './professional-profile.config';
+import puppeteerConfig from './puppeteer.config';
 
 export default [
   appConfig,
@@ -20,4 +21,5 @@ export default [
   professionalProfileConfig,
   courseraConfig,
   domestikaConfig,
+  puppeteerConfig,
 ];

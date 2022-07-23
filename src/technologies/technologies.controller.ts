@@ -58,6 +58,11 @@ export class TechnologiesController {
     return payload;
   }
 
+  /**
+   * A través de web scraping se obtienen cursos de acuerdo a un criterio de búsqueda. Ejemplo: "Java"
+   *
+   */
+  @ApiOperation({ summary: 'buscar cursos' })
   @Get('search')
   @Roles(Role.Admin, Role.User)
   async courseScraping(@Query('course') course: string) {

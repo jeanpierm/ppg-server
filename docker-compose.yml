@@ -1,11 +1,10 @@
 version: '3.9'
 services:
   ppg-server:
-    container_name: ppg_server
+    container_name: ppg-server
     image: jeanp0/ppg-server:1.0.0
     build:
       context: .
-      target: production
       dockerfile: ./Dockerfile
     ports:
       - 3000:3000

@@ -73,11 +73,12 @@ export class ProfessionalProfileGeneratorService {
     const jobs = await this.linkedInScrapper.getJobs(jobTitle, location);
     const jobsAnalyzed = await this.saveJobs(jobs);
     const jobsCount = jobs.length;
-    const jobDetails = jobs.map(({ detail, title }) => {
+    const jobDetails = jobs.map(({ detail, title }, i) => {
       const detailNormalized = this.normalizeJobDetail(detail);
-      return `${title} ${detailNormalized}`;
+      const finalDetail = `${title} ${detailNormalized}`;
+      console.log(`[Job ${i}] details: ${finalDetail}`);
+      return finalDetail;
     });
-    console.log('Job details normalized: ', jobDetails);
 
     const technologyTypes = await this.techTypesService.findActives();
     const technologiesMostDemanded: TechnologyDocument[] = [];
@@ -90,8 +91,8 @@ export class ProfessionalProfileGeneratorService {
         jobDetails,
       );
       console.log(
-        `Mapa resultante de tecnologías de tipo ${type}:`,
-        technologiesByType,
+        `Mapa resultante de tecnologías de tipo ${type.name}:`,
+        countResultByType,
       );
       const technologiesMostDemandedByType =
         await this.getTechnologiesMostDemanded(countResultByType);
@@ -208,7 +209,7 @@ export class ProfessionalProfileGeneratorService {
           if (jobIncludesTechnology) {
             ++countDictionary[name];
             console.log(
-              `[Job ${jobIndex + 1}] ${type} "${name}" found! (count: ${
+              `[Job ${jobIndex + 1}] ${type.name} "${name}" found! (count: ${
                 countDictionary[name]
               })`,
             );

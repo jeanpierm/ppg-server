@@ -164,7 +164,7 @@ export class TechnologiesService {
   }
 
   async findCourses(course: string): Promise<CoursesResponse[]> {
-    return await this.coursesScraper.getCourses(course);
+    return this.coursesScraper.getCourses(course);
   }
 
   async create(

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LinkedInConfig } from '../../config/linkedin.config';
 import * as puppeteer from 'puppeteer';
@@ -9,10 +9,13 @@ import {
 } from '../../professional-profiles/utils';
 import { JobIntf } from '../../professional-profiles/interfaces/job.interface';
 import { WorkPlace } from '../../professional-profiles/types/workplace.type';
+import { PuppeteerConfig } from '../../config/puppeteer.config';
 
 @Injectable()
 export class LinkedInScraperService {
   private readonly config = this.configService.get<LinkedInConfig>('linkedin');
+  private readonly puppeteerConfig =
+    this.configService.get<PuppeteerConfig>('puppeteer');
   private readonly urls = this.config.urls;
   private readonly account = this.config.account;
   private readonly selectors = this.config.selectors;
@@ -21,7 +24,7 @@ export class LinkedInScraperService {
 
   async getJobs(jobTitle: string, location: string): Promise<JobIntf[]> {
     try {
-      const browser = await puppeteer.launch({ headless: false });
+      const browser = await puppeteer.launch(this.puppeteerConfig.options);
       const page = await browser.newPage();
       await this.setLanguageInEnglish(page);
       await page.setViewport({ width: 1920, height: 2400 });
@@ -36,8 +39,10 @@ export class LinkedInScraperService {
       await browser.close();
       return jobs;
     } catch (err) {
-      console.error(
-        `Ha ocurrido un error en el algoritmo de web scrapping a ofertas de trabajo. Error: ${err}`,
+      console.error(`An error has ocurred while scraping jobs offers.`, err);
+      throw new InternalServerErrorException(
+        `An error has ocurred while scraping jobs offers.`,
+        err.message,
       );
     }
   }
