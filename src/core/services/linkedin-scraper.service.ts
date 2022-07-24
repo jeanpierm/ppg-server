@@ -10,7 +10,8 @@ import {
 import { JobIntf } from '../../professional-profiles/interfaces/job.interface';
 import { WorkPlace } from '../../professional-profiles/types/workplace.type';
 import { PuppeteerConfig } from '../../config/puppeteer.config';
-
+import * as fs from 'fs-extra';
+import * as path from 'path';
 @Injectable()
 export class LinkedInScraperService {
   private readonly config = this.configService.get<LinkedInConfig>('linkedin');
@@ -19,6 +20,7 @@ export class LinkedInScraperService {
   private readonly urls = this.config.urls;
   private readonly account = this.config.account;
   private readonly selectors = this.config.selectors;
+  private readonly screenshotsPath = path.join(process.cwd(), 'screenshots');
 
   constructor(private readonly configService: ConfigService) {}
 
@@ -27,7 +29,7 @@ export class LinkedInScraperService {
       const browser = await puppeteer.launch(this.puppeteerConfig.options);
       const page = await browser.newPage();
       await this.setLanguageInEnglish(page);
-      await page.setViewport({ width: 1920, height: 2400 });
+      await page.setViewport({ width: 1920, height: 1080 });
       await this.login(page);
       await this.searchJobs(page, jobTitle, location);
       const jobLinks = await this.scrapJobLinks(page);
@@ -61,12 +63,24 @@ export class LinkedInScraperService {
    */
   private async login(page: puppeteer.Page) {
     await page.goto(this.urls.login, waitLoad);
+
+    await fs.ensureDir(this.screenshotsPath);
+    await page.screenshot({
+      path: path.join(this.screenshotsPath, 'linkedin-0.png'),
+    });
+
     await page.type(this.selectors.inputUsername, this.account.user);
     await page.type(this.selectors.inputPassword, this.account.password);
     await page.$eval(this.selectors.formLogin, (form: HTMLFormElement) =>
       form.submit(),
     );
     await page.waitForNavigation();
+
+    await fs.ensureDir(this.screenshotsPath);
+    await page.screenshot({
+      path: path.join(this.screenshotsPath, 'linkedin-1.png'),
+    });
+
     console.debug('Login successfully');
   }
 
@@ -112,6 +126,12 @@ export class LinkedInScraperService {
       );
     }, this.selectors.job.element);
     console.debug(`Job links scrapped successfully`);
+
+    await page.screenshot({
+      path: path.join(this.screenshotsPath, 'linkedin-2.png'),
+    });
+
+    await page.close();
     console.debug(`Job links count: ${links.length}:`, links);
     return links;
   }
