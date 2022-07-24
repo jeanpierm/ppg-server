@@ -82,8 +82,7 @@ export class LinkedInScraperService {
     await page.waitForNavigation();
     if (page.url().includes('challenge')) {
       throw new BadGatewayException(
-        'No se pudo iniciar sesión correctamente',
-        'Linkedin solicitó una prueba de verificación',
+        'LinkedIn Scraper no pudo iniciar sesión debido a que se LinkedIn solicitó una prueba de verificación',
       );
     }
 
@@ -161,10 +160,10 @@ export class LinkedInScraperService {
     i: number,
   ): Promise<JobIntf> {
     try {
-      const { job: jobSelectors } = this.selectors;
+      const jobSelectors = this.selectors.job;
       const page = await browser.newPage();
-      await page.goto(url, waitLoad);
       page.setDefaultTimeout(10000);
+      await page.goto(url, waitLoad);
       await page.waitForSelector(jobSelectors.details);
 
       const title = await getTextContent(page, jobSelectors.title);
