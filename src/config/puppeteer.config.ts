@@ -10,12 +10,6 @@ export default registerAs('puppeteer', () => ({
     process.env.NODE_ENV === 'production'
       ? {
           headless: true,
-          args: [
-            '--disable-gpu',
-            '--disable-dev-shm-usage',
-            '--disable-setuid-sandbox',
-            '--no-sandbox',
-          ],
         }
       : { headless: false },
 }));
