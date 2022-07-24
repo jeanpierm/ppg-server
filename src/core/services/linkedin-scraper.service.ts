@@ -1,4 +1,8 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import {
+  BadGatewayException,
+  Injectable,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LinkedInConfig } from '../../config/linkedin.config';
 import * as puppeteer from 'puppeteer';
@@ -76,6 +80,12 @@ export class LinkedInScraperService {
       form.submit(),
     );
     await page.waitForNavigation();
+    if (page.url().includes('challenge')) {
+      throw new BadGatewayException(
+        'No se pudo iniciar sesión correctamente',
+        'Linkedin solicitó una prueba de verificación',
+      );
+    }
 
     await fs.ensureDir(this.screenshotsPath);
     await page.screenshot({
