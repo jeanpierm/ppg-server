@@ -25,8 +25,8 @@ export class LinkedInScraperService {
   constructor(private readonly configService: ConfigService) {}
 
   async getJobs(jobTitle: string, location: string): Promise<JobIntf[]> {
+    const browser = await puppeteer.launch(this.puppeteerConfig.options);
     try {
-      const browser = await puppeteer.launch(this.puppeteerConfig.options);
       const page = await browser.newPage();
       await this.setLanguageInEnglish(page);
       await page.setViewport({ width: 1920, height: 1080 });
@@ -41,6 +41,7 @@ export class LinkedInScraperService {
       await browser.close();
       return jobs;
     } catch (err) {
+      await browser.close();
       console.error(`An error has ocurred while scraping jobs offers.`, err);
       throw new InternalServerErrorException(
         `An error has ocurred while scraping jobs offers.`,

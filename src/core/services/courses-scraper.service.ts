@@ -31,9 +31,9 @@ export class CoursesScraperService {
   constructor(private readonly configService: ConfigService) {}
 
   async getCourses(searchCriteria: string): Promise<CourseInterface[]> {
+    const browser = await puppeteer.launch(this.puppeteerConfig.options);
     try {
       this.logger.log('Iniciando obtención de cursos por web scraping...');
-      const browser = await puppeteer.launch(this.puppeteerConfig.options);
       let result: CourseInterface[] = [];
       const domestikaCourses = await this.extractDomestikaCourses(
         browser,
@@ -49,16 +49,14 @@ export class CoursesScraperService {
       this.logger.log(
         `Cursos de COURSERA obtenidos (${courseraCourses.length})`,
       );
-
       await browser.close();
-
       result = result.concat(domestikaCourses, courseraCourses);
       this.logger.log(
         `Total de cursos obtenidos para "${searchCriteria}": ${result.length}`,
       );
-
       return result;
     } catch (err) {
+      await browser.close();
       console.error(
         `Ha ocurrido un error en el algoritmo de web scrapping para cursos.`,
         err,
@@ -122,7 +120,7 @@ export class CoursesScraperService {
       titleSelector,
     );
 
-    return results;
+    return results as CourseInterface[];
   }
 
   private async extractDomestikaCourseDetails(
@@ -208,7 +206,7 @@ export class CoursesScraperService {
       titleSelector,
     );
 
-    return results;
+    return results as CourseInterface[];
   }
 
   private async extractCourseraDetails(
