@@ -2,7 +2,7 @@
 #       BUILD       #
 #####################
 FROM node:16.16.0 as builder
-USER node
+
 WORKDIR /usr/src/app
 
 COPY --chown=node:node package*.json ./
@@ -10,9 +10,11 @@ COPY --chown=node:node package*.json ./
 RUN npm ci
 
 COPY --chown=node:node . .
+
 RUN npm run build \
   && npm prune --production
 
+USER node
 
 #####################
 #       RUN         #

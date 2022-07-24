@@ -6,7 +6,6 @@ import { AuthConfig } from 'src/config/auth.config';
 import { User } from 'src/users/schemas/user.schema';
 import { UsersService } from 'src/users/users.service';
 import { AccountResponse } from '../account/dto/account-response.dto';
-import { EmailService } from '../core/services/email.service';
 import { UsersMapper } from '../users/mapper/users.mapper';
 import { JwtPayload } from './dto/jwt-payload.dto';
 import { LoginResponse } from './dto/login-response.dto';

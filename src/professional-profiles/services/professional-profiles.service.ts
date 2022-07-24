@@ -5,14 +5,14 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import * as fs from 'fs/promises';
 
+import { ConfigService } from '@nestjs/config';
 import { FilterQuery, Model } from 'mongoose';
-import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 import { DownloadPreferencesService } from 'src/download-preferences/download-preferences.service';
 import { EntityStatus } from 'src/shared/enums/status.enum';
 import { UserDocument } from 'src/users/schemas/user.schema';
+import { PuppeteerConfig } from '../../config/puppeteer.config';
 import { TemplatesService } from '../../core/services/templates.service';
 import { PaginatedResponseDto } from '../../shared/dto/paginated-response.dto';
 import { PaginationParams } from '../../shared/dto/pagination-params.dto';
@@ -20,17 +20,19 @@ import { removeDuplicateObjects, stringToDate } from '../../shared/util';
 import { TechType } from '../../tech-types/schemas/tech-type.schema';
 import { Technology } from '../../technologies/schemas/technology.schema';
 import { TechnologiesService } from '../../technologies/technologies.service';
-import { ProfessionalProfileGeneratorService } from './professional-profile-generator.service';
 import { GetProfessionalProfilesQuery } from '../dto/get-professional-profiles-query.dto';
 import { TechnologyItem } from '../interfaces/technology-item.interface';
 import {
   ProfessionalProfile,
   ProfessionalProfileDocument,
 } from '../schemas/professional-profile.schema';
+import { ProfessionalProfileGeneratorService } from './professional-profile-generator.service';
 
 @Injectable()
 export class ProfessionalProfilesService {
   private readonly logger = new Logger(ProfessionalProfilesService.name);
+  private readonly puppeteerConfig =
+    this.configService.get<PuppeteerConfig>('puppeteer');
 
   constructor(
     @InjectModel(ProfessionalProfile.name)
@@ -39,6 +41,7 @@ export class ProfessionalProfilesService {
     private readonly technologiesService: TechnologiesService,
     private readonly downloadPreferencesService: DownloadPreferencesService,
     private readonly templatesService: TemplatesService,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
@@ -222,10 +225,10 @@ export class ProfessionalProfilesService {
 
     if (!profile) throw new BadRequestException();
 
+    const templateName = 'resume';
     const preferences =
       await this.downloadPreferencesService.getDownloadPreferences(user);
     const { technologies, jobTitle } = profile;
-
     const technologyItems: TechnologyItem[] = [];
     const rawTechTypes = technologies.map((technology) => technology.type);
     const techTypes = removeDuplicateObjects(rawTechTypes) as TechType[];
@@ -240,31 +243,13 @@ export class ProfessionalProfilesService {
       }
     });
 
-    const html = await this.templatesService.compile('resume', {
+    const html = await this.templatesService.compile(templateName, {
       preferences,
       user,
       jobTitle,
       technologyItems,
     });
-
-    //helper para guardarlo en html, por si se desea revisar como se ve el html
-    await fs.writeFile(
-      path.join(process.cwd(), 'templates', `resume-test.html`),
-      html,
-    );
-
-    const browser = await puppeteer.launch({
-      headless: true,
-    });
-    const page = await browser.newPage();
-    await page.setContent(html, {
-      waitUntil: ['domcontentloaded', 'networkidle0'],
-    });
-    const pdfBuffer = await page.pdf({
-      format: 'A4',
-      printBackground: true,
-    });
-    await browser.close();
+    const pdfBuffer = await this.convertHTMLToPDF(html);
 
     return pdfBuffer;
   }
@@ -276,5 +261,20 @@ export class ProfessionalProfilesService {
     return technologies
       .filter(({ type }) => type.name === typeName)
       .map(({ name }) => name);
+  }
+
+  private async convertHTMLToPDF(html: string) {
+    const browser = await puppeteer.launch(this.puppeteerConfig.options);
+    const page = await browser.newPage();
+    await page.setContent(html, {
+      waitUntil: ['domcontentloaded', 'networkidle0'],
+    });
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true,
+    });
+    await browser.close();
+
+    return pdfBuffer;
   }
 }
