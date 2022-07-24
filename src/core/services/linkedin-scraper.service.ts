@@ -175,11 +175,11 @@ export class LinkedInScraperService {
     url: string,
     i: number,
   ): Promise<JobIntf> {
+    const page = await browser.newPage();
     try {
       const jobSelectors = this.selectors.job;
-      const page = await browser.newPage();
       page.setDefaultTimeout(10000);
-      await page.goto(url, { waitUntil: 'networkidle0' });
+      await page.goto(url, { waitUntil: 'networkidle2' });
       await page.waitForSelector(jobSelectors.details);
       await page.screenshot({
         path: path.join(
@@ -214,6 +214,13 @@ export class LinkedInScraperService {
 
       return job;
     } catch (err) {
+      await page.screenshot({
+        path: path.join(
+          this.screenshotsPath,
+          'linkedin-3-extract-job-metadata(error).png',
+        ),
+      });
+      await page.close();
       console.error(
         `Ocurrió un error al extraer la metadata de la oferta de trabajo con URL "${url}"`,
         err,
