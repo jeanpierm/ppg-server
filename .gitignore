@@ -39,3 +39,5 @@ lerna-debug.log*
 .env
 
 /templates/resume-test.html
+
+/screenshots
