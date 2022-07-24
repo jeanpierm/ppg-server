@@ -4,18 +4,18 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { LinkedInConfig } from '../../config/linkedin.config';
+import * as fs from 'fs-extra';
+import * as path from 'path';
 import * as puppeteer from 'puppeteer';
+import { LinkedInConfig } from '../../config/linkedin.config';
+import { PuppeteerConfig } from '../../config/puppeteer.config';
+import { JobIntf } from '../../professional-profiles/interfaces/job.interface';
+import { WorkPlace } from '../../professional-profiles/types/workplace.type';
 import {
   getImageSrc,
   getTextContent,
   waitLoad,
 } from '../../professional-profiles/utils';
-import { JobIntf } from '../../professional-profiles/interfaces/job.interface';
-import { WorkPlace } from '../../professional-profiles/types/workplace.type';
-import { PuppeteerConfig } from '../../config/puppeteer.config';
-import * as fs from 'fs-extra';
-import * as path from 'path';
 @Injectable()
 export class LinkedInScraperService {
   private readonly config = this.configService.get<LinkedInConfig>('linkedin');
@@ -62,6 +62,13 @@ export class LinkedInScraperService {
         )
       ).filter((job) => job !== undefined);
       await browser.close();
+
+      if (!jobs.length)
+        throw new InternalServerErrorException({
+          message:
+            'No se pudo extraer metadatos de las ofertas de trabajo a analizar',
+          data: { jobLinks },
+        });
 
       return jobs;
     } catch (err) {
@@ -172,7 +179,7 @@ export class LinkedInScraperService {
       const jobSelectors = this.selectors.job;
       const page = await browser.newPage();
       page.setDefaultTimeout(10000);
-      await page.goto(url, waitLoad);
+      await page.goto(url, { waitUntil: 'networkidle0' });
       await page.waitForSelector(jobSelectors.details);
       await page.screenshot({
         path: path.join(
@@ -207,7 +214,10 @@ export class LinkedInScraperService {
 
       return job;
     } catch (err) {
-      console.error(err);
+      console.error(
+        `Ocurrió un error al extraer la metadata de la oferta de trabajo con URL "${url}"`,
+        err,
+      );
     }
   }
 }
