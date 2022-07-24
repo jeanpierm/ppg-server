@@ -31,18 +31,38 @@ export class LinkedInScraperService {
   async getJobs(jobTitle: string, location: string): Promise<JobIntf[]> {
     const browser = await puppeteer.launch(this.puppeteerConfig.options);
     try {
+      await fs.ensureDir(this.screenshotsPath);
       const page = await browser.newPage();
       await this.setLanguageInEnglish(page);
       await page.setViewport({ width: 1920, height: 1080 });
+
+      // 1. login
       await this.login(page);
+      await page.screenshot({
+        path: path.join(this.screenshotsPath, 'linkedin-0-login.png'),
+      });
+
+      // 2. search jobs
       await this.searchJobs(page, jobTitle, location);
+      await page.screenshot({
+        path: path.join(this.screenshotsPath, 'linkedin-1-search-jobs.png'),
+      });
+
+      // 3. get job links
       const jobLinks = await this.scrapJobLinks(page);
+      await page.screenshot({
+        path: path.join(this.screenshotsPath, 'linkedin-2-get-job-links.png'),
+      });
+      await page.close();
+
+      // 4. get jobs data for each link
       const jobs = (
         await Promise.all(
           jobLinks.map((link, i) => this.extractJobMetadata(browser, link, i)),
         )
       ).filter((job) => job !== undefined);
       await browser.close();
+
       return jobs;
     } catch (err) {
       await browser.close();
@@ -85,11 +105,6 @@ export class LinkedInScraperService {
         'LinkedIn Scraper no pudo iniciar sesión debido a que se LinkedIn solicitó una prueba de verificación',
       );
     }
-
-    await fs.ensureDir(this.screenshotsPath);
-    await page.screenshot({
-      path: path.join(this.screenshotsPath, 'linkedin-1.png'),
-    });
 
     console.debug('Login successfully');
   }
@@ -136,12 +151,6 @@ export class LinkedInScraperService {
       );
     }, this.selectors.job.element);
     console.debug(`Job links scrapped successfully`);
-
-    await page.screenshot({
-      path: path.join(this.screenshotsPath, 'linkedin-2.png'),
-    });
-
-    await page.close();
     console.debug(`Job links count: ${links.length}:`, links);
     return links;
   }
@@ -165,6 +174,12 @@ export class LinkedInScraperService {
       page.setDefaultTimeout(10000);
       await page.goto(url, waitLoad);
       await page.waitForSelector(jobSelectors.details);
+      await page.screenshot({
+        path: path.join(
+          this.screenshotsPath,
+          'linkedin-3-extract-job-metadata.png',
+        ),
+      });
 
       const title = await getTextContent(page, jobSelectors.title);
       const detail = await getTextContent(page, jobSelectors.details);
