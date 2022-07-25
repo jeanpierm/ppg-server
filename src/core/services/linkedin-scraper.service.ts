@@ -178,7 +178,7 @@ export class LinkedInScraperService {
     const page = await browser.newPage();
     try {
       const jobSelectors = this.selectors.job;
-      page.setDefaultTimeout(10000);
+      page.setDefaultTimeout(this.puppeteerConfig.timeout);
       await page.goto(url, { waitUntil: 'networkidle2' });
       await page.waitForSelector(jobSelectors.details);
       await page.screenshot({

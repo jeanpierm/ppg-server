@@ -130,7 +130,7 @@ export class CoursesScraperService {
     console.log('current URL:', course.link);
     const newPage = await browser.newPage();
     await newPage.goto(course.link, waitLoad);
-    newPage.setDefaultTimeout(10000);
+    newPage.setDefaultTimeout(this.puppeteerConfig.timeout);
 
     try {
       const price = await newPage.$eval(
@@ -216,7 +216,7 @@ export class CoursesScraperService {
     console.log('current URL:', course.link);
     const newPage = await browser.newPage();
     await newPage.goto(course.link, waitLoad);
-    newPage.setDefaultTimeout(10000);
+    newPage.setDefaultTimeout(this.puppeteerConfig.timeout);
 
     try {
       const description = await newPage.$eval(
