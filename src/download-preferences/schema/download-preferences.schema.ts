@@ -15,37 +15,37 @@ export class DownloadPreferences {
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   photo: boolean;
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   biography: boolean;
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   linkedIn: boolean;
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   email: boolean;
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   github: boolean;
 
   @Prop({
     required: false,
-    default: false,
+    default: true,
   })
   portfolio: boolean;
 
