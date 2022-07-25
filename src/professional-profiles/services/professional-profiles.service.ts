@@ -264,7 +264,7 @@ export class ProfessionalProfilesService {
   }
 
   private async convertHTMLToPDF(html: string) {
-    const browser = await puppeteer.launch(this.puppeteerConfig.options);
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setContent(html, {
       waitUntil: ['domcontentloaded', 'networkidle0'],
