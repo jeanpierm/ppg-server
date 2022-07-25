@@ -2,9 +2,9 @@ import {
   BadGatewayException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as puppeteer from 'puppeteer';
 import { LinkedInConfig } from '../../config/linkedin.config';
@@ -30,47 +30,30 @@ export class LinkedInScraperService {
 
   async getJobs(jobTitle: string, location: string): Promise<JobIntf[]> {
     const browser = await puppeteer.launch(this.puppeteerConfig.options);
+    let jobs: JobIntf[];
+
     try {
-      await fs.ensureDir(this.screenshotsPath);
       const page = await browser.newPage();
       await this.setLanguageInEnglish(page);
       await page.setViewport({ width: 1920, height: 1080 });
 
       // 1. login
       await this.login(page);
-      await page.screenshot({
-        path: path.join(this.screenshotsPath, 'linkedin-0-login.png'),
-      });
 
       // 2. search jobs
       await this.searchJobs(page, jobTitle, location);
-      await page.screenshot({
-        path: path.join(this.screenshotsPath, 'linkedin-1-search-jobs.png'),
-      });
 
       // 3. get job links
       const jobLinks = await this.scrapJobLinks(page);
-      await page.screenshot({
-        path: path.join(this.screenshotsPath, 'linkedin-2-get-job-links.png'),
-      });
       await page.close();
 
       // 4. get jobs data for each link
-      const jobs = (
+      jobs = (
         await Promise.all(
           jobLinks.map((link, i) => this.extractJobMetadata(browser, link, i)),
         )
       ).filter((job) => job !== undefined);
       await browser.close();
-
-      if (!jobs.length)
-        throw new InternalServerErrorException({
-          message:
-            'No se pudo extraer metadatos de las ofertas de trabajo a analizar',
-          data: { jobLinks },
-        });
-
-      return jobs;
     } catch (err) {
       await browser.close();
       console.error(`An error has ocurred while scraping jobs offers.`, err);
@@ -79,6 +62,15 @@ export class LinkedInScraperService {
         err.message,
       );
     }
+
+    if (!jobs.length) {
+      throw new NotFoundException({
+        message:
+          'No se pudo extraer metadatos de las ofertas de trabajo a analizar',
+      });
+    }
+
+    return jobs;
   }
 
   private async setLanguageInEnglish(page: puppeteer.Page) {
@@ -95,12 +87,6 @@ export class LinkedInScraperService {
    */
   private async login(page: puppeteer.Page) {
     await page.goto(this.urls.login, waitLoad);
-
-    await fs.ensureDir(this.screenshotsPath);
-    await page.screenshot({
-      path: path.join(this.screenshotsPath, 'linkedin-0.png'),
-    });
-
     await page.type(this.selectors.inputUsername, this.account.user);
     await page.type(this.selectors.inputPassword, this.account.password);
     await page.$eval(this.selectors.formLogin, (form: HTMLFormElement) =>
@@ -181,12 +167,6 @@ export class LinkedInScraperService {
       page.setDefaultTimeout(this.puppeteerConfig.timeout);
       await page.goto(url, { waitUntil: 'networkidle2' });
       await page.waitForSelector(jobSelectors.details);
-      await page.screenshot({
-        path: path.join(
-          this.screenshotsPath,
-          'linkedin-3-extract-job-metadata.png',
-        ),
-      });
 
       const title = await getTextContent(page, jobSelectors.title);
       const detail = await getTextContent(page, jobSelectors.details);
@@ -214,12 +194,6 @@ export class LinkedInScraperService {
 
       return job;
     } catch (err) {
-      await page.screenshot({
-        path: path.join(
-          this.screenshotsPath,
-          'linkedin-3-extract-job-metadata(error).png',
-        ),
-      });
       await page.close();
       console.error(
         `Ocurrió un error al extraer la metadata de la oferta de trabajo con URL "${url}"`,
