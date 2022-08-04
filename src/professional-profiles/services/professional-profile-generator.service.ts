@@ -68,8 +68,6 @@ export class ProfessionalProfileGeneratorService {
     jobTitle: string,
     location: string,
   ): Promise<CreateProfessionalProfile> {
-    console.time(PPG_ALGORITHM_LABEL);
-
     const jobs = await this.linkedInScrapper.getJobs(jobTitle, location);
     const jobsAnalyzed = await this.saveJobs(jobs);
     const jobsCount = jobs.length;
@@ -79,7 +77,6 @@ export class ProfessionalProfileGeneratorService {
       console.log(`[Job ${i}] details: ${finalDetail}`);
       return finalDetail;
     });
-
     const technologyTypes = await this.techTypesService.findActives();
     const technologiesMostDemanded: TechnologyDocument[] = [];
 
@@ -121,8 +118,6 @@ export class ProfessionalProfileGeneratorService {
       technologiesIds: technologiesMostDemanded.map((tech) => tech._id),
       requireEnglish,
     };
-
-    console.timeEnd(PPG_ALGORITHM_LABEL);
 
     // persist english metadata in db
     this.saveEnglishMetadata({
