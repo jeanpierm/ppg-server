@@ -77,7 +77,7 @@ export class UsersController {
   @ApiOperation({ summary: 'crear usuario' })
   @ApiCreatedCustomResponse(UserResponse)
   @Post()
-  // @Roles(Role.Admin)
+  @Roles(Role.Admin)
   @Public()
   async create(
     @Body() createUserDto: CreateUserDto,
