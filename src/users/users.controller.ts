@@ -15,7 +15,6 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
 import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
-import { Public } from '../auth/decorators/public.decorator';
 import {
   ApiCreatedCustomResponse,
   ApiOkCustomResponse,
@@ -78,7 +77,6 @@ export class UsersController {
   @ApiCreatedCustomResponse(UserResponse)
   @Post()
   @Roles(Role.Admin)
-  @Public()
   async create(
     @Body() createUserDto: CreateUserDto,
   ): Promise<ApiResponse<UserResponse>> {
