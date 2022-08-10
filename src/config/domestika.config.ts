@@ -17,6 +17,7 @@ export interface DomestikaConfig {
   queryParams: {
     search: string;
   };
+  maxCoursesToScrap: number;
 }
 
 export default registerAs(
@@ -45,5 +46,6 @@ export default registerAs(
     queryParams: {
       search: process.env.DOMESTIKA_QUERY_PARAM_SEARCH || 'query',
     },
+    maxCoursesToScrap: +process.env.DOMESTIKA_MAX_COURSES_TO_SCRAP || 10,
   }),
 );

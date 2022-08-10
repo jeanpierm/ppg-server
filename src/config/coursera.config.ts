@@ -16,6 +16,7 @@ export interface CourseraConfig {
   queryParams: {
     search: string;
   };
+  maxCoursesToScrap: number;
 }
 
 export default registerAs(
@@ -40,5 +41,6 @@ export default registerAs(
     queryParams: {
       search: process.env.COURSERA_QUERY_PARAM_SEARCH || 'query',
     },
+    maxCoursesToScrap: +process.env.COURSERA_MAX_COURSES_TO_SCRAP || 10,
   }),
 );

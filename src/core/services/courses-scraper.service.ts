@@ -100,8 +100,11 @@ export class CoursesScraperService {
     const titleSelector = this.dkSelectors.course.title;
     const results = await page.$$eval(
       this.dkSelectors.results,
-      (options, imgSelector, titleSelector) =>
-        options.map((item: HTMLLinkElement) => {
+      (options, imgSelector, titleSelector, maxCourses) => {
+        if (options?.length > maxCourses)
+          options = options.slice(0, maxCourses);
+
+        return options.map((item: HTMLLinkElement) => {
           const img: HTMLImageElement = item.querySelector(
             imgSelector as string,
           ) as HTMLImageElement;
@@ -115,9 +118,11 @@ export class CoursesScraperService {
             title: title.innerText,
           };
           return details;
-        }),
+        });
+      },
       imgSelector,
       titleSelector,
+      this.dkConfig.maxCoursesToScrap,
     );
 
     return results as CourseInterface[];
@@ -187,8 +192,11 @@ export class CoursesScraperService {
     const titleSelector = this.courSelectors.course.title;
     const results = await page.$$eval(
       this.courSelectors.results,
-      (options, imgSelector, titleSelector) =>
-        options.map((option: HTMLAnchorElement) => {
+      (options, imgSelector, titleSelector, maxCourses) => {
+        if (options?.length > maxCourses)
+          options = options.slice(0, maxCourses);
+
+        return options.map((option: HTMLAnchorElement) => {
           const img: HTMLImageElement = option.querySelector(
             imgSelector as string,
           ) as HTMLImageElement;
@@ -201,9 +209,11 @@ export class CoursesScraperService {
             title: title.innerText,
           };
           return course;
-        }),
+        });
+      },
       imgSelector,
       titleSelector,
+      this.courConfig.maxCoursesToScrap,
     );
 
     return results as CourseInterface[];
