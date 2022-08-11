@@ -33,7 +33,7 @@ export class TechTypesController {
    * Obtener tipos de tecnologías, las cuales están relacionadas a las tecnologías que se usan para el algoritmo PPG.
    */
   @ApiOperation({ summary: 'obtener tipos de tecnologías' })
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @Get()
   async findAll(
     @Query() paginationParams: PaginationParams & GetTechTypeQuery,
@@ -52,7 +52,7 @@ export class TechTypesController {
    * Obtener tipo de tecnología por ID.
    */
   @ApiOperation({ summary: 'obtener tipo de tecnología' })
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   @Get(':id')
   async findOne(
     @Param('id', ParseObjectIdPipe) id: string,

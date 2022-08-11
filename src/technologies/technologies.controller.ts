@@ -40,7 +40,7 @@ export class TechnologiesController {
   @ApiOperation({ summary: 'buscar tecnologías' })
   @ApiPaginatedResponse(TechnologyResponse)
   @Get()
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   async findAll(
     @Query() paginationParams: PaginationParams,
     @Query('type') type: string,
@@ -76,7 +76,7 @@ export class TechnologiesController {
   @ApiOperation({ summary: 'buscar tecnología' })
   @ApiOkCustomResponse(TechnologyResponse)
   @Get(':name')
-  @Roles(Role.Admin)
+  @Roles(Role.Admin, Role.User)
   async findOne(@Param('name') name: string) {
     const technology = await this.technologiesService.findByName(name);
     const payload = TechnologiesMapper.toTechnologyResponse(technology);
