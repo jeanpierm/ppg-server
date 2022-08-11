@@ -1,14 +1,14 @@
 import { registerAs } from '@nestjs/config';
 
 export interface ClientConfig {
-  baseUrl: string;
+  baseUrl?: string;
   passwordResetPath: string;
 }
 
 export default registerAs(
   'client',
   (): ClientConfig => ({
-    baseUrl: process.env.APP_CLIENT_URL || 'http://localhost:4200',
+    baseUrl: process.env.APP_CLIENT_URL,
     passwordResetPath:
       process.env.APP_CLIENT_PASSWORD_RESET || '/password-reset',
   }),

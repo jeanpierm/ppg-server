@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   HttpCode,
   HttpStatus,
   Logger,
@@ -94,8 +95,11 @@ export class AccountController {
   @Post('password/recover')
   @HttpCode(HttpStatus.ACCEPTED)
   @Public()
-  async recoverPassword(@Body() { email }: RecoverPassDto) {
-    await this.accountService.recoverPassword(email);
+  async recoverPassword(
+    @Body() { email }: RecoverPassDto,
+    @Headers('host') host: string,
+  ) {
+    await this.accountService.recoverPassword(email, host);
     return new ApiResponse('Password reset link sent to email successfully');
   }
 
