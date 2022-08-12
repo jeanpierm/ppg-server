@@ -16,6 +16,7 @@ import {
 } from '../download-preferences/schema/download-preferences.schema';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { FindUsersQueryParams } from './dto/find-users-query-params.dto';
 
 @Injectable()
 export class UsersService {
@@ -28,9 +29,9 @@ export class UsersService {
   ) {}
 
   async findAll(
-    pagination: PaginationParams,
+    params: PaginationParams & FindUsersQueryParams,
   ): Promise<PaginatedResponseDto<User>> {
-    const { size, search, page } = pagination;
+    const { size, search, page, status } = params;
     const filterQuery: Record<string, any> = {};
     if (search) {
       filterQuery['$or'] = [
@@ -39,6 +40,7 @@ export class UsersService {
         { email: new RegExp(search, 'i') },
       ];
     }
+    if (status) filterQuery.status = status;
 
     const users = await this.userModel
       .find(filterQuery)

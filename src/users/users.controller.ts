@@ -23,6 +23,7 @@ import {
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
+import { FindUsersQueryParams } from './dto/find-users-query-params.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponse } from './dto/user-response.dto';
 import { UsersMapper } from './mapper/users.mapper';
@@ -42,9 +43,9 @@ export class UsersController {
   @Get()
   @Roles(Role.Admin)
   async findAll(
-    @Query() paginationParams: PaginationParams,
+    @Query() params: PaginationParams & FindUsersQueryParams,
   ): Promise<PaginatedResponseDto<UserResponse>> {
-    const usersPagination = await this.usersService.findAll(paginationParams);
+    const usersPagination = await this.usersService.findAll(params);
     const payload: PaginatedResponseDto<UserResponse> = {
       ...usersPagination,
       data: usersPagination.data.map((user) =>
