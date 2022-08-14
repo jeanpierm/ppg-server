@@ -20,7 +20,7 @@ import { TechnologiesModule } from './technologies/technologies.module';
 import { UsersModule } from './users/users.module';
 import { LogsModule } from './logs/logs.module';
 import { LogsInterceptor } from './logs/logs.interceptor';
-import { HttpExceptionFilter } from './core/http-exception.filter';
+import { HttpExceptionFilter } from './core/filters/http-exception.filter';
 
 @Module({
   imports: [

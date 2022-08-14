@@ -4,8 +4,12 @@ import { InjectModel } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
 import { Model } from 'mongoose';
+import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
+import { stringToDate } from '../shared/util';
 import { User } from '../users/schemas/user.schema';
 import { CreateLogDto } from './dto/create-log.dto';
+import { FindLogsQuery } from './dto/logs-query.dto';
 import { Log, LogDocument } from './schemas/log.schema';
 import { buildLogMessage } from './utils/build-log-message';
 import { httpCodeResolver } from './utils/http-code-resolver';
@@ -57,7 +61,7 @@ export class LogsService {
       exception: err?.name,
     };
 
-    // save in db asynchrouysly
+    // save in db asynchronously
     this.logModel.create(log);
 
     return logId;
@@ -83,8 +87,50 @@ export class LogsService {
     }
   }
 
-  async findAll() {
-    const logs = await this.logModel.find({});
-    return logs;
+  async findPaginated({
+    size,
+    search,
+    page,
+    startDate,
+    endDate,
+    level,
+    httpMethod,
+    statusCode,
+  }: PaginationQuery & FindLogsQuery = {}): Promise<PaginatedResponseDto<Log>> {
+    const filterQuery: Record<string, any> = {};
+    if (search)
+      filterQuery['$or'] = [
+        { className: new RegExp(search, 'i') },
+        { hostname: new RegExp(search, 'i') },
+        { ip: new RegExp(search, 'i') },
+        { logId: new RegExp(search, 'i') },
+        { message: new RegExp(search, 'i') },
+        { methodKey: new RegExp(search, 'i') },
+        { path: new RegExp(search, 'i') },
+        { userId: new RegExp(search, 'i') },
+      ];
+    if (startDate || endDate) filterQuery.createdAt = {};
+    if (startDate) filterQuery.createdAt['$gte'] = stringToDate(startDate);
+    if (endDate) filterQuery.createdAt['$lt'] = stringToDate(endDate);
+    if (level) filterQuery.level = new RegExp(level, 'i');
+    if (httpMethod) filterQuery.httpMethod = new RegExp(httpMethod, 'i');
+    if (statusCode) filterQuery.statusCode = new RegExp(statusCode, 'i');
+
+    const logs = await this.logModel
+      .find(filterQuery)
+      .sort({ timestamp: -1 })
+      .skip((page - 1) * size)
+      .limit(size)
+      .lean();
+    const totalItems = await this.logModel.count(filterQuery);
+    const totalPages = Math.ceil(totalItems / size);
+
+    return {
+      totalItems,
+      currentPage: page,
+      pageSize: size,
+      data: logs,
+      totalPages,
+    };
   }
 }

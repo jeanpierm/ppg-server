@@ -15,7 +15,7 @@ import { UserDocument } from 'src/users/schemas/user.schema';
 import { PuppeteerConfig } from '../../config/puppeteer.config';
 import { TemplatesService } from '../../core/services/templates.service';
 import { PaginatedResponseDto } from '../../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../../shared/dto/pagination-query.dto';
 import { removeDuplicateObjects, stringToDate } from '../../shared/util';
 import { TechType } from '../../tech-types/schemas/tech-type.schema';
 import { Technology } from '../../technologies/schemas/technology.schema';
@@ -83,14 +83,19 @@ export class ProfessionalProfilesService {
 
   async findActiveProfilesOfUser(
     user: UserDocument,
-    getQuery?: GetProfessionalProfilesQuery & PaginationParams,
+    {
+      initDate,
+      endDate,
+      jobTitle,
+      location,
+      page,
+      size,
+    }: GetProfessionalProfilesQuery & PaginationQuery = {},
   ): Promise<PaginatedResponseDto<ProfessionalProfile>> {
     const filterQuery: FilterQuery<ProfessionalProfileDocument> = {
       owner: user._id,
       status: EntityStatus.Active,
     };
-    const { initDate, endDate, jobTitle, location, page, size } =
-      getQuery || {};
     if (initDate || endDate) filterQuery.createdAt = {};
     if (initDate) filterQuery.createdAt['$gte'] = stringToDate(initDate);
     if (endDate) filterQuery.createdAt['$lt'] = stringToDate(endDate);

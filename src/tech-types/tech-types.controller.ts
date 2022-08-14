@@ -15,7 +15,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from '../auth/enums/role.enum';
 import { ParseObjectIdPipe } from '../core/pipes/parse-objectid.pipe';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { CreateTechTypeDto } from './dto/create-tech-type.dto';
 import { GetTechTypeQuery } from './dto/get-tech-type-query';
 import { TechTypeResponseDto } from './dto/tech-type-response.dto';
@@ -36,7 +36,7 @@ export class TechTypesController {
   @Roles(Role.Admin, Role.User)
   @Get()
   async findAll(
-    @Query() paginationParams: PaginationParams & GetTechTypeQuery,
+    @Query() paginationParams: PaginationQuery & GetTechTypeQuery,
   ): Promise<PaginatedResponseDto<TechTypeResponseDto>> {
     const techTypesPaginated = await this.techTypesService.findPaginated(
       paginationParams,

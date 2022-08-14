@@ -14,7 +14,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/auth/enums/role.enum';
 import { ApiResponse } from 'src/shared/dto/api-response.dto';
-import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
+import { PaginationQuery } from 'src/shared/dto/pagination-query.dto';
 import {
   ApiCreatedCustomResponse,
   ApiOkCustomResponse,
@@ -23,7 +23,7 @@ import {
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserParams } from './dto/find-user-params.dto';
-import { FindUsersQueryParams } from './dto/find-users-query-params.dto';
+import { FindUsersQuery } from './dto/find-users-query.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserResponse } from './dto/user-response.dto';
 import { UsersMapper } from './mapper/users.mapper';
@@ -43,9 +43,9 @@ export class UsersController {
   @Get()
   @Roles(Role.Admin)
   async findAll(
-    @Query() params: PaginationParams & FindUsersQueryParams,
+    @Query() params: PaginationQuery & FindUsersQuery,
   ): Promise<PaginatedResponseDto<UserResponse>> {
-    const usersPagination = await this.usersService.findAll(params);
+    const usersPagination = await this.usersService.findPaginated(params);
     const payload: PaginatedResponseDto<UserResponse> = {
       ...usersPagination,
       data: usersPagination.data.map((user) =>

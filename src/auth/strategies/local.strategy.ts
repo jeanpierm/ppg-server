@@ -27,7 +27,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     // credentials validation
     const user = await this.authService.validateCredentials(email, password);
     if (!user) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Invalid credentials');
     }
     if (user.status === EntityStatus.Inactive) {
       throw new NotFoundException('User not found in database');

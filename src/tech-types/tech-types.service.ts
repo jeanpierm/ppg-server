@@ -7,7 +7,7 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { EntityStatus } from '../shared/enums/status.enum';
 import {
   Technology,
@@ -31,7 +31,7 @@ export class TechTypesService {
   ) {}
 
   async findPaginated(
-    paginationParams?: PaginationParams & GetTechTypeQuery,
+    paginationParams?: PaginationQuery & GetTechTypeQuery,
   ): Promise<PaginatedResponseDto<TechType>> {
     const { size, search, page, status } = paginationParams || {};
     const filterQuery: Record<string, any> = {};

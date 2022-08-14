@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
-import { PaginationParams } from 'src/shared/dto/pagination-params.dto';
+import { PaginationQuery } from 'src/shared/dto/pagination-query.dto';
 import { Role } from '../auth/enums/role.enum';
 import { RolesService } from '../roles/roles.service';
 import { RoleDocument } from '../roles/schemas/role.schema';
@@ -16,7 +16,7 @@ import {
 } from '../download-preferences/schema/download-preferences.schema';
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { FindUsersQueryParams } from './dto/find-users-query-params.dto';
+import { FindUsersQuery } from './dto/find-users-query.dto';
 
 @Injectable()
 export class UsersService {
@@ -28,8 +28,8 @@ export class UsersService {
     private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
   ) {}
 
-  async findAll(
-    params: PaginationParams & FindUsersQueryParams,
+  async findPaginated(
+    params: PaginationQuery & FindUsersQuery,
   ): Promise<PaginatedResponseDto<User>> {
     const { size, search, page, status } = params;
     const filterQuery: Record<string, any> = {};

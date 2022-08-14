@@ -9,7 +9,7 @@ import * as fs from 'fs/promises';
 import { FilterQuery, Model } from 'mongoose';
 import * as path from 'path';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { CreateTechTypeDto } from '../tech-types/dto/create-tech-type.dto';
 import { TechTypesService } from '../tech-types/tech-types.service';
 import { CoursesScraperService } from '../core/services/courses-scraper.service';
@@ -103,7 +103,7 @@ export class TechnologiesService {
   }
 
   async findAll(
-    pagination?: PaginationParams,
+    pagination?: PaginationQuery,
     typeName?: string,
   ): Promise<PaginatedResponseDto<Technology>> {
     const { size, search, page } = pagination || {};

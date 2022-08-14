@@ -24,10 +24,10 @@ import { UserDocument } from 'src/users/schemas/user.schema';
 import {
   ApiCreatedCustomResponse,
   ApiOkCustomResponse,
-  ApiOkCustomResponseArray,
+  ApiPaginatedResponse,
 } from '../shared/decorators/api-response.decorator';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { CountQuery } from './dto/count-query.dto';
 import { GeneratePpgDto } from './dto/generate-ppg.dto';
 import { ProfessionalProfileResponse } from './dto/professional-profile-response.dto';
@@ -46,12 +46,12 @@ export class ProfessionalProfilesController {
    * Obtiene los perfiles profesionales activos generados por la cuenta autenticada.
    */
   @ApiOperation({ summary: 'obtener perfiles' })
-  @ApiOkCustomResponseArray(ProfessionalProfileResponse)
+  @ApiPaginatedResponse(ProfessionalProfileResponse)
   @Get()
   @Roles(Role.User, Role.Admin)
   async get(
     @Query()
-    getQuery: GetProfessionalProfilesQuery & PaginationParams,
+    getQuery: GetProfessionalProfilesQuery & PaginationQuery,
     @CurrentUser() user: UserDocument,
   ): Promise<PaginatedResponseDto<ProfessionalProfileResponse>> {
     const profiles = await this.proProfilesService.findActiveProfilesOfUser(

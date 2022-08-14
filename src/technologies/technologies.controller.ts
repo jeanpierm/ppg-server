@@ -20,7 +20,7 @@ import {
 } from '../shared/decorators/api-response.decorator';
 import { ApiResponse } from '../shared/dto/api-response.dto';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
-import { PaginationParams } from '../shared/dto/pagination-params.dto';
+import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { CreateTechnologyDto } from './dto/create-technology.dto';
 import { TechnologyResponse } from './dto/technology-response.dto';
 import { UpdateTechnologyDto } from './dto/update-technology.dto';
@@ -42,7 +42,7 @@ export class TechnologiesController {
   @Get()
   @Roles(Role.Admin, Role.User)
   async findAll(
-    @Query() paginationParams: PaginationParams,
+    @Query() paginationParams: PaginationQuery,
     @Query('type') type: string,
   ): Promise<PaginatedResponseDto<TechnologyResponse>> {
     const technologiesPagination = await this.technologiesService.findAll(
