@@ -40,7 +40,7 @@ export class AuthService {
     }
     const passwordMatch = await compare(pass, user.password);
     if (!passwordMatch) {
-      this.logger.log('Invalid credentials');
+      this.logger.warn('Invalid credentials');
       return null;
     }
     this.logger.log('Valid credentials');

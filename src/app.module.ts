@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { APP_FILTER, APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import * as Joi from 'joi';
@@ -18,6 +18,9 @@ import { RolesModule } from './roles/roles.module';
 import { TechTypesModule } from './tech-types/tech-types.module';
 import { TechnologiesModule } from './technologies/technologies.module';
 import { UsersModule } from './users/users.module';
+import { LogsModule } from './logs/logs.module';
+import { LogsInterceptor } from './logs/logs.interceptor';
+import { HttpExceptionFilter } from './core/http-exception.filter';
 
 @Module({
   imports: [
@@ -49,9 +52,18 @@ import { UsersModule } from './users/users.module';
     RolesModule,
     DownloadPreferencesModule,
     TechTypesModule,
+    LogsModule,
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LogsInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,

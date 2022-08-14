@@ -41,7 +41,6 @@ async function bootstrap() {
   const server = await app.listen(appConfig.http.port, appConfig.http.host);
   if (process.env.NODE_ENV === 'production')
     server.setTimeout(appConfig.timeout);
-
   logger.debug(`Server environment set to ${appConfig.env}`);
   logger.log(`Database running on ${dbConfig.host}/${dbConfig.name}`);
   logger.log(`Server running on ${await app.getUrl()}`);
