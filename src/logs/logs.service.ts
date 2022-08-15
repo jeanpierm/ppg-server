@@ -109,12 +109,12 @@ export class LogsService {
         { path: new RegExp(search, 'i') },
         { userId: new RegExp(search, 'i') },
       ];
-    if (startDate || endDate) filterQuery.createdAt = {};
-    if (startDate) filterQuery.createdAt['$gte'] = stringToDate(startDate);
-    if (endDate) filterQuery.createdAt['$lt'] = stringToDate(endDate);
+    if (startDate || endDate) filterQuery.timestamp = {};
+    if (startDate) filterQuery.timestamp['$gte'] = stringToDate(startDate);
+    if (endDate) filterQuery.timestamp['$lt'] = stringToDate(endDate);
     if (level) filterQuery.level = new RegExp(level, 'i');
     if (httpMethod) filterQuery.httpMethod = new RegExp(httpMethod, 'i');
-    if (statusCode) filterQuery.statusCode = new RegExp(statusCode, 'i');
+    if (statusCode) filterQuery.statusCode = statusCode;
 
     const logs = await this.logModel
       .find(filterQuery)
