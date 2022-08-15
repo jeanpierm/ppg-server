@@ -43,9 +43,9 @@ export class EmailService {
 
   private getResetLink({ resetToken, userId, host }) {
     const protocol = 'http';
-    const baseUrl = this.clientConfig.baseUrl || host;
+    const clientHost = this.clientConfig.host || host;
     const resetPath = this.clientConfig.passwordResetPath;
-    const resetLink = `${protocol}://${baseUrl}${resetPath}`;
+    const resetLink = `${protocol}://${clientHost}${resetPath}`;
     const resetUrl = new URL(resetLink);
     resetUrl.searchParams.set('token', resetToken);
     resetUrl.searchParams.set('id', userId);

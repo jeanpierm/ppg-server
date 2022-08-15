@@ -13,6 +13,8 @@ export function buildLogMessage({ req, res, logId, err }: BuildLog): string {
   const { method, path } = req;
   const statusCode = err ? err.getStatus() : res.statusCode;
   const statusMessage = httpCodeResolver(statusCode);
-  const message = `${method} ${path} - ${statusCode} ${statusMessage} - ${logId}`;
+  const message = `${method} ${path} - ${statusCode} ${statusMessage} - ${
+    logId || 'not saved'
+  }`;
   return message;
 }

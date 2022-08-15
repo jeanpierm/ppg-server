@@ -1,9 +1,11 @@
 import { HttpException, Injectable, Logger, LogLevel } from '@nestjs/common';
 import { HttpArgumentsHost } from '@nestjs/common/interfaces';
+import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { randomUUID } from 'crypto';
 import { Request, Response } from 'express';
 import { Model } from 'mongoose';
+import { AppConfig } from '../config/app.config';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { PaginationQuery } from '../shared/dto/pagination-query.dto';
 import { stringToDate } from '../shared/util';
@@ -29,19 +31,32 @@ type PrintLogArgs = {
 @Injectable()
 export class LogsService {
   private readonly logger = new Logger();
+  private readonly config: AppConfig = this.configService.get<AppConfig>('app');
+
+  readonly excludePaths = ['/auth/refresh'];
 
   constructor(
     @InjectModel(Log.name)
     private readonly logModel: Model<LogDocument>,
+    private readonly configService: ConfigService,
   ) {}
 
   /**
    * Save a log of the request in database.
+   * If the log is not saved, returns undefined.
    * @returns the logIg
    */
   save({ ctx, message, err }: SaveLogArgs) {
+    if (!this.config.saveLogs) return;
+
     const req = ctx.getRequest<Request>();
     const res = ctx.getResponse<Response>();
+
+    const isExcluded = this.excludePaths.some((path) =>
+      req.path.includes(path),
+    );
+    if (isExcluded) return;
+
     const logId = randomUUID();
     const now = new Date();
     const level: LogLevel = err ? 'error' : 'log';

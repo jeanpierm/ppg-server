@@ -12,6 +12,7 @@ export interface AppConfig {
   language: string;
   http: HttpConfig;
   timezone: string;
+  saveLogs: boolean;
 }
 
 export default registerAs(
@@ -28,5 +29,6 @@ export default registerAs(
         parseInt(process.env.PORT) || parseInt(process.env.APP_PORT) || 3000,
     },
     timezone: process.env.APP_TZ || 'America/Guayaquil',
+    saveLogs: process.env.APP_SAVE_LOGS === 'true',
   }),
 );

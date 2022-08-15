@@ -42,6 +42,7 @@ async function bootstrap() {
   if (process.env.NODE_ENV === 'production')
     server.setTimeout(appConfig.timeout);
   logger.debug(`Server environment set to ${appConfig.env}`);
+  logger.debug(`App save logs set to ${appConfig.saveLogs}`);
   logger.log(`Database running on ${dbConfig.host}/${dbConfig.name}`);
   logger.log(`Server running on ${await app.getUrl()}`);
 }
