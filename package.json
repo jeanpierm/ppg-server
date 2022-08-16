@@ -4,7 +4,6 @@
   "description": "PPG (Professional Profile Generator) es una plataforma que permite identificar las tecnologías de desarrollo de software más demandadas a través de web scraping a ofertas de trabajo de LinkedIn y en este sentido generar perfiles profesionales ideales.",
   "author": "Emily Lino; Jeanpier Mendoza",
   "private": true,
-  "license": "",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
