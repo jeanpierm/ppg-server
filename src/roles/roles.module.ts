@@ -26,7 +26,16 @@ import { ValidateRoleExistsMiddleware } from './middlewares/validate-role-exists
   ],
   controllers: [RolesController],
   providers: [RolesService],
-  exports: [RolesService],
+  exports: [
+    RolesService,
+    MongooseModule.forFeature([
+      {
+        name: RoleEntity.name,
+        schema: RoleSchema,
+        collection: RoleCollectionName,
+      },
+    ]),
+  ],
 })
 export class RolesModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

@@ -1,11 +1,11 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { genSalt, hash } from 'bcrypt';
 import { Model } from 'mongoose';
 import { PaginationQuery } from 'src/shared/dto/pagination-query.dto';
 import { Role } from '../auth/enums/role.enum';
 import { RolesService } from '../roles/roles.service';
-import { RoleDocument } from '../roles/schemas/role.schema';
+import { RoleDocument, RoleEntity } from '../roles/schemas/role.schema';
 import { EntityStatus } from '../shared/enums/status.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -17,16 +17,86 @@ import {
 import { IsUnregisteredEmailValidator } from './validators/is-unregistered-email.validator';
 import { PaginatedResponseDto } from '../shared/dto/paginated-response.dto';
 import { FindUsersQuery } from './dto/find-users-query.dto';
-
+import * as path from 'path';
+import * as fs from 'fs-extra';
+import { CreateRoleDto } from '../roles/dto/create-role.dto';
 @Injectable()
 export class UsersService {
+  private readonly logger = new Logger(UsersService.name);
+  private readonly rolesJsonPath = path.join(
+    process.cwd(),
+    'collections',
+    'roles.json',
+  );
+  private readonly usersJsonPath = path.join(
+    process.cwd(),
+    'collections',
+    'users.json',
+  );
+
   constructor(
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
     @InjectModel(DownloadPreferences.name)
     private readonly downloadPreferencesModel: Model<DownloadPreferencesDocument>,
+    @InjectModel(RoleEntity.name)
+    private readonly roleModel: Model<RoleDocument>,
     private readonly rolesService: RolesService,
     private readonly isUnregisteredEmail: IsUnregisteredEmailValidator,
-  ) {}
+  ) {
+    this.initDocuments();
+  }
+
+  private async initDocuments() {
+    try {
+      const roles = await this.roleModel.find().lean();
+      const users = await this.userModel.find().lean();
+      const rolesExists = roles.length > 0;
+      const usersExists = users.length > 0;
+
+      if (usersExists) {
+        this.logger.debug(
+          'Carga de usuarios predeterminados a MongoDB omitida debido a que ya existen usuarios registrados.',
+        );
+        return;
+      }
+
+      if (!rolesExists) {
+        await this.insertDefaultRoles();
+        this.logger.debug('Roles cargados a MongoDB desde JSON exitosamente');
+      }
+      if (!usersExists) {
+        await this.insertDefaultUsers();
+        this.logger.debug(
+          'Usuarios cargados a MongoDB desde JSON exitosamente',
+        );
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        this.logger.warn(
+          `Ocurrió un error y no se pudo cargar los tipos de tecnologías desde JSON: ${err.message}`,
+        );
+        console.error(err);
+      }
+    }
+  }
+
+  private async insertDefaultUsers() {
+    const usersJson: string = (
+      await fs.readFile(this.usersJsonPath, 'utf-8')
+    ).toString();
+    const createUsers = JSON.parse(usersJson) as CreateUserDto[];
+    for (const user of createUsers) {
+      await this.create(user);
+    }
+  }
+
+  private async insertDefaultRoles() {
+    const rolesJson: string = (
+      await fs.readFile(this.rolesJsonPath, 'utf-8')
+    ).toString();
+    const createRoles = JSON.parse(rolesJson) as CreateRoleDto[];
+    await this.roleModel.insertMany(createRoles);
+  }
 
   async findPaginated(
     params: PaginationQuery & FindUsersQuery,

@@ -1,0 +1,11 @@
+[
+  {
+    "name": "admin",
+    "surname": "admin",
+    "email": "admin@gmail.com",
+    "password": "admin",
+    "jobTitle": "software developer",
+    "location": "Guayaquil, Guayas, Ecuador",
+    "role": "admin"
+  }
+]
