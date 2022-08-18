@@ -13,6 +13,7 @@ import { DatabaseConfig } from './config/database.config';
 import { OpenApiConfig } from './config/open-api.config';
 import { ProfessionalProfileResponse } from './professional-profiles/dto/professional-profile-response.dto';
 import { ApiResponse } from './shared/dto/api-response.dto';
+import { PaginatedResponseDto } from './shared/dto/paginated-response.dto';
 import { TechnologyResponse } from './technologies/dto/technology-response.dto';
 import { UserResponse } from './users/dto/user-response.dto';
 
@@ -68,6 +69,7 @@ function setupOpenApi(app: INestApplication) {
     extraModels: [
       ApiResponse,
       UserResponse,
+      PaginatedResponseDto,
       ProfessionalProfileResponse,
       TechnologyResponse,
     ],
