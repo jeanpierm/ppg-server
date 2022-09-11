@@ -25,8 +25,6 @@ import {
 } from '../schemas/technology-metadata.schema';
 import { getKeysSortedByHigherValue } from '../utils';
 
-const PPG_ALGORITHM_LABEL = 'PPG ALGORITHM';
-
 @Injectable()
 export class ProfessionalProfileGeneratorService {
   private readonly logger = new Logger(
