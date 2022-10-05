@@ -133,7 +133,7 @@ export class ProfessionalProfileGeneratorService {
   ): Promise<TechnologyDocument[]> {
     const techNamesMostDemandedByType: string[] = getKeysSortedByHigherValue(
       countResult,
-    ).slice(0, this.config.numberOfTechnologiesByType);
+    ).slice(0, this.config.numberOfTechnologiesByType); // ["java", "python", "javascript"]
     const technologiesMostDemandedByType: TechnologyDocument[] =
       await Promise.all(
         techNamesMostDemandedByType.map((name) =>
